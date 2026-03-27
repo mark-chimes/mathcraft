@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://b3ucxibfne3j7" path="res://qna.gd" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="2_feb5d"]
+[ext_resource type="Script" uid="uid://cktdpa8m7fbl1" path="res://xp.gd" id="3_feb5d"]
+[ext_resource type="PackedScene" uid="uid://cnqs03kwxkvan" path="res://levelupdisp.tscn" id="4_fc0e3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fc0e3"]
+bg_color = Color(0.19215783, 0.07966017, 0.0143858725, 1)
 
 [node name="Game" type="Node2D" unique_id=1675520924]
 
@@ -23,5 +28,43 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(915, 342)
 script = ExtResource("2_feb5d")
 
+[node name="XP" type="Node2D" parent="." unique_id=1855861851]
+position = Vector2(123, 34)
+script = ExtResource("3_feb5d")
+
+[node name="LevelLabel" type="Label" parent="XP" unique_id=870951989]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "lvl 1"
+
+[node name="CurrentLabel" type="Label" parent="XP" unique_id=153089439]
+offset_top = 31.0
+offset_right = 126.0
+offset_bottom = 54.0
+text = "100 xp"
+
+[node name="TargetLabel" type="Label" parent="XP" unique_id=204815815]
+offset_left = 232.0
+offset_top = 32.0
+offset_right = 357.0
+offset_bottom = 55.0
+text = "/ 1000"
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="XP" unique_id=1782928505]
+offset_top = 60.0
+offset_right = 357.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/background = SubResource("StyleBoxFlat_fc0e3")
+max_value = 1.0
+value = 0.01
+
+[node name="LevelUpLoc" type="Node2D" parent="XP" unique_id=1339847606]
+position = Vector2(366, 19)
+
+[node name="Levelupdisp" parent="XP/LevelUpLoc" unique_id=1597561200 instance=ExtResource("4_fc0e3")]
+
+[connection signal="add_xp" from="Qna" to="XP" method="add_xp"]
 [connection signal="failure" from="Qna" to="ResultDisplay" method="display_failure"]
 [connection signal="success" from="Qna" to="ResultDisplay" method="display_success"]

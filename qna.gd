@@ -1,5 +1,6 @@
 extends Node2D
 signal success
+signal add_xp(xp)
 signal failure
 
 var correct_answer = -1
@@ -28,6 +29,7 @@ func press_num(num):
 	
 	if num == correct_answer: 
 		success.emit()
+		add_xp.emit(100)
 		show_old_quans(true)
 
 		generate_question()

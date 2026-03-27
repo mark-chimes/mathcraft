@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cnqs03kwxkvan"]
+
+[ext_resource type="Script" uid="uid://c0jfs8a6nbs1v" path="res://levelupdisp.gd" id="1_8qvbm"]
+[ext_resource type="Texture2D" uid="uid://d4ksn268iq26c" path="res://assets/tinker.png" id="2_j68xt"]
+
+[node name="Levelupdisp" type="Node2D" unique_id=1597561200]
+script = ExtResource("1_8qvbm")
+
+[node name="Tinker" type="Sprite2D" parent="." unique_id=1131093446]
+modulate = Color(1, 0.38039216, 1, 1)
+position = Vector2(76.000015, 61)
+rotation = -0.4207157
+scale = Vector2(0.16992188, 0.16992188)
+texture = ExtResource("2_j68xt")
+
+[node name="Label" type="Label" parent="." unique_id=925920061]
+offset_right = 40.0
+offset_bottom = 23.0
+rotation = -0.40472054
+theme_override_colors/font_color = Color(1, 0.2509804, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "lvl up!"
