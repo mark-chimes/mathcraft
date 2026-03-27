@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://fjle5dsowx4x"]
+
+[ext_resource type="Texture2D" uid="uid://xkgip45pfnof" path="res://assets/nailed-foot-red.png" id="1_n5jna"]
+[ext_resource type="Script" uid="uid://tg6pimsrmww4" path="res://succfail_sprite.gd" id="2_bnaqn"]
+
+[node name="FailSprite" type="Sprite2D" unique_id=1151683905]
+texture = ExtResource("1_n5jna")
+script = ExtResource("2_bnaqn")

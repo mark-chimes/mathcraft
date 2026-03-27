@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://elst0xn32iil"]
 
 [ext_resource type="Script" uid="uid://b3ucxibfne3j7" path="res://qna.gd" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="2_feb5d"]
 
 [node name="Game" type="Node2D" unique_id=1675520924]
 
 [node name="Qna" type="Node2D" parent="." unique_id=2025614425]
-position = Vector2(489, 165)
+position = Vector2(131, 182)
 script = ExtResource("1_80nbo")
 
 [node name="Question" type="Node2D" parent="Qna" unique_id=297014051]
@@ -16,19 +17,11 @@ offset_right = 110.0
 offset_bottom = 89.0
 theme_override_font_sizes/font_size = 64
 text = "2+2"
-horizontal_alignment = 1
-vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="AnswerBox" type="Node2D" parent="Qna" unique_id=1418165150]
-position = Vector2(-1, 144)
+[node name="ResultDisplay" type="Node2D" parent="." unique_id=1282888775]
+position = Vector2(915, 342)
+script = ExtResource("2_feb5d")
 
-[node name="Label" type="Label" parent="Qna/AnswerBox" unique_id=1494225043]
-offset_left = 40.0
-offset_top = -12.0
-offset_right = 80.0
-offset_bottom = 76.0
-theme_override_font_sizes/font_size = 64
-text = "4"
-horizontal_alignment = 1
-vertical_alignment = 1
+[connection signal="failure" from="Qna" to="ResultDisplay" method="display_failure"]
+[connection signal="success" from="Qna" to="ResultDisplay" method="display_success"]
