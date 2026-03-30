@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ykp160mbei0n"]
+
+[ext_resource type="Script" uid="uid://bmkdtevqabn2x" path="res://locklabel.gd" id="1_cjwlf"]
+
+[node name="SwitchLabel" type="Label" unique_id=1649971417]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.00003
+offset_top = -34.0
+offset_right = 201.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.1690728
+theme_override_colors/font_color = Color(0.33333334, 0.3137255, 0.7372549, 1)
+theme_override_colors/font_shadow_color = Color(0.55217475, 0.59850574, 0.8528515, 0.6431373)
+theme_override_colors/font_outline_color = Color(0.6478527, 0.91932744, 0.99999994, 1)
+theme_override_constants/shadow_offset_x = -5
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_outline_size = 16
+theme_override_font_sizes/font_size = 42
+text = "Active"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_cjwlf")
+fade_seconds = 2.0

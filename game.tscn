@@ -2,17 +2,30 @@
 
 [ext_resource type="Script" uid="uid://b3ucxibfne3j7" path="res://qna.gd" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="2_feb5d"]
-[ext_resource type="Script" uid="uid://cktdpa8m7fbl1" path="res://xp.gd" id="3_feb5d"]
+[ext_resource type="Script" uid="uid://b6edhqtrxd3xt" path="res://tasklist.gd" id="3_vef74"]
 [ext_resource type="PackedScene" uid="uid://cnqs03kwxkvan" path="res://levelupdisp.tscn" id="4_fc0e3"]
+[ext_resource type="Texture2D" uid="uid://bfdh7j4ppf26h" path="res://assets/stone-pile.png" id="5_7jktm"]
+[ext_resource type="Script" uid="uid://c4doxkcen16ic" path="res://craft_task.gd" id="5_j5wjh"]
+[ext_resource type="Script" uid="uid://bcs1px6s8w217" path="res://scavenge_task.gd" id="5_ryrav"]
+[ext_resource type="Script" uid="uid://ckwdafscgp1nw" path="res://resources.gd" id="6_eow3j"]
+[ext_resource type="ButtonGroup" uid="uid://0u24ed0wth8c" path="res://TaskSelectionGroup.tres" id="6_hve3p"]
+[ext_resource type="Texture2D" uid="uid://cm7ltdtow6qn8" path="res://assets/stone-axe.png" id="7_eow3j"]
+[ext_resource type="PackedScene" uid="uid://ykp160mbei0n" path="res://switch_label.tscn" id="8_mfdv2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fc0e3"]
 bg_color = Color(0.19215783, 0.07966017, 0.0143858725, 1)
 
 [node name="Game" type="Node2D" unique_id=1675520924]
 
+[node name="Background" type="ColorRect" parent="." unique_id=836233844]
+offset_right = 1153.0
+offset_bottom = 649.0
+color = Color(0.07258432, 0.014035841, 0, 1)
+
 [node name="Qna" type="Node2D" parent="." unique_id=2025614425]
-position = Vector2(131, 182)
+position = Vector2(745, 23)
 script = ExtResource("1_80nbo")
+task_button_group = ExtResource("6_hve3p")
 
 [node name="Question" type="Node2D" parent="Qna" unique_id=297014051]
 
@@ -24,47 +37,192 @@ theme_override_font_sizes/font_size = 64
 text = "2+2"
 metadata/_edit_use_anchors_ = true
 
-[node name="ResultDisplay" type="Node2D" parent="." unique_id=1282888775]
-position = Vector2(915, 342)
+[node name="ResultDisplay" type="Node2D" parent="Qna" unique_id=1282888775]
+position = Vector2(27, 332)
 script = ExtResource("2_feb5d")
 
-[node name="XP" type="Node2D" parent="." unique_id=1855861851]
-position = Vector2(123, 34)
-script = ExtResource("3_feb5d")
+[node name="Tasklist" type="Node2D" parent="." unique_id=2048841871]
+position = Vector2(8, 100)
+script = ExtResource("3_vef74")
 
-[node name="LevelLabel" type="Label" parent="XP" unique_id=870951989]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "lvl 1"
+[node name="ColorRect" type="ColorRect" parent="Tasklist" unique_id=1864829560]
+offset_right = 410.0
+offset_bottom = 543.0
+color = Color(0.32941177, 0.043137256, 0.06666667, 0.28235295)
 
-[node name="CurrentLabel" type="Label" parent="XP" unique_id=153089439]
-offset_top = 31.0
-offset_right = 126.0
-offset_bottom = 54.0
-text = "100 xp"
+[node name="ScavengeTask" type="Node2D" parent="Tasklist" unique_id=456392196]
+position = Vector2(1, 1)
+script = ExtResource("5_ryrav")
 
-[node name="TargetLabel" type="Label" parent="XP" unique_id=204815815]
-offset_left = 232.0
-offset_top = 32.0
+[node name="ProgressBar" type="ProgressBar" parent="Tasklist/ScavengeTask" unique_id=445550761]
+offset_top = 29.0
 offset_right = 357.0
-offset_bottom = 55.0
-text = "/ 1000"
-horizontal_alignment = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="XP" unique_id=1782928505]
-offset_top = 60.0
-offset_right = 357.0
-offset_bottom = 118.0
+offset_bottom = 87.0
 theme_override_font_sizes/font_size = 32
 theme_override_styles/background = SubResource("StyleBoxFlat_fc0e3")
 max_value = 1.0
-value = 0.01
+value = 0.5
+show_percentage = false
+metadata/_edit_use_anchors_ = true
 
-[node name="LevelUpLoc" type="Node2D" parent="XP" unique_id=1339847606]
-position = Vector2(366, 19)
+[node name="CurrentLabel" type="Label" parent="Tasklist/ScavengeTask" unique_id=685176182]
+offset_right = 126.0
+offset_bottom = 23.0
+text = "100 progress"
+metadata/_edit_use_anchors_ = true
 
-[node name="Levelupdisp" parent="XP/LevelUpLoc" unique_id=1597561200 instance=ExtResource("4_fc0e3")]
+[node name="TargetLabel" type="Label" parent="Tasklist/ScavengeTask" unique_id=115871857]
+offset_left = 232.0
+offset_top = 1.0
+offset_right = 357.0
+offset_bottom = 24.0
+text = "/ 1000"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
 
-[connection signal="add_xp" from="Qna" to="XP" method="add_xp"]
-[connection signal="failure" from="Qna" to="ResultDisplay" method="display_failure"]
-[connection signal="success" from="Qna" to="ResultDisplay" method="display_success"]
+[node name="TaskLabel" type="Label" parent="Tasklist/ScavengeTask" unique_id=1815296805]
+offset_left = 6.0
+offset_top = 29.0
+offset_right = 350.0
+offset_bottom = 122.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Search for stones
+"
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ResIconLoc" type="Node2D" parent="Tasklist/ScavengeTask" unique_id=528955822]
+position = Vector2(375, -5)
+
+[node name="ResDisp" parent="Tasklist/ScavengeTask/ResIconLoc" unique_id=878884668 instance=ExtResource("4_fc0e3")]
+
+[node name="ScavengeButton" type="CheckButton" parent="Tasklist/ScavengeTask" unique_id=919820823]
+offset_left = 4.0
+offset_top = 34.0
+offset_right = 408.0
+offset_bottom = 86.0
+button_pressed = true
+button_group = ExtResource("6_hve3p")
+expand_icon = true
+
+[node name="CraftTask" type="Node2D" parent="Tasklist" unique_id=490550893]
+position = Vector2(-1, 106)
+script = ExtResource("5_j5wjh")
+
+[node name="ProgressBar" type="ProgressBar" parent="Tasklist/CraftTask" unique_id=1591602151]
+offset_top = 29.0
+offset_right = 357.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/background = SubResource("StyleBoxFlat_fc0e3")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="CurrentLabel" type="Label" parent="Tasklist/CraftTask" unique_id=1426748738]
+offset_right = 126.0
+offset_bottom = 23.0
+text = "100 progress"
+metadata/_edit_use_anchors_ = true
+
+[node name="TargetLabel" type="Label" parent="Tasklist/CraftTask" unique_id=777897226]
+offset_left = 232.0
+offset_top = 1.0
+offset_right = 357.0
+offset_bottom = 24.0
+text = "/ 1000"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TaskLabel" type="Label" parent="Tasklist/CraftTask" unique_id=642813425]
+offset_left = 10.0
+offset_top = 29.0
+offset_right = 354.0
+offset_bottom = 122.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Craft basic stone tool
+"
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ResIconLoc" type="Node2D" parent="Tasklist/CraftTask" unique_id=303336250]
+position = Vector2(375, -5)
+
+[node name="ResDisp" parent="Tasklist/CraftTask/ResIconLoc" unique_id=1597561200 instance=ExtResource("4_fc0e3")]
+
+[node name="UseIconLoc" type="Node2D" parent="Tasklist/CraftTask" unique_id=1206163890]
+position = Vector2(492, -6)
+
+[node name="ResDisp" parent="Tasklist/CraftTask/UseIconLoc" unique_id=859247713 instance=ExtResource("4_fc0e3")]
+
+[node name="CraftButton" type="CheckButton" parent="Tasklist/CraftTask" unique_id=2066619802]
+offset_left = 8.0
+offset_top = 34.0
+offset_right = 410.0
+offset_bottom = 85.0
+disabled = true
+button_group = ExtResource("6_hve3p")
+expand_icon = true
+
+[node name="CraftLockLoc" type="Node2D" parent="Tasklist" unique_id=2069369258]
+position = Vector2(179, 199)
+
+[node name="AutoswitchLoc" type="Node2D" parent="Tasklist" unique_id=95763028]
+position = Vector2(173, 83)
+
+[node name="SwitchLabel" parent="Tasklist/AutoswitchLoc" unique_id=1649971417 instance=ExtResource("8_mfdv2")]
+
+[node name="Resources" type="Node2D" parent="." unique_id=403358583]
+script = ExtResource("6_eow3j")
+
+[node name="Stone" type="Node2D" parent="Resources" unique_id=91632624]
+
+[node name="Sprite2D" type="Sprite2D" parent="Resources/Stone" unique_id=1330435494]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("5_7jktm")
+centered = false
+
+[node name="QtyLabel" type="Label" parent="Resources/Stone" unique_id=343260025]
+offset_left = 74.0
+offset_top = 10.0
+offset_right = 118.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="Axe" type="Node2D" parent="Resources" unique_id=798579285]
+position = Vector2(181, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Resources/Axe" unique_id=438773993]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("7_eow3j")
+centered = false
+
+[node name="QtyLabel" type="Label" parent="Resources/Axe" unique_id=1742686190]
+offset_left = 74.0
+offset_top = 10.0
+offset_right = 118.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[connection signal="failure" from="Qna" to="Qna/ResultDisplay" method="display_failure"]
+[connection signal="generate_craft_progress" from="Qna" to="Tasklist/CraftTask" method="add_progress"]
+[connection signal="generate_scavenge_progress" from="Qna" to="Tasklist/ScavengeTask" method="add_progress"]
+[connection signal="success" from="Qna" to="Qna/ResultDisplay" method="display_success"]
+[connection signal="disable_craft" from="Tasklist" to="Qna" method="disable_crafting"]
+[connection signal="got_stone" from="Tasklist/ScavengeTask" to="Resources" method="get_stone"]
+[connection signal="got_stone" from="Tasklist/CraftTask" to="Resources" method="get_stone"]
+[connection signal="got_tools" from="Tasklist/CraftTask" to="Resources" method="get_tools"]
+[connection signal="have_stone" from="Resources" to="Tasklist" method="_on_resources_have_stone"]

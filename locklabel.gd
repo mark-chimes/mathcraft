@@ -1,13 +1,12 @@
-extends Node2D
-
+extends Label
 
 var alpha_amount = 1.0
-var fade_seconds = 4.0
+@export var fade_seconds = 4.0
 
 func _process(delta):
 	alpha_amount = max(alpha_amount - delta/fade_seconds, 0.0)
 	modulate.a = alpha_amount
-	position.y += delta*10
+	#position.y += delta*10
 
 	
 	if alpha_amount == 0.0:

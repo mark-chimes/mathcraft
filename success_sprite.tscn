@@ -4,5 +4,6 @@
 [ext_resource type="Script" uid="uid://tg6pimsrmww4" path="res://succfail_sprite.gd" id="2_bnaqn"]
 
 [node name="SuccessSprite" type="Sprite2D" unique_id=1151683905]
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_eeuee")
 script = ExtResource("2_bnaqn")

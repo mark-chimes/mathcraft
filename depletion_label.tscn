@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://d2t3l7ukgf6cp"]
+
+[ext_resource type="Script" uid="uid://bmkdtevqabn2x" path="res://locklabel.gd" id="1_rrjys"]
+
+[node name="DepletionLabel" type="Label" unique_id=1612614884]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = -33.5
+offset_right = 201.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.1690728
+theme_override_colors/font_color = Color(0.30110523, 3.5195612e-07, 9.62615e-08, 1)
+theme_override_colors/font_shadow_color = Color(1, 0.53361195, 0.4686134, 0.32156864)
+theme_override_colors/font_outline_color = Color(0.74665266, 0, 0.005591542, 1)
+theme_override_constants/shadow_offset_x = -8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 32
+theme_override_constants/shadow_outline_size = 32
+theme_override_font_sizes/font_size = 42
+text = "STONE DEPLETED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_rrjys")
+fade_seconds = 8.0

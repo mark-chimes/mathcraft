@@ -6,7 +6,7 @@
 [node name="Levelupdisp" type="Node2D" unique_id=1597561200]
 script = ExtResource("1_8qvbm")
 
-[node name="Tinker" type="Sprite2D" parent="." unique_id=1131093446]
+[node name="Icon" type="Sprite2D" parent="." unique_id=1131093446]
 modulate = Color(1, 0.38039216, 1, 1)
 position = Vector2(76.000015, 61)
 rotation = -0.4207157
