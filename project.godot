@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Mathcraft"
 run/main_scene="uid://elst0xn32iil"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://brj7wfio4joku"
 
 [input]
 

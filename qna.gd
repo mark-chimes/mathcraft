@@ -29,7 +29,7 @@ func press_num(num):
 	
 	if num == correct_answer: 
 		success.emit()
-		add_xp.emit(100)
+		add_xp.emit(420)
 		show_old_quans(true)
 
 		generate_question()
