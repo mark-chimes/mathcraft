@@ -2,6 +2,7 @@ extends Node2D
 
 signal have_stone(yes)
 
+var food_qty = 0
 var stone_qty = 0
 var tool_qty = 0
 
@@ -16,3 +17,9 @@ func get_tools(quantity):
 
 	tool_qty += quantity 
 	$Axe/QtyLabel.text = str(tool_qty)
+
+
+func _got_food(quantity: Variant) -> void:
+	print("Got food: " + str(quantity))
+	food_qty += quantity 
+	$Food/QtyLabel.text = str(food_qty)

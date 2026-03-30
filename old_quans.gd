@@ -20,3 +20,12 @@ func set_qa(is_correct, question_string, answer_string):
 	else: 
 		$OldQuest.text = question_string + " ≠ " + answer_string
 		modulate.g = 0.0
+
+func set_qa_comp(is_correct, correct_string): 
+	print("Set QA Comp got string: " + correct_string)
+	$OldQuest.text = correct_string
+	modulate.b = 0.0
+	if is_correct: 
+		modulate.r = 0.0
+	else: 
+		modulate.g = 0.0
