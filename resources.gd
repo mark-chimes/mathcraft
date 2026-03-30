@@ -1,8 +1,10 @@
 extends Node2D
 
 signal have_stone(yes)
+signal have_berries(yes)
 
-var food_qty = 0
+var berry_qty = 0
+var juice_qty = 0
 var stone_qty = 0
 var tool_qty = 0
 
@@ -18,8 +20,13 @@ func get_tools(quantity):
 	tool_qty += quantity 
 	$Axe/QtyLabel.text = str(tool_qty)
 
+func got_berry(quantity: Variant) -> void:
+	print("Got berries: " + str(quantity))
+	berry_qty += quantity 
+	$Berry/QtyLabel.text = str(berry_qty)
+	have_berries.emit(berry_qty > 1) #TODO find a better way of doing this
 
-func _got_food(quantity: Variant) -> void:
-	print("Got food: " + str(quantity))
-	food_qty += quantity 
-	$Food/QtyLabel.text = str(food_qty)
+func get_juice(quantity: Variant) -> void:
+	print("Got juice: " + str(quantity))
+	juice_qty += quantity 
+	$Juice/QtyLabel.text = str(juice_qty)

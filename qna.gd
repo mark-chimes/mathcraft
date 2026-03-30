@@ -1,6 +1,7 @@
 extends Node2D
 signal success
 signal generate_berry_progress(progress)
+signal generate_juice_progress(progress)
 signal generate_scavenge_progress(progress)
 signal generate_craft_progress(progress)
 
@@ -10,7 +11,7 @@ var correct_answer = -1
 var question_text = ""
 var answer_text = ""
 
-var progress_per_answer = 80
+var progress_per_answer = 800
 
 var current_task = "scavenge"
 
@@ -31,6 +32,8 @@ func _on_task_button_pressed(button: BaseButton):
 	
 	if task_name == "BerryButton": 
 		current_task = "pickberries"
+	elif task_name == "JuiceButton": 
+		current_task = "squeezejuice"
 	elif task_name == "ScavengeButton": 
 		current_task = "scavenge"
 	elif task_name == "CraftButton": 
@@ -73,7 +76,7 @@ func press_left_right(is_right):
 		failure.emit()		
 
 func press_num(num):
-	if not ( current_task == "scavenge" or current_task == "craft"):
+	if not ( current_task == "scavenge" or current_task == "squeezejuice" or current_task == "craft"):
 		return
 	print("Pressed number: " + str(num))
 
@@ -118,6 +121,8 @@ func show_old_quans(is_correct):
 func emit_progress(): 
 	if current_task == "pickberries":
 		generate_berry_progress.emit(progress_per_answer)
+	elif current_task == "squeezejuice":
+		generate_juice_progress.emit(progress_per_answer)
 	elif current_task == "scavenge":
 		generate_scavenge_progress.emit(progress_per_answer)
 	elif current_task == "craft": 
@@ -128,6 +133,8 @@ func emit_progress():
 func generate_question():
 	if current_task == "pickberries":
 		generate_comparison()
+	elif current_task == "squeezejuice":
+		generate_addition()
 	elif current_task == "scavenge":
 		generate_addition()
 	elif current_task == "craft": 

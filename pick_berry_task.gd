@@ -1,6 +1,6 @@
 extends Node2D
 
-signal got_food(quantity)
+signal got_berry(quantity)
 
 @export var icon = preload("res://assets/blackcurrant.png")
 @export var production_text = "+1 food"
@@ -32,4 +32,4 @@ func get_resource():
 	prog -= req_prog
 	if prog >= req_prog: 
 		get_resource()
-	got_food.emit(1)
+	got_berry.emit(1)
