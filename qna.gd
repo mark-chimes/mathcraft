@@ -11,9 +11,9 @@ var correct_answer = -1
 var question_text = ""
 var answer_text = ""
 
-var progress_per_answer = 800
+var progress_per_answer = 400
 
-var current_task = "scavenge"
+var current_task = "pickberries"
 
 @onready var OldQuans = preload("res://old_quans.tscn")
 @export var task_button_group: ButtonGroup # Reference to your ButtonGroup resource

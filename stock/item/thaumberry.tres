@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://decx3hdd3kxrg"]
+
+[ext_resource type="Texture2D" uid="uid://d333cxedwnhce" path="res://assets/art/item/blackcurrant.png" id="1_ewyh1"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_tti62"]
+
+[resource]
+script = ExtResource("2_tti62")
+id = &"thaumberry"
+display_name = "Wild Thaumberry"
+icon = ExtResource("1_ewyh1")
+description = "A be rry imbued with magical power"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

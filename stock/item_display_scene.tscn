@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://celdnw05v2nyr"]
+
+[ext_resource type="Script" uid="uid://d31ygnrvwlg6t" path="res://stock/item_display_scene.gd" id="1_o6dm0"]
+[ext_resource type="Texture2D" uid="uid://d4alv36ol2bwo" path="res://assets/cherry.png" id="2_u8chd"]
+
+[node name="ItemDisplayScene" type="HBoxContainer" unique_id=849002156]
+script = ExtResource("1_o6dm0")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1686577759]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_u8chd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Qty" type="Label" parent="." unique_id=1252424887]
+layout_mode = 2

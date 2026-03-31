@@ -168,9 +168,10 @@ position = Vector2(-9, -137)
 
 [node name="BerryButton" type="CheckButton" parent="Game/Tasklist/BerryTask" unique_id=1808189362]
 offset_left = 4.0
-offset_top = 34.0
+offset_top = 33.0
 offset_right = 408.0
-offset_bottom = 86.0
+offset_bottom = 85.0
+button_pressed = true
 button_group = ExtResource("5_074og")
 expand_icon = true
 metadata/_edit_use_anchors_ = true
@@ -193,6 +194,10 @@ metadata/_edit_use_anchors_ = true
 [node name="JuiceTask" type="Node2D" parent="Game/Tasklist" unique_id=2076445214]
 position = Vector2(7, 149)
 script = ExtResource("13_cegan")
+production_text = "+1 juice"
+usage_text = "-2 berries"
+use_icon = ExtResource("14_a6jrf")
+produce_icon = ExtResource("4_074og")
 
 [node name="ProgressBar" type="ProgressBar" parent="Game/Tasklist/JuiceTask" unique_id=257962924]
 offset_top = 29.0
@@ -313,7 +318,6 @@ offset_left = 4.0
 offset_top = 34.0
 offset_right = 408.0
 offset_bottom = 86.0
-button_pressed = true
 button_group = ExtResource("5_074og")
 expand_icon = true
 metadata/_edit_use_anchors_ = true
@@ -392,7 +396,7 @@ position = Vector2(181, 343)
 [node name="SwitchLabel" parent="Game/Tasklist/AutoswitchLoc" unique_id=1649971417 instance=ExtResource("11_1u8w0")]
 
 [node name="AutoswitchBerryLoc" type="Node2D" parent="Game/Tasklist" unique_id=1050289763]
-position = Vector2(181, 343)
+position = Vector2(180, 137)
 
 [node name="SwitchLabel" parent="Game/Tasklist/AutoswitchBerryLoc" unique_id=1354546452 instance=ExtResource("11_1u8w0")]
 
@@ -403,7 +407,7 @@ theme_override_colors/font_color = Color(1, 0.8522068, 0.77387404, 1)
 theme_override_colors/font_outline_color = Color(0.07450981, 0.015686275, 0, 1)
 theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 32
-text = "TASKS"
+text = "QUESTS"
 horizontal_alignment = 1
 
 [node name="SweetNSour" type="Node2D" parent="." unique_id=1259930394]

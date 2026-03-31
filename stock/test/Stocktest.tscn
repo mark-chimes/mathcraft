@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://b0mtsmfyp8emj"]
+
+[ext_resource type="Script" uid="uid://cssu08b02kpsk" path="res://stock/test/stocktest.gd" id="1_1e5dl"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_a6ppu"]
+[ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="3_hplrj"]
+[ext_resource type="Resource" uid="uid://bwqc15jq010hs" path="res://stock/item/thaumjuice.tres" id="4_5e86r"]
+[ext_resource type="PackedScene" uid="uid://celdnw05v2nyr" path="res://stock/item_display_scene.tscn" id="4_oylah"]
+[ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="5_hq2ul"]
+[ext_resource type="Resource" uid="uid://ci3fqsaaho447" path="res://stock/item/stone_tool.tres" id="6_kfdev"]
+[ext_resource type="Script" uid="uid://bxhr3qo6krc5t" path="res://stock/stock_display.gd" id="6_rvhpt"]
+
+[node name="Stocktest" type="Node2D" unique_id=18442708]
+script = ExtResource("1_1e5dl")
+all_items = Array[ExtResource("2_a6ppu")]([ExtResource("3_hplrj"), ExtResource("4_5e86r"), ExtResource("5_hq2ul"), ExtResource("6_kfdev")])
+
+[node name="StockDisplay" type="Control" parent="." unique_id=663421477]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 460.0
+offset_bottom = 139.0
+script = ExtResource("6_rvhpt")
+item_display_scene = ExtResource("4_oylah")
+
+[node name="StockContainer" type="HBoxContainer" parent="StockDisplay" unique_id=390486836]
+layout_mode = 1
+offset_right = 593.0
+offset_bottom = 66.0
