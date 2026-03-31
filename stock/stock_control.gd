@@ -17,3 +17,4 @@ func _add_item(item: ItemData, qty: int):
 		new_qty = 0
 	inventory[item] = new_qty
 	stock_display.update_item_qty(item, new_qty)
+	stock_display.spawn_item_effect(item, qty)
