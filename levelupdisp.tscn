@@ -1,10 +1,32 @@
-[gd_scene format=3 uid="uid://cnqs03kwxkvan"]
+[gd_scene format=3 uid="uid://ok7soahgj06"]
 
-[ext_resource type="Script" uid="uid://c0jfs8a6nbs1v" path="res://levelupdisp.gd" id="1_8qvbm"]
 [ext_resource type="Texture2D" uid="uid://d4ksn268iq26c" path="res://assets/tinker.png" id="2_j68xt"]
 
+[sub_resource type="GDScript" id="GDScript_p8okg"]
+script/source = "extends Node2D
+
+
+var alpha_amount = 1.0
+var fade_seconds = 4.0
+
+func _process(delta):
+	alpha_amount = max(alpha_amount - delta/fade_seconds, 0.0)
+	modulate.a = alpha_amount
+	position.y += delta*10
+
+	
+	if alpha_amount == 0.0:
+		queue_free()
+
+func set_icon_text_col(new_icon, new_text, new_color): 
+	$Icon.texture = new_icon
+	$Label.text = new_text
+	$Icon.modulate = new_color
+	$Icon.modulate.a = 1.0
+"
+
 [node name="Levelupdisp" type="Node2D" unique_id=1597561200]
-script = ExtResource("1_8qvbm")
+script = SubResource("GDScript_p8okg")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1131093446]
 modulate = Color(1, 0.38039216, 1, 1)

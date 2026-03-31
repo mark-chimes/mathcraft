@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://yktbywjttbi3" path="res://main.gd" id="1_vivmo"]
 [ext_resource type="Script" uid="uid://ckwdafscgp1nw" path="res://resources.gd" id="1_w48qg"]
+[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="2_82xsv"]
+[ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
 [ext_resource type="Texture2D" uid="uid://bfdh7j4ppf26h" path="res://assets/stone-pile.png" id="2_vivmo"]
 [ext_resource type="Texture2D" uid="uid://cm7ltdtow6qn8" path="res://assets/stone-axe.png" id="3_2cqfq"]
 [ext_resource type="Texture2D" uid="uid://b2gjhvv4i5t2t" path="res://assets/blackcurrant.png" id="3_yaehf"]
@@ -11,7 +13,6 @@
 [ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="6_cegan"]
 [ext_resource type="Script" uid="uid://b6edhqtrxd3xt" path="res://tasklist.gd" id="7_82xsv"]
 [ext_resource type="Script" uid="uid://bcs1px6s8w217" path="res://scavenge_task.gd" id="8_getpj"]
-[ext_resource type="PackedScene" uid="uid://cnqs03kwxkvan" path="res://levelupdisp.tscn" id="9_ryguw"]
 [ext_resource type="Script" uid="uid://c4doxkcen16ic" path="res://craft_task.gd" id="10_d13ii"]
 [ext_resource type="Script" uid="uid://cyiu7e8ecs48p" path="res://pick_berry_task.gd" id="10_yaehf"]
 [ext_resource type="PackedScene" uid="uid://ykp160mbei0n" path="res://switch_label.tscn" id="11_1u8w0"]
@@ -19,6 +20,11 @@
 [ext_resource type="Script" uid="uid://c8qn3fgx1iiy4" path="res://juice_task.gd" id="13_cegan"]
 [ext_resource type="Texture2D" uid="uid://d4alv36ol2bwo" path="res://assets/cherry.png" id="13_lswn8"]
 [ext_resource type="Texture2D" uid="uid://d2abdecrtmpid" path="res://assets/elderberry.png" id="14_a6jrf"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="14_d13ii"]
+[ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="15_1u8w0"]
+[ext_resource type="Resource" uid="uid://bwqc15jq010hs" path="res://stock/item/thaumjuice.tres" id="17_0odxb"]
+[ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="19_lswn8"]
+[ext_resource type="Resource" uid="uid://ci3fqsaaho447" path="res://stock/item/stone_tool.tres" id="21_a6jrf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fc0e3"]
 bg_color = Color(0.19215783, 0.07966017, 0.0143858725, 1)
@@ -33,7 +39,15 @@ color = Color(0.07258432, 0.014035841, 0, 1)
 
 [node name="Game" type="Node2D" parent="." unique_id=1698628223]
 
+[node name="Inventory" type="Node2D" parent="Game" unique_id=448375714]
+
+[node name="StockControl" parent="Game/Inventory" unique_id=741979544 node_paths=PackedStringArray("stock_display") instance=ExtResource("2_getpj")]
+stock_display = NodePath("../StockDisplay")
+
+[node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
+
 [node name="Resources" type="Node2D" parent="Game" unique_id=403358583]
+position = Vector2(488, 226)
 script = ExtResource("1_w48qg")
 
 [node name="Berry" type="Node2D" parent="Game/Resources" unique_id=1174996011]
@@ -133,7 +147,9 @@ color = Color(0.32941177, 0.043137256, 0.06666667, 0.28235295)
 [node name="BerryTask" type="Node2D" parent="Game/Tasklist" unique_id=1149055102]
 position = Vector2(2, 45)
 script = ExtResource("10_yaehf")
-production_text = "+1 berry"
+item_mods = Dictionary[ExtResource("14_d13ii"), int]({
+ExtResource("15_1u8w0"): 1
+})
 
 [node name="ProgressBar" type="ProgressBar" parent="Game/Tasklist/BerryTask" unique_id=1437678395]
 offset_top = 29.0
@@ -160,11 +176,6 @@ offset_bottom = 24.0
 text = "/ 1000"
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="ResIconLoc" type="Node2D" parent="Game/Tasklist/BerryTask" unique_id=781603302]
-position = Vector2(-9, -137)
-
-[node name="ResDisp" parent="Game/Tasklist/BerryTask/ResIconLoc" unique_id=1597561200 instance=ExtResource("9_ryguw")]
 
 [node name="BerryButton" type="CheckButton" parent="Game/Tasklist/BerryTask" unique_id=1808189362]
 offset_left = 4.0
@@ -194,10 +205,10 @@ metadata/_edit_use_anchors_ = true
 [node name="JuiceTask" type="Node2D" parent="Game/Tasklist" unique_id=2076445214]
 position = Vector2(7, 149)
 script = ExtResource("13_cegan")
-production_text = "+1 juice"
-usage_text = "-2 berries"
-use_icon = ExtResource("14_a6jrf")
-produce_icon = ExtResource("4_074og")
+item_mods = Dictionary[ExtResource("14_d13ii"), int]({
+ExtResource("15_1u8w0"): -2,
+ExtResource("17_0odxb"): 1
+})
 
 [node name="ProgressBar" type="ProgressBar" parent="Game/Tasklist/JuiceTask" unique_id=257962924]
 offset_top = 29.0
@@ -240,16 +251,6 @@ text = "Extract Thaumjuice Essence"
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ResIconLoc" type="Node2D" parent="Game/Tasklist/JuiceTask" unique_id=1423586336]
-position = Vector2(144, -241)
-
-[node name="ResDisp" parent="Game/Tasklist/JuiceTask/ResIconLoc" unique_id=927085268 instance=ExtResource("9_ryguw")]
-
-[node name="UseIconLoc" type="Node2D" parent="Game/Tasklist/JuiceTask" unique_id=65324288]
-position = Vector2(-15, -240)
-
-[node name="ResDisp" parent="Game/Tasklist/JuiceTask/UseIconLoc" unique_id=1578793798 instance=ExtResource("9_ryguw")]
-
 [node name="JuiceButton" type="CheckButton" parent="Game/Tasklist/JuiceTask" unique_id=1864223282]
 offset_left = 8.0
 offset_top = 34.0
@@ -265,6 +266,9 @@ position = Vector2(183, 238)
 [node name="ScavengeTask" type="Node2D" parent="Game/Tasklist" unique_id=456392196]
 position = Vector2(6, 257)
 script = ExtResource("8_getpj")
+item_mods = Dictionary[ExtResource("14_d13ii"), int]({
+ExtResource("19_lswn8"): 1
+})
 
 [node name="ProgressBar" type="ProgressBar" parent="Game/Tasklist/ScavengeTask" unique_id=445550761]
 offset_top = 29.0
@@ -308,11 +312,6 @@ text = "Search for stones
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ResIconLoc" type="Node2D" parent="Game/Tasklist/ScavengeTask" unique_id=528955822]
-position = Vector2(300, -342)
-
-[node name="ResDisp" parent="Game/Tasklist/ScavengeTask/ResIconLoc" unique_id=878884668 instance=ExtResource("9_ryguw")]
-
 [node name="ScavengeButton" type="CheckButton" parent="Game/Tasklist/ScavengeTask" unique_id=919820823]
 offset_left = 4.0
 offset_top = 34.0
@@ -325,6 +324,10 @@ metadata/_edit_use_anchors_ = true
 [node name="CraftTask" type="Node2D" parent="Game/Tasklist" unique_id=490550893]
 position = Vector2(4, 362)
 script = ExtResource("10_d13ii")
+item_mods = Dictionary[ExtResource("14_d13ii"), int]({
+ExtResource("19_lswn8"): -1,
+ExtResource("21_a6jrf"): 1
+})
 
 [node name="ProgressBar" type="ProgressBar" parent="Game/Tasklist/CraftTask" unique_id=1591602151]
 offset_top = 29.0
@@ -367,16 +370,6 @@ text = "Craft basic stone tool
 "
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="ResIconLoc" type="Node2D" parent="Game/Tasklist/CraftTask" unique_id=303336250]
-position = Vector2(481, -447)
-
-[node name="ResDisp" parent="Game/Tasklist/CraftTask/ResIconLoc" unique_id=1181968785 instance=ExtResource("9_ryguw")]
-
-[node name="UseIconLoc" type="Node2D" parent="Game/Tasklist/CraftTask" unique_id=1206163890]
-position = Vector2(301, -448)
-
-[node name="ResDisp" parent="Game/Tasklist/CraftTask/UseIconLoc" unique_id=859247713 instance=ExtResource("9_ryguw")]
 
 [node name="CraftButton" type="CheckButton" parent="Game/Tasklist/CraftTask" unique_id=2066619802]
 offset_left = 8.0
@@ -502,9 +495,13 @@ autowrap_mode = 3
 [connection signal="success" from="Game/Qna" to="Game/Qna/ResultDisplay" method="display_success"]
 [connection signal="disable_craft" from="Game/Tasklist" to="Game/Qna" method="disable_crafting"]
 [connection signal="got_berry" from="Game/Tasklist/BerryTask" to="Game/Resources" method="got_berry"]
+[connection signal="got_item" from="Game/Tasklist/BerryTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_berry" from="Game/Tasklist/JuiceTask" to="Game/Resources" method="got_berry"]
+[connection signal="got_item" from="Game/Tasklist/JuiceTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_juice" from="Game/Tasklist/JuiceTask" to="Game/Resources" method="get_juice"]
+[connection signal="got_item" from="Game/Tasklist/ScavengeTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_stone" from="Game/Tasklist/ScavengeTask" to="Game/Resources" method="get_stone"]
+[connection signal="got_item" from="Game/Tasklist/CraftTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_stone" from="Game/Tasklist/CraftTask" to="Game/Resources" method="get_stone"]
 [connection signal="got_tools" from="Game/Tasklist/CraftTask" to="Game/Resources" method="get_tools"]
 [connection signal="close_dialog" from="SweetNSour" to="." method="_on_close_dialog"]

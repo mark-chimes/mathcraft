@@ -1,16 +1,17 @@
 extends Node2D
 
 signal got_stone(quantity)
-@export var icon = preload("res://assets/stone-pile.png")
-@export var production_text = "+1 stone"
+
+signal got_item(item, quantity)
 
 var prog = 0
 var req_prog = 1000
-@onready var LevelUpDisp = preload("res://levelupdisp.tscn")
+
+@export var item_mods : Dictionary[ItemData, int] = {}
+
 
 func _ready(): 
 	update_xp_display()
-	$ResIconLoc/ResDisp.queue_free()
 
 func add_progress(prog_to_add): 
 	prog += prog_to_add
@@ -24,9 +25,8 @@ func update_xp_display():
 	$ProgressBar.value = 1.0 * prog / req_prog
 	
 func get_resource(): 
-	var levelupdisp = LevelUpDisp.instantiate()
-	levelupdisp.set_icon_text_col(icon, production_text, Color(0.5, 1.0, 0.5))
-	$ResIconLoc.add_child(levelupdisp)
+	for item in item_mods: 
+		got_item.emit(item, item_mods[item])
 	
 	prog -= req_prog
 	if prog >= req_prog: 
