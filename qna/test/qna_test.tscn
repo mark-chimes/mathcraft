@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://jnw6yiq8jm28"]
+
+[ext_resource type="Script" uid="uid://dr6uugnt62skc" path="res://qna/generators/arithmetic_generator.gd" id="2_4qyqu"]
+[ext_resource type="Script" uid="uid://cxswulm64kmqe" path="res://qna/q_n_a.gd" id="2_jfiad"]
+[ext_resource type="Script" uid="uid://ciyek7jggnj6k" path="res://qna/question_display.gd" id="3_4qyqu"]
+
+[sub_resource type="Resource" id="Resource_1dcoo"]
+script = ExtResource("2_4qyqu")
+metadata/_custom_type_script = "uid://dr6uugnt62skc"
+
+[node name="QnaTest" type="Node2D" unique_id=796816239]
+
+[node name="QnA" type="Node2D" parent="." unique_id=500856014]
+script = ExtResource("2_jfiad")
+question_generator = SubResource("Resource_1dcoo")
+
+[node name="QuestionDisplay" type="Node2D" parent="QnA" unique_id=1173754207]
+position = Vector2(248, 161)
+script = ExtResource("3_4qyqu")
+
+[node name="Label" type="Label" parent="QnA/QuestionDisplay" unique_id=1132612952]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "2+3"
+
+[node name="QuestionGenerator" type="Node2D" parent="QnA" unique_id=2117757561]

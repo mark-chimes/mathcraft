@@ -42,6 +42,7 @@ stock_display = NodePath("../StockDisplay")
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
 
 [node name="Qna" type="Node2D" parent="Game" unique_id=2025614425]
+visible = false
 position = Vector2(745, 23)
 script = ExtResource("4_yaehf")
 task_button_group = ExtResource("5_074og")
@@ -70,6 +71,7 @@ offset_bottom = 543.0
 color = Color(0.32941177, 0.043137256, 0.06666667, 0.28235295)
 
 [node name="BerryTask" type="Node2D" parent="Game/Tasklist" unique_id=1149055102]
+visible = false
 position = Vector2(2, 45)
 script = ExtResource("10_yaehf")
 item_mods = Dictionary[ExtResource("14_d13ii"), int]({

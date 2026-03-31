@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ArithmeticGenerator" format=3 uid="uid://cxk3mohaigffp"]
+
+[ext_resource type="Script" uid="uid://dr6uugnt62skc" path="res://qna/generators/arithmetic_generator.gd" id="1_0gjpt"]
+
+[resource]
+script = ExtResource("1_0gjpt")
+question_type = 1
+metadata/_custom_type_script = "uid://dr6uugnt62skc"
