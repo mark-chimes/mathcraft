@@ -10,6 +10,9 @@ func _process(delta):
 	if alpha_amount == 0.0:
 		queue_free()
 
+func fade_faster(): 
+	alpha_amount /= 2.0
+
 func set_icon_text_col(new_icon, new_text, new_color): 
 	$Icon.texture = new_icon
 	$Label.text = new_text
