@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d4alv36ol2bwo" path="res://assets/cherry.png" id="2_u8chd"]
 
 [node name="ItemDisplayScene" type="HBoxContainer" unique_id=849002156]
+theme_override_constants/separation = 12
 script = ExtResource("1_o6dm0")
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1686577759]
@@ -15,4 +16,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Qty" type="Label" parent="." unique_id=1252424887]
+custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
+text = "100"

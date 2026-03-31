@@ -13,15 +13,14 @@
 script = ExtResource("1_1e5dl")
 all_items = Array[ExtResource("2_a6ppu")]([ExtResource("3_hplrj"), ExtResource("4_5e86r"), ExtResource("5_hq2ul"), ExtResource("6_kfdev")])
 
-[node name="StockDisplay" type="Control" parent="." unique_id=663421477]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 460.0
-offset_bottom = 139.0
+[node name="StockDisplay" type="VBoxContainer" parent="." unique_id=521946638]
+offset_right = 1279.0
+offset_bottom = 64.0
+theme_override_constants/separation = 8
 script = ExtResource("6_rvhpt")
 item_display_scene = ExtResource("4_oylah")
+items = Array[ExtResource("2_a6ppu")]([ExtResource("3_hplrj"), ExtResource("4_5e86r"), ExtResource("3_hplrj"), ExtResource("3_hplrj"), ExtResource("4_5e86r"), ExtResource("6_kfdev"), ExtResource("5_hq2ul")])
 
-[node name="StockContainer" type="HBoxContainer" parent="StockDisplay" unique_id=390486836]
-layout_mode = 1
-offset_right = 593.0
-offset_bottom = 66.0
+[node name="StockContainer" type="HFlowContainer" parent="StockDisplay" unique_id=810949333]
+layout_mode = 2
+theme_override_constants/h_separation = 16
