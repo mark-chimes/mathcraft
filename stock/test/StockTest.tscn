@@ -18,7 +18,12 @@ script = ExtResource("1_kmph4")
 berry = ExtResource("6_4x323")
 stone = ExtResource("4_h7u20")
 
-[node name="StockControl" parent="." unique_id=741979544 instance=ExtResource("4_nk2ie")]
+[node name="StockControl" parent="." unique_id=741979544 node_paths=PackedStringArray("stock_display") instance=ExtResource("4_nk2ie")]
+stock_display = NodePath("../StockDisplay")
+initial_inventory = Dictionary[ExtResource("2_45sgy"), int]({
+ExtResource("6_4x323"): 3,
+ExtResource("5_01wb5"): 8
+})
 
 [node name="StockDisplay" parent="." unique_id=662775784 instance=ExtResource("1_7rm6c")]
 offset_right = 906.0
@@ -60,6 +65,7 @@ text = "Fewer stones"
 icon = ExtResource("12_nk2ie")
 expand_icon = true
 
+[connection signal="add_items" from="." to="StockControl" method="_add_item"]
 [connection signal="pressed" from="MoreBerriesButton" to="." method="_on_more_berries_button_pressed"]
 [connection signal="pressed" from="LessBerriesButton" to="." method="_on_less_berries_button_pressed"]
 [connection signal="pressed" from="MoreStonesButton" to="." method="_on_more_stones_button_pressed"]
