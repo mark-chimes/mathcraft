@@ -8,5 +8,5 @@ script = ExtResource("2_tti62")
 id = &"thaumberry"
 display_name = "Wild Thaumberry"
 icon = ExtResource("1_ewyh1")
-description = "A be rry imbued with magical power"
+description = "A berry imbued with magical power"
 metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

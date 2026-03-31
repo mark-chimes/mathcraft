@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://b0mtsmfyp8emj"]
+
+[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="1_7rm6c"]
+[ext_resource type="Script" uid="uid://dbi5ndtdo4lfq" path="res://stock/stock_control.gd" id="1_45sgy"]
+[ext_resource type="Script" uid="uid://bk5ye38kem02s" path="res://stock/test/stock_test.gd" id="1_kmph4"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_45sgy"]
+[ext_resource type="Resource" uid="uid://ci3fqsaaho447" path="res://stock/item/stone_tool.tres" id="3_kmph4"]
+[ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="4_h7u20"]
+[ext_resource type="Resource" uid="uid://bwqc15jq010hs" path="res://stock/item/thaumjuice.tres" id="5_01wb5"]
+[ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="6_4x323"]
+[ext_resource type="Texture2D" uid="uid://d2abdecrtmpid" path="res://assets/elderberry.png" id="9_01wb5"]
+[ext_resource type="Texture2D" uid="uid://d4alv36ol2bwo" path="res://assets/cherry.png" id="9_h7u20"]
+[ext_resource type="Texture2D" uid="uid://dkc675pxkx4av" path="res://assets/art/item/stone-pile.png" id="11_4x323"]
+[ext_resource type="Texture2D" uid="uid://ohnqw5ytnlav" path="res://assets/silex.png" id="12_nk2ie"]
+
+[node name="StockTest" type="Node2D" unique_id=18442708]
+script = ExtResource("1_kmph4")
+berry = ExtResource("6_4x323")
+stone = ExtResource("4_h7u20")
+
+[node name="StockControl" type="Node" parent="." unique_id=266344698 node_paths=PackedStringArray("stock_display")]
+script = ExtResource("1_45sgy")
+stock_display = NodePath("../StockDisplay")
+initial_inventory = Dictionary[ExtResource("2_45sgy"), int]({
+ExtResource("6_4x323"): 3
+})
+
+[node name="StockDisplay" parent="." unique_id=662775784 instance=ExtResource("1_7rm6c")]
+offset_right = 906.0
+preview_items = Array[ExtResource("2_45sgy")]([ExtResource("3_kmph4"), ExtResource("4_h7u20"), ExtResource("4_h7u20"), ExtResource("5_01wb5"), ExtResource("6_4x323"), ExtResource("4_h7u20")])
+
+[node name="MoreBerriesButton" type="Button" parent="." unique_id=1819044325]
+offset_left = 17.0
+offset_top = 358.0
+offset_right = 159.0
+offset_bottom = 389.0
+text = "More Berries!"
+icon = ExtResource("9_01wb5")
+expand_icon = true
+
+[node name="LessBerriesButton" type="Button" parent="." unique_id=1639394530]
+offset_left = 19.0
+offset_top = 408.0
+offset_right = 167.0
+offset_bottom = 439.0
+text = "Fewer berries"
+icon = ExtResource("9_h7u20")
+expand_icon = true
+
+[node name="MoreStonesButton" type="Button" parent="." unique_id=2099738356]
+offset_left = 186.0
+offset_top = 356.0
+offset_right = 328.0
+offset_bottom = 387.0
+text = "More stones!"
+icon = ExtResource("11_4x323")
+expand_icon = true
+
+[node name="LessStonesButton" type="Button" parent="." unique_id=2092124724]
+offset_left = 188.0
+offset_top = 406.0
+offset_right = 336.0
+offset_bottom = 437.0
+text = "Fewer stones"
+icon = ExtResource("12_nk2ie")
+expand_icon = true
+
+[connection signal="add_items" from="." to="StockControl" method="_add_item"]
+[connection signal="pressed" from="MoreBerriesButton" to="." method="_on_more_berries_button_pressed"]
+[connection signal="pressed" from="LessBerriesButton" to="." method="_on_less_berries_button_pressed"]
+[connection signal="pressed" from="MoreStonesButton" to="." method="_on_more_stones_button_pressed"]
+[connection signal="pressed" from="LessStonesButton" to="." method="_on_less_stones_button_pressed"]
