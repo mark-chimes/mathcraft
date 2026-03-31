@@ -47,3 +47,10 @@ func _on_resources_have_berries(yes: Variant) -> void:
 		var active_label = ActiveLabel.instantiate()
 		$AutoswitchBerryLoc.add_child(active_label)
 	$JuiceLockLoc.add_child(locklabel)
+
+
+func _on_stock_control_stock_update(item: Variant, new_qty: Variant) -> void:
+	if item.id == "stone":
+		_on_resources_have_stone(new_qty > 0)
+	elif item.id == "thaumberry": 
+		_on_resources_have_berries(new_qty > 1)

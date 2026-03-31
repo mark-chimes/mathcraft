@@ -1,13 +1,8 @@
 [gd_scene format=3 uid="uid://1iq786as3ggc"]
 
 [ext_resource type="Script" uid="uid://yktbywjttbi3" path="res://main.gd" id="1_vivmo"]
-[ext_resource type="Script" uid="uid://ckwdafscgp1nw" path="res://resources.gd" id="1_w48qg"]
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
-[ext_resource type="Texture2D" uid="uid://bfdh7j4ppf26h" path="res://assets/stone-pile.png" id="2_vivmo"]
-[ext_resource type="Texture2D" uid="uid://cm7ltdtow6qn8" path="res://assets/stone-axe.png" id="3_2cqfq"]
-[ext_resource type="Texture2D" uid="uid://b2gjhvv4i5t2t" path="res://assets/blackcurrant.png" id="3_yaehf"]
-[ext_resource type="Texture2D" uid="uid://c2ftdqv36gs8j" path="res://assets/bubbling-flask.png" id="4_074og"]
 [ext_resource type="Script" uid="uid://b3ucxibfne3j7" path="res://qna.gd" id="4_yaehf"]
 [ext_resource type="ButtonGroup" uid="uid://0u24ed0wth8c" path="res://TaskSelectionGroup.tres" id="5_074og"]
 [ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="6_cegan"]
@@ -45,76 +40,6 @@ color = Color(0.07258432, 0.014035841, 0, 1)
 stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
-
-[node name="Resources" type="Node2D" parent="Game" unique_id=403358583]
-position = Vector2(488, 226)
-script = ExtResource("1_w48qg")
-
-[node name="Berry" type="Node2D" parent="Game/Resources" unique_id=1174996011]
-position = Vector2(9, 8)
-
-[node name="Sprite2D" type="Sprite2D" parent="Game/Resources/Berry" unique_id=1275705812]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("3_yaehf")
-centered = false
-
-[node name="QtyLabel" type="Label" parent="Game/Resources/Berry" unique_id=1354062487]
-offset_left = 74.0
-offset_top = 10.0
-offset_right = 118.0
-offset_bottom = 55.0
-theme_override_font_sizes/font_size = 32
-text = "0"
-
-[node name="Juice" type="Node2D" parent="Game/Resources" unique_id=564015547]
-position = Vector2(168, 2)
-
-[node name="Sprite2D" type="Sprite2D" parent="Game/Resources/Juice" unique_id=760249396]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("4_074og")
-centered = false
-
-[node name="QtyLabel" type="Label" parent="Game/Resources/Juice" unique_id=431597720]
-offset_left = 74.0
-offset_top = 10.0
-offset_right = 118.0
-offset_bottom = 55.0
-theme_override_font_sizes/font_size = 32
-text = "0"
-metadata/_edit_use_anchors_ = true
-
-[node name="Stone" type="Node2D" parent="Game/Resources" unique_id=91632624]
-position = Vector2(317, 7)
-
-[node name="Sprite2D" type="Sprite2D" parent="Game/Resources/Stone" unique_id=1330435494]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("2_vivmo")
-centered = false
-
-[node name="QtyLabel" type="Label" parent="Game/Resources/Stone" unique_id=343260025]
-offset_left = 74.0
-offset_top = 10.0
-offset_right = 118.0
-offset_bottom = 55.0
-theme_override_font_sizes/font_size = 32
-text = "0"
-metadata/_edit_use_anchors_ = true
-
-[node name="Axe" type="Node2D" parent="Game/Resources" unique_id=798579285]
-position = Vector2(498, 8)
-
-[node name="Sprite2D" type="Sprite2D" parent="Game/Resources/Axe" unique_id=438773993]
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("3_2cqfq")
-centered = false
-
-[node name="QtyLabel" type="Label" parent="Game/Resources/Axe" unique_id=1742686190]
-offset_left = 74.0
-offset_top = 10.0
-offset_right = 118.0
-offset_bottom = 55.0
-theme_override_font_sizes/font_size = 32
-text = "0"
 
 [node name="Qna" type="Node2D" parent="Game" unique_id=2025614425]
 position = Vector2(745, 23)
@@ -485,8 +410,7 @@ theme_override_font_sizes/font_size = 32
 text = "press right-arrow to continue"
 autowrap_mode = 3
 
-[connection signal="have_berries" from="Game/Resources" to="Game/Tasklist" method="_on_resources_have_berries"]
-[connection signal="have_stone" from="Game/Resources" to="Game/Tasklist" method="_on_resources_have_stone"]
+[connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Tasklist" method="_on_stock_control_stock_update"]
 [connection signal="failure" from="Game/Qna" to="Game/Qna/ResultDisplay" method="display_failure"]
 [connection signal="generate_berry_progress" from="Game/Qna" to="Game/Tasklist/BerryTask" method="add_progress"]
 [connection signal="generate_craft_progress" from="Game/Qna" to="Game/Tasklist/CraftTask" method="add_progress"]
@@ -494,14 +418,8 @@ autowrap_mode = 3
 [connection signal="generate_scavenge_progress" from="Game/Qna" to="Game/Tasklist/ScavengeTask" method="add_progress"]
 [connection signal="success" from="Game/Qna" to="Game/Qna/ResultDisplay" method="display_success"]
 [connection signal="disable_craft" from="Game/Tasklist" to="Game/Qna" method="disable_crafting"]
-[connection signal="got_berry" from="Game/Tasklist/BerryTask" to="Game/Resources" method="got_berry"]
 [connection signal="got_item" from="Game/Tasklist/BerryTask" to="Game/Inventory/StockControl" method="_add_item"]
-[connection signal="got_berry" from="Game/Tasklist/JuiceTask" to="Game/Resources" method="got_berry"]
 [connection signal="got_item" from="Game/Tasklist/JuiceTask" to="Game/Inventory/StockControl" method="_add_item"]
-[connection signal="got_juice" from="Game/Tasklist/JuiceTask" to="Game/Resources" method="get_juice"]
 [connection signal="got_item" from="Game/Tasklist/ScavengeTask" to="Game/Inventory/StockControl" method="_add_item"]
-[connection signal="got_stone" from="Game/Tasklist/ScavengeTask" to="Game/Resources" method="get_stone"]
 [connection signal="got_item" from="Game/Tasklist/CraftTask" to="Game/Inventory/StockControl" method="_add_item"]
-[connection signal="got_stone" from="Game/Tasklist/CraftTask" to="Game/Resources" method="get_stone"]
-[connection signal="got_tools" from="Game/Tasklist/CraftTask" to="Game/Resources" method="get_tools"]
 [connection signal="close_dialog" from="SweetNSour" to="." method="_on_close_dialog"]

@@ -3,6 +3,8 @@ extends Node
 @export var stock_display : Control #attach node that displays the inventory
 @export var initial_inventory: Dictionary[ItemData, int] = {}
 
+signal stock_update(item, new_qty)
+
 var inventory: Dictionary[ItemData, int] = {}
 
 func _ready():
@@ -18,3 +20,5 @@ func _add_item(item: ItemData, qty: int):
 
 	stock_display.update_item_qty(item, new_qty)
 	stock_display.spawn_item_effect(item, qty)
+	
+	stock_update.emit(item, new_qty)
