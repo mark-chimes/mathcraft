@@ -3,6 +3,11 @@ extends Node2D
 @export var question_generator: QuestionGenerator
 var current_question : QuestionData
 
+@onready var question_display = $QuestionDisplay
+@onready var result_display = $ResultDisplay
+
+
+
 func _ready(): 
 	generate_question()
 	
@@ -10,7 +15,7 @@ func generate_question():
 	if question_generator == null: 
 		printerr("QnA Question Generator is null")
 	current_question = question_generator.generate()
-	$QuestionDisplay.display_question(current_question)
+	question_display.display_question(current_question)
 
 func _process(delta) -> void: 
 	# only goes up to 9
@@ -23,9 +28,13 @@ func press_num(num):
 		return
 	print("Pressed number: " + str(num))
 	
-	if num == current_question.correct_answer:
-		print("SUCCESS!")
+	var is_correct = ( num == current_question.correct_answer)
+	result_display.display_result(is_correct, current_question, str(num))
+	if is_correct:
 		generate_question()
-	else: 
-		print("Failure")
-	
+
+func success(): 
+	print("SUCCESS!")
+
+func failure(): 
+	print("Failure")
