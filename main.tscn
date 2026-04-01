@@ -3,9 +3,7 @@
 [ext_resource type="Script" uid="uid://yktbywjttbi3" path="res://main.gd" id="1_vivmo"]
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
-[ext_resource type="Script" uid="uid://b3ucxibfne3j7" path="res://qna.gd" id="4_yaehf"]
 [ext_resource type="ButtonGroup" uid="uid://0u24ed0wth8c" path="res://TaskSelectionGroup.tres" id="5_074og"]
-[ext_resource type="Script" uid="uid://c305g5sd2wivo" path="res://result_display.gd" id="6_cegan"]
 [ext_resource type="Script" uid="uid://b6edhqtrxd3xt" path="res://tasklist.gd" id="7_82xsv"]
 [ext_resource type="Script" uid="uid://bcs1px6s8w217" path="res://scavenge_task.gd" id="8_getpj"]
 [ext_resource type="Script" uid="uid://c4doxkcen16ic" path="res://craft_task.gd" id="10_d13ii"]
@@ -40,26 +38,6 @@ color = Color(0.07258432, 0.014035841, 0, 1)
 stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
-
-[node name="Qna" type="Node2D" parent="Game" unique_id=2025614425]
-visible = false
-position = Vector2(745, 23)
-script = ExtResource("4_yaehf")
-task_button_group = ExtResource("5_074og")
-
-[node name="Question" type="Node2D" parent="Game/Qna" unique_id=297014051]
-
-[node name="Label" type="Label" parent="Game/Qna/Question" unique_id=176163871]
-offset_top = 1.0
-offset_right = 110.0
-offset_bottom = 89.0
-theme_override_font_sizes/font_size = 64
-text = "2+2"
-metadata/_edit_use_anchors_ = true
-
-[node name="ResultDisplay" type="Node2D" parent="Game/Qna" unique_id=1282888775]
-position = Vector2(27, 332)
-script = ExtResource("6_cegan")
 
 [node name="Tasklist" type="Node2D" parent="Game" unique_id=2048841871]
 position = Vector2(20, 157)
@@ -413,13 +391,6 @@ text = "press right-arrow to continue"
 autowrap_mode = 3
 
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Tasklist" method="_on_stock_control_stock_update"]
-[connection signal="failure" from="Game/Qna" to="Game/Qna/ResultDisplay" method="display_failure"]
-[connection signal="generate_berry_progress" from="Game/Qna" to="Game/Tasklist/BerryTask" method="add_progress"]
-[connection signal="generate_craft_progress" from="Game/Qna" to="Game/Tasklist/CraftTask" method="add_progress"]
-[connection signal="generate_juice_progress" from="Game/Qna" to="Game/Tasklist/JuiceTask" method="add_progress"]
-[connection signal="generate_scavenge_progress" from="Game/Qna" to="Game/Tasklist/ScavengeTask" method="add_progress"]
-[connection signal="success" from="Game/Qna" to="Game/Qna/ResultDisplay" method="display_success"]
-[connection signal="disable_craft" from="Game/Tasklist" to="Game/Qna" method="disable_crafting"]
 [connection signal="got_item" from="Game/Tasklist/BerryTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_item" from="Game/Tasklist/JuiceTask" to="Game/Inventory/StockControl" method="_add_item"]
 [connection signal="got_item" from="Game/Tasklist/ScavengeTask" to="Game/Inventory/StockControl" method="_add_item"]
