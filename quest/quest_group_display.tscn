@@ -1,3 +1,101 @@
 [gd_scene format=3 uid="uid://c0jylxnlmvvcp"]
 
-[node name="QuestGroupDisplay" type="Node2D" unique_id=948481398]
+[ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/quest_display_theme.tres" id="1_755ly"]
+[ext_resource type="PackedScene" uid="uid://dyt80ulkxak25" path="res://quest/quest_display.tscn" id="1_u5pbd"]
+
+[node name="QuestGroupDisplay" type="Panel" unique_id=1670799080]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_755ly")
+
+[node name="Label" type="Label" parent="." unique_id=1248802906]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 61.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.79235935, 0.6886196, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 32
+theme_override_font_sizes/font_size = 32
+text = "QUESTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1593809856]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=2058660074]
+layout_mode = 2
+theme = ExtResource("1_755ly")
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer" unique_id=1357744874]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer" unique_id=1818028973]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="QuestDisplay" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=639139388 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay2" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1026188429 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay3" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=181547910 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay4" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=721015633 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay5" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=294607011 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay6" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=31803003 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay7" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=109264385 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay8" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=405056270 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay9" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=672226136 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay10" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1133527974 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay11" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=825113872 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay12" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=157838851 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay13" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1765210309 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay14" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=890136472 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay15" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=477227011 instance=ExtResource("1_u5pbd")]
+layout_mode = 2
+
+[node name="QuestDisplay16" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=1843892975 instance=ExtResource("1_u5pbd")]
+layout_mode = 2

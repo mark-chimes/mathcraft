@@ -1,0 +1,59 @@
+[gd_resource type="Theme" format=3 uid="uid://duljwydysj88n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le8h4"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.15686275, 0.07450981, 0.06666667, 0.654902)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.0895899, 0.044665977, 0.015914071, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1g5p"]
+bg_color = Color(0.99999994, 0.35378885, 0.11055627, 0.42745098)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3nys"]
+bg_color = Color(0.42833847, 0.17113724, 4.813075e-08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.554649, 0.24072623, 0.111098535, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pwasj"]
+content_margin_left = 20.0
+bg_color = Color(0.19584963, 0.04107921, 1.2032688e-08, 1)
+border_width_bottom = 5
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[resource]
+Label/colors/font_color = Color(1, 0.8862745, 0.6745098, 1)
+Label/colors/font_outline_color = Color(0.1254902, 0.06666667, 0, 1)
+Label/constants/outline_size = 16
+Label/font_sizes/font_size = 24
+Panel/styles/panel = SubResource("StyleBoxFlat_le8h4")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_v1g5p")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_j3nys")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_pwasj")

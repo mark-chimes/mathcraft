@@ -1,73 +1,84 @@
 [gd_scene format=3 uid="uid://dyt80ulkxak25"]
 
+[ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/quest_display_theme.tres" id="1_4tmqi"]
 [ext_resource type="Script" uid="uid://v10ty15vhf7d" path="res://quest/quest_display.gd" id="1_ab47b"]
 [ext_resource type="ButtonGroup" uid="uid://calnqcdbrbymt" path="res://quest/QuestSelectionGroup.tres" id="4_vkuss"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dnwph"]
-bg_color = Color(0.19215783, 0.07966017, 0.0143858725, 1)
-
-[node name="QuestDisplay" type="Control" unique_id=386305533]
-layout_mode = 3
-anchors_preset = 0
+[node name="QuestDisplay" type="Panel" unique_id=639139388]
+clip_contents = true
+custom_minimum_size = Vector2(360, 80)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme = ExtResource("1_4tmqi")
 script = ExtResource("1_ab47b")
 
-[node name="ProgressBar" type="ProgressBar" parent="." unique_id=367140504]
-layout_mode = 0
-offset_top = 29.0
-offset_right = 357.0
-offset_bottom = 87.0
-theme_override_font_sizes/font_size = 32
-theme_override_styles/background = SubResource("StyleBoxFlat_dnwph")
-max_value = 1.0
-value = 0.5
-show_percentage = false
-metadata/_edit_use_anchors_ = true
-
-[node name="QuestName" type="Label" parent="." unique_id=1419850221]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 10.0
-offset_right = 350.0
-offset_bottom = 103.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 3
-theme_override_constants/shadow_offset_y = 3
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 24
-text = "Pick Thaumberry"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SelectButton" type="CheckButton" parent="." unique_id=1917550976]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 33.0
-offset_right = 408.0
-offset_bottom = 85.0
-button_pressed = true
-button_group = ExtResource("4_vkuss")
-expand_icon = true
-metadata/_edit_use_anchors_ = true
-
-[node name="ProgressText" type="Control" parent="." unique_id=1744863390]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ProgressText" type="MarginContainer" parent="." unique_id=1984435301]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -1.0
+offset_right = -1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
 
 [node name="CurrentLabel" type="Label" parent="ProgressText" unique_id=1891541684]
-layout_mode = 0
-offset_right = 126.0
-offset_bottom = 23.0
+layout_mode = 2
+theme = ExtResource("1_4tmqi")
+theme_type_variation = &"progress_text"
+theme_override_font_sizes/font_size = 16
 text = "100 progress"
 metadata/_edit_use_anchors_ = true
 
 [node name="TargetLabel" type="Label" parent="ProgressText" unique_id=1588460411]
-layout_mode = 0
-offset_left = 232.0
-offset_top = 1.0
-offset_right = 357.0
-offset_bottom = 24.0
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
 text = "/ 1000"
 horizontal_alignment = 2
 metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="MarginContainer" parent="." unique_id=1141262189]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 4
+
+[node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=367140504]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+theme = ExtResource("1_4tmqi")
+theme_override_font_sizes/font_size = 32
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="SelectButton" type="CheckButton" parent="Control" unique_id=1917550976]
+layout_mode = 2
+button_pressed = true
+button_group = ExtResource("4_vkuss")
+expand_icon = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1460303073]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=940071443]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 40
+
+[node name="QuestName" type="Label" parent="Control/MarginContainer" unique_id=1419850221]
+layout_mode = 2
+theme = ExtResource("1_4tmqi")
+text = "Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
+clip_text = true
