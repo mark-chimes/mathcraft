@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://6yhktebqke58"]
+
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="1_7oypd"]
+[ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="1_w646r"]
+
+[resource]
+script = ExtResource("1_7oypd")
+quest_id = "berry_quest"
+quest_title = "Pick Wild Thaumberries"
+quest_description = "Pick some Thaumberries"
+question_generator = ExtResource("1_w646r")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"
