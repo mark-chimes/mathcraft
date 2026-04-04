@@ -50,4 +50,5 @@ func remove_quest(quest_activity: QuestActivityInfo):
 	quest_display.queue_free()
 
 func _on_quest_activated(quest_activity:QuestActivityInfo): 
+	print("Quest group display got activation code for: " + quest_activity.quest.quest_title)
 	quest_activated.emit(quest_activity)

@@ -21,6 +21,7 @@ func _ready():
 	quest_display.initialize_with_quest_activity(quest_activities)
 
 func _on_quest_group_display_quest_activated(activated_quest: QuestActivityInfo) -> void:
+	print("Activating quest: " + activated_quest.quest.quest_title)
 	activate_quest(activated_quest)
 	refresh_quest_display()
 	
@@ -36,6 +37,7 @@ func activate_quest(new_quest):
 	
 	new_quest.is_active = true
 	active_quest = new_quest
+	print("Active quest is now: " + active_quest.quest.quest_title)
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_active = false

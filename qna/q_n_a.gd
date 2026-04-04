@@ -6,8 +6,6 @@ var current_question : QuestionData
 @onready var question_display = $QuestionDisplay
 @onready var result_display = $ResultDisplay
 
-
-
 func _ready(): 
 	generate_question()
 	

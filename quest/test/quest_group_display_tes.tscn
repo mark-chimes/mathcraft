@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="1_hbroc"]
 [ext_resource type="Script" uid="uid://d3u0jcobdpxtg" path="res://quest/test/quest_group_display_tes.gd" id="1_jncrp"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_u644j"]
-[ext_resource type="Script" uid="uid://darqe0cwt7ge1" path="res://quest/quest_manager.gd" id="4_jij3q"]
+[ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="5_bughn"]
 [ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_odpjt"]
 [ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="6_bughn"]
 
@@ -12,10 +12,8 @@ script = ExtResource("1_jncrp")
 quest_group_display = NodePath("Control/QuestGroupDisplay")
 initial_quest_details = Array[ExtResource("2_u644j")]([ExtResource("6_bughn"), ExtResource("5_odpjt")])
 
-[node name="QuestManager" type="Node" parent="." unique_id=1282197263 node_paths=PackedStringArray("quest_display")]
-script = ExtResource("4_jij3q")
+[node name="QuestManager" parent="." unique_id=2095940230 node_paths=PackedStringArray("quest_display") instance=ExtResource("5_bughn")]
 quest_display = NodePath("../Control/QuestGroupDisplay")
-initial_quest_details = Array[ExtResource("2_u644j")]([ExtResource("5_odpjt"), ExtResource("6_bughn")])
 
 [node name="Control" type="Control" parent="." unique_id=1522851877]
 custom_minimum_size = Vector2(640, 480)
@@ -44,7 +42,5 @@ autostart = true
 
 [connection signal="quest_activated" from="Control/QuestGroupDisplay" to="QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Timer" to="QuestManager" method="_on_timer_timeout"]
 [connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]
-[connection signal="timeout" from="Timer2" to="QuestManager" method="_on_timer_2_timeout"]
 [connection signal="timeout" from="Timer3" to="." method="_on_timer_3_timeout"]

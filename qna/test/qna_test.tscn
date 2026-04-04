@@ -1,32 +1,8 @@
 [gd_scene format=3 uid="uid://jnw6yiq8jm28"]
 
-[ext_resource type="Script" uid="uid://dr6uugnt62skc" path="res://qna/generators/arithmetic_generator.gd" id="2_4qyqu"]
-[ext_resource type="Script" uid="uid://cxswulm64kmqe" path="res://qna/q_n_a.gd" id="2_jfiad"]
-[ext_resource type="Script" uid="uid://ciyek7jggnj6k" path="res://qna/question_display.gd" id="3_4qyqu"]
-[ext_resource type="Script" uid="uid://bli2gojp3ub66" path="res://qna/result_display.gd" id="4_1dcoo"]
-
-[sub_resource type="Resource" id="Resource_1dcoo"]
-script = ExtResource("2_4qyqu")
-metadata/_custom_type_script = "uid://dr6uugnt62skc"
+[ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="1_50k66"]
 
 [node name="QnaTest" type="Node2D" unique_id=796816239]
 
-[node name="QnA" type="Node2D" parent="." unique_id=500856014]
+[node name="QnA" parent="." unique_id=853901431 instance=ExtResource("1_50k66")]
 position = Vector2(363, 193)
-script = ExtResource("2_jfiad")
-question_generator = SubResource("Resource_1dcoo")
-
-[node name="QuestionDisplay" type="Node2D" parent="QnA" unique_id=1173754207]
-position = Vector2(4, 4)
-script = ExtResource("3_4qyqu")
-
-[node name="Label" type="Label" parent="QnA/QuestionDisplay" unique_id=1132612952]
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_font_sizes/font_size = 64
-text = "2+3"
-metadata/_edit_use_anchors_ = true
-
-[node name="ResultDisplay" type="Node2D" parent="QnA" unique_id=1477886085]
-position = Vector2(9, 84)
-script = ExtResource("4_1dcoo")
