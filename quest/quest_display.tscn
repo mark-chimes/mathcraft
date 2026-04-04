@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://v10ty15vhf7d" path="res://quest/quest_display.gd" id="1_ab47b"]
 [ext_resource type="ButtonGroup" uid="uid://calnqcdbrbymt" path="res://quest/QuestSelectionGroup.tres" id="4_vkuss"]
 
-[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "active_button")]
+[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "active_button", "activate_button")]
 clip_contents = true
 custom_minimum_size = Vector2(360, 80)
 anchors_preset = 10
@@ -18,6 +18,7 @@ quest_name_label = NodePath("Control/MarginContainer/QuestName")
 progress_bar = NodePath("Control/ProgressBar")
 progress_text = NodePath("ProgressText/CurrentLabel")
 active_button = NodePath("Control/SelectButton")
+activate_button = NodePath("Control/ActivateButton")
 
 [node name="ProgressText" type="MarginContainer" parent="." unique_id=1984435301]
 layout_mode = 1
@@ -70,7 +71,18 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
+[node name="HSplitContainer" type="HSplitContainer" parent="Control" unique_id=1990951352]
+layout_mode = 2
+split_offsets = PackedInt32Array(4)
+split_offset = 4
+
+[node name="ActivateButton" type="Button" parent="Control" unique_id=921258812]
+layout_mode = 2
+text = "inactive"
+alignment = 2
+
 [node name="SelectButton" type="CheckButton" parent="Control" unique_id=1917550976]
+visible = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 button_pressed = true
@@ -93,4 +105,5 @@ theme = ExtResource("1_4tmqi")
 text = " Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
 clip_text = true
 
+[connection signal="pressed" from="Control/ActivateButton" to="." method="_on_activate_button_pressed"]
 [connection signal="toggled" from="Control/SelectButton" to="." method="_on_select_button_toggled"]
