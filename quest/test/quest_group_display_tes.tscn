@@ -1,3 +1,45 @@
 [gd_scene format=3 uid="uid://dvak00i4o15g"]
 
-[node name="QuestGroupDisplayTes" type="Node2D" unique_id=935852]
+[ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="1_hbroc"]
+[ext_resource type="Script" uid="uid://d3u0jcobdpxtg" path="res://quest/test/quest_group_display_tes.gd" id="1_jncrp"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_u644j"]
+[ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_jij3q"]
+[ext_resource type="Script" uid="uid://darqe0cwt7ge1" path="res://quest/quest_manager.gd" id="4_jij3q"]
+[ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_odpjt"]
+[ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="6_bughn"]
+
+[sub_resource type="Resource" id="Resource_odpjt"]
+script = ExtResource("2_u644j")
+quest_id = "MyCustomQuest"
+quest_title = "MyQustomQuest"
+quest_description = "This is a custom quest"
+question_generator = ExtResource("3_jij3q")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"
+
+[sub_resource type="Resource" id="Resource_u644j"]
+script = ExtResource("2_u644j")
+quest_id = "Quest2"
+quest_title = "AnotherQuest"
+quest_description = "what a qust"
+question_generator = ExtResource("3_jij3q")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"
+
+[node name="QuestGroupDisplayTes" type="Node2D" unique_id=935852 node_paths=PackedStringArray("quest_group_display")]
+script = ExtResource("1_jncrp")
+quest_group_display = NodePath("Control/QuestGroupDisplay")
+quests = Array[ExtResource("2_u644j")]([SubResource("Resource_odpjt"), SubResource("Resource_u644j")])
+
+[node name="QuestManager" type="Node" parent="." unique_id=1282197263 node_paths=PackedStringArray("quest_display")]
+script = ExtResource("4_jij3q")
+quest_display = NodePath("../Control/QuestGroupDisplay")
+initial_quest_details = Array[ExtResource("2_u644j")]([ExtResource("5_odpjt"), ExtResource("6_bughn")])
+
+[node name="Control" type="Control" parent="." unique_id=1522851877]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 617.0
+offset_bottom = 415.0
+
+[node name="QuestGroupDisplay" parent="Control" unique_id=1670799080 instance=ExtResource("1_hbroc")]
+layout_mode = 1

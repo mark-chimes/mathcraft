@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://bdps74xrgqou6"]
+
+[ext_resource type="Resource" uid="uid://cxk3mohaigffp" path="res://qna/generators/subtraction_generator.tres" id="1_k1vcs"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_liwee"]
+
+[resource]
+script = ExtResource("2_liwee")
+quest_id = "juice_quest"
+quest_title = "Juice Thaumberries"
+quest_description = "Turn the Thaumberries into magic juice"
+question_generator = ExtResource("1_k1vcs")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

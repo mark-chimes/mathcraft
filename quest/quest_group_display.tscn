@@ -2,8 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/quest_display_theme.tres" id="1_755ly"]
 [ext_resource type="PackedScene" uid="uid://dyt80ulkxak25" path="res://quest/quest_display.tscn" id="1_u5pbd"]
+[ext_resource type="Script" uid="uid://173evua3y8k1" path="res://quest/quest_group_display.gd" id="2_31adv"]
 
-[node name="QuestGroupDisplay" type="Panel" unique_id=1670799080]
+[node name="QuestGroupDisplay" type="Panel" unique_id=1670799080 node_paths=PackedStringArray("quests_container_node")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,6 +13,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_755ly")
+script = ExtResource("2_31adv")
+QuestDisplayScene = ExtResource("1_u5pbd")
+quests_container_node = NodePath("MarginContainer/ScrollContainer/MarginContainer/VBoxContainer")
 
 [node name="Label" type="Label" parent="." unique_id=1248802906]
 layout_mode = 1
@@ -46,6 +50,7 @@ horizontal_scroll_mode = 0
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer" unique_id=1357744874]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
 theme_override_constants/margin_right = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer/MarginContainer" unique_id=1818028973]
