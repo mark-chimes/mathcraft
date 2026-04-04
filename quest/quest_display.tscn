@@ -11,6 +11,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 64.0
 grow_horizontal = 2
+mouse_filter = 2
 theme = ExtResource("1_4tmqi")
 script = ExtResource("1_ab47b")
 quest_name_label = NodePath("Control/MarginContainer/QuestName")
@@ -54,6 +55,7 @@ anchor_bottom = 1.0
 offset_top = -47.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 4
@@ -61,6 +63,7 @@ theme_override_constants/margin_right = 4
 [node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=367140504]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
+mouse_filter = 2
 theme = ExtResource("1_4tmqi")
 theme_override_font_sizes/font_size = 32
 max_value = 1.0
@@ -69,15 +72,18 @@ show_percentage = false
 
 [node name="SelectButton" type="CheckButton" parent="Control" unique_id=1917550976]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 button_pressed = true
 button_group = ExtResource("4_vkuss")
 expand_icon = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1460303073]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=940071443]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 40
 
@@ -86,3 +92,5 @@ layout_mode = 2
 theme = ExtResource("1_4tmqi")
 text = " Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
 clip_text = true
+
+[connection signal="toggled" from="Control/SelectButton" to="." method="_on_select_button_toggled"]
