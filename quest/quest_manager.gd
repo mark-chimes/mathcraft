@@ -113,6 +113,7 @@ func _on_answer_correct() -> void:
 	refresh_quest_display()
 	
 func _on_quest_completed() -> void:
+	quest_display.quest_complete(active_quest)
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])

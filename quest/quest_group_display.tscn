@@ -3,6 +3,8 @@
 [ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/quest_display_theme.tres" id="1_755ly"]
 [ext_resource type="PackedScene" uid="uid://dyt80ulkxak25" path="res://quest/quest_display.tscn" id="1_u5pbd"]
 [ext_resource type="Script" uid="uid://173evua3y8k1" path="res://quest/quest_group_display.gd" id="2_31adv"]
+[ext_resource type="PackedScene" uid="uid://ok7soahgj06" path="res://quest/quest_complete_effect.tscn" id="4_d8gqt"]
+[ext_resource type="Texture2D" uid="uid://h3ea0a1jda8w" path="res://assets/check-mark.png" id="5_d8gqt"]
 
 [node name="QuestGroupDisplay" type="Panel" unique_id=1670799080 node_paths=PackedStringArray("quests_container_node")]
 anchors_preset = 15
@@ -17,6 +19,8 @@ theme = ExtResource("1_755ly")
 script = ExtResource("2_31adv")
 QuestDisplayScene = ExtResource("1_u5pbd")
 quests_container_node = NodePath("MarginContainer/ScrollContainer/MarginContainer/VBoxContainer")
+level_up_disp = ExtResource("4_d8gqt")
+level_up_icon = ExtResource("5_d8gqt")
 
 [node name="Label" type="Label" parent="." unique_id=1248802906]
 layout_mode = 1

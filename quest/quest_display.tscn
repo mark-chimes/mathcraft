@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://v10ty15vhf7d" path="res://quest/quest_display.gd" id="1_ab47b"]
 [ext_resource type="ButtonGroup" uid="uid://calnqcdbrbymt" path="res://quest/QuestSelectionGroup.tres" id="4_vkuss"]
 
-[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "active_button", "activate_button")]
+[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "activate_button")]
 clip_contents = true
 custom_minimum_size = Vector2(360, 80)
 anchors_preset = 10
@@ -17,7 +17,6 @@ script = ExtResource("1_ab47b")
 quest_name_label = NodePath("Control/MarginContainer/QuestName")
 progress_bar = NodePath("Control/ProgressBar")
 progress_text = NodePath("ProgressText/CurrentLabel")
-active_button = NodePath("Control/SelectButton")
 activate_button = NodePath("Control/ActivateButton")
 
 [node name="ProgressText" type="MarginContainer" parent="." unique_id=1984435301]

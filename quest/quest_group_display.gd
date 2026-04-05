@@ -5,6 +5,8 @@ signal quest_activated(quest_activity:QuestActivityInfo) # do not fire this sign
 
 @export var QuestDisplayScene : PackedScene #:= preload("res://quest/quest_display.tscn")
 @export var quests_container_node : Control
+@export var level_up_disp : PackedScene #:= preload("res://quest/level_up_disp.gd")
+@export var level_up_icon : Texture2D
 
 var activity_displays: Dictionary[QuestActivityInfo, QuestDisplay] = {}
 
@@ -51,3 +53,14 @@ func remove_quest(quest_activity: QuestActivityInfo):
 
 func _on_quest_activated(quest_activity:QuestActivityInfo): 
 	quest_activated.emit(quest_activity)
+
+func quest_complete(quest_activity:QuestActivityInfo): 
+	spawn_quest_complete_effect(quest_activity)
+	
+func spawn_quest_complete_effect(quest_activity:QuestActivityInfo): 
+	var activity_node = activity_displays[quest_activity]
+	var level_up = level_up_disp.instantiate()
+	quests_container_node.add_child(level_up)
+	level_up.position = activity_node.position
+	level_up.set_icon_text_col(level_up_icon, "quest complete!", Color(0,1.0,0.5,1))
+	

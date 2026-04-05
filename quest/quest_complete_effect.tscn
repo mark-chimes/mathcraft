@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ok7soahgj06"]
+
+[ext_resource type="Script" uid="uid://cmfgos1m64aef" path="res://quest/quest_complete_effect.gd" id="1_10cm0"]
+[ext_resource type="Texture2D" uid="uid://d4ksn268iq26c" path="res://assets/tinker.png" id="2_2bben"]
+
+[node name="QuestCompleteEffect" type="Node2D" unique_id=1597561200]
+script = ExtResource("1_10cm0")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1131093446]
+modulate = Color(1, 0.38039216, 1, 1)
+position = Vector2(76.000015, 61)
+rotation = -0.4207157
+scale = Vector2(0.085, 0.085)
+texture = ExtResource("2_2bben")
+
+[node name="Label" type="Label" parent="." unique_id=925920061]
+offset_left = -67.0
+offset_top = 49.0
+offset_right = 181.0
+offset_bottom = 94.0
+rotation = -0.40472054
+text = "quest complete!"
+horizontal_alignment = 1
+vertical_alignment = 2
