@@ -1,13 +1,15 @@
 extends Node
 
 @export var quest_display : QuestGroupDisplay
+@export var stock_control : StockControl
+@export var non_question: QuestionGenerator
+
 @export var initial_quest_details: Array[QuestDetails]
 
 var quest_activities: Array[QuestActivityInfo]
 var active_quest: QuestActivityInfo
 
 signal switch_question_generator(question_generator)
-signal modify_item(item, qty)
 
 func _ready(): 
 	if initial_quest_details.is_empty():
@@ -20,22 +22,40 @@ func _ready():
 		quest_activities.append(quest_activity)
 	active_quest = quest_activities[0]
 	active_quest.is_active = true
-	await quest_display.ready
+	active_quest.is_possible = true # Make sure the first quest is possible
+	if not stock_control.is_node_ready():
+		await stock_control.ready
+	update_quest_possibility()
+	if not quest_display.is_node_ready():
+		await quest_display.ready
 	quest_display.initialize_with_quest_activity(quest_activities)
+	refresh_quest_display()
 
+func update_quest_possibility(): 
+	for activity in quest_activities: 
+		activity.is_possible = true
+		var item_mods = activity.quest.item_mods
+		for item in item_mods: 
+			var required_qty = - item_mods[item] # note negative
+			if required_qty > 0:
+				var stock_qty = stock_control.get_qty_for(item)
+				if stock_qty < required_qty: 
+					print("Quest " + activity.quest.quest_title + " not possible due to resource constraints")
+					activity.is_possible = false
+	if not active_quest.is_possible: 
+		deactivate_all_quests()
+		#activate_quest(quest_activities[0])
+	
+	
 func _on_quest_group_display_quest_activated(activated_quest: QuestActivityInfo) -> void:
-	print("Activating quest: " + activated_quest.quest.quest_title)
 	activate_quest(activated_quest)
 	refresh_quest_display()
 	
-
 func refresh_quest_display(): 
 	quest_display.refresh()
 
-func activate_quest(new_quest): 
-	# TODO QnA question generation
-	if new_quest == null: 
-		deactivate_all_quests()
+func activate_quest(new_quest : QuestActivityInfo): 
+	if not is_questable(new_quest): 
 		return
 	print("Active quest is now: " + active_quest.quest.quest_title)
 	new_quest.is_active = true
@@ -45,9 +65,25 @@ func activate_quest(new_quest):
 		if quest!= new_quest:
 			quest.is_active = false
 
+func is_questable(new_activity: QuestActivityInfo): 
+	if new_activity == null:
+		printerr("Attempt to activate null quest")
+		return false
+	var quest = new_activity.quest
+	if quest == null: 
+		printerr("Activity has null quest")
+		return false
+	if quest.question_generator == null: 
+		printerr("Quest: " + quest.quest_title + " has no question generator")
+		return false
+	if not new_activity.is_possible: 
+		return false
+	return true
+
 func deactivate_all_quests(): 
 	for quest in quest_activities: 
 		quest.is_active = false
+	switch_question_generator.emit(non_question)
 
 func remove_quest(activity: QuestActivityInfo): 
 	if not quest_activities.has(activity): 
@@ -69,4 +105,9 @@ func remove_quest(activity: QuestActivityInfo):
 func _on_answer_correct() -> void:
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
-		modify_item.emit(item, item_mods[item])
+		stock_control.modify_item(item, item_mods[item])
+
+func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
+	#recheck quests
+	update_quest_possibility()
+	refresh_quest_display()

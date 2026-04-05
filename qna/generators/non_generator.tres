@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="NonGenerator" format=3 uid="uid://tguudnm7na35"]
+
+[ext_resource type="Script" uid="uid://ciars6sww88f0" path="res://qna/generators/non_generator.gd" id="1_x03pk"]
+
+[resource]
+script = ExtResource("1_x03pk")
+metadata/_custom_type_script = "uid://ciars6sww88f0"

@@ -27,9 +27,13 @@ func refresh():
 
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
 	# This button should be clickable iff the quest is not active so it can be
-	activate_button.set_disabled(quest_activity.is_active)
-	if quest_activity.is_active: 
+	var is_active = quest_activity.is_active
+	var is_possible = quest_activity.is_possible
+	activate_button.set_disabled(is_active)
+	if is_active: 
 		activate_button.text = "active"
+	elif not is_possible:
+		activate_button.text = "impossible"
 	else: 
 		activate_button.text = ""
 		

@@ -8,9 +8,6 @@ var text = null
 
 @onready var label = $QuestAnsLabel
 
-func _ready(): 
-	label.text = text
-
 func _process(delta):
 	alpha_amount = max(alpha_amount - delta/fade_seconds, 0.0)
 	position.y += delta/fade_seconds*vert_speed
@@ -20,7 +17,6 @@ func _process(delta):
 		queue_free()
 
 func set_qa(is_correct, question_string, answer_string): 
-	print("Label: " + str(label))
 	text = question_string + " = " + answer_string
 	modulate.b = 0.0
 	if is_correct: 
@@ -29,12 +25,13 @@ func set_qa(is_correct, question_string, answer_string):
 	else: 
 		text = question_string + " ≠ " + answer_string
 		modulate.g = 0.0
-
+	label.text = text
+	
 func set_qa_comp(is_correct, correct_string): 
-	print("Set QA Comp got string: " + correct_string)
 	text = correct_string
 	modulate.b = 0.0
 	if is_correct: 
 		modulate.r = 0.0
 	else: 
 		modulate.g = 0.0
+	label.text = text

@@ -3,6 +3,7 @@ extends Node2D
 signal answer_correct
 
 @export var question_generator: QuestionGenerator
+
 var current_question : QuestionData
 
 @onready var question_display = $QuestionDisplay
@@ -27,20 +28,12 @@ func _process(delta) -> void:
 func press_num(num):
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
-	print("Pressed number: " + str(num))
-	
 	var is_correct = ( num == current_question.correct_answer)
 	result_display.display_result(is_correct, current_question, str(num))
 	if is_correct:
 		answer_correct.emit()
 		generate_question()
 
-func success(): 
-	print("SUCCESS!")
-
-func failure(): 
-	print("Failure")
-
-func _on_switch_question_generator(new_question_generator: Variant) -> void:
+func _on_switch_question_generator(new_question_generator: QuestionGenerator) -> void:
 	question_generator = new_question_generator
 	generate_question()

@@ -1,7 +1,7 @@
 class_name QuestionData 
 
 enum AnswerType { 
-	INTEGER, COMPARISON
+	NONE, INTEGER, COMPARISON
 }
 
 var question_text : String

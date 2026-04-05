@@ -8,25 +8,7 @@ extends Control
 @onready var ItemUpEffect = preload("res://stock/item_up_effect.tscn")
 
 const MAX_DISPLAY_VAL = 9999999
-#func _enter_tree():
-	#if Engine.is_editor_hint():
-		#_editor_display_preview()
-		#return
-
-## Only to be used in-editor
-#func _editor_display_preview(): 
-	#if item_display_scene == null: 
-		#printerr("No Item Display Scene set")
-#
-	#for child in container.get_children():
-		#child.queue_free()
-	#
-	#for item in preview_items: 
-		#var display = item_display_scene.instantiate()
-		#display.setup(item)
-		#container.add_child(display)
-		
-var item_display_dict : Dictionary[ItemData, Node] = {} #Dict<ItemData, ItemDisplayScene>
+var item_display_dict : Dictionary[ItemData, Node] = {}
 var initial_items: Dictionary[ItemData, int] = {}
 
 func _ready(): 
