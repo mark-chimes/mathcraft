@@ -22,7 +22,7 @@ func refresh():
 	# https://github.com/godotengine/godot/issues/78523
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
 	progress_bar.value = quest_activity.progress / 1000.0
-	progress_text.text = " " + str(quest_activity.progress/MAX_PROGRESS) + " progress"
+	progress_text.text = " " + str(quest_activity.progress) + " progress"
 	# active_button.button_pressed = quest_activity.is_active
 
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 

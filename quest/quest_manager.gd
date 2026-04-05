@@ -12,7 +12,7 @@ var null_activity : QuestActivityInfo
 var quest_activities: Array[QuestActivityInfo]
 var active_quest: QuestActivityInfo
 
-const PROGRESS_BY_ANSWER = 800
+const PROGRESS_BY_ANSWER = 120
 const REQUIRED_PROGRESS = 1000
 
 signal switch_question_generator(question_generator: QuestionGenerator)
@@ -79,11 +79,8 @@ func activate_quest(new_quest : QuestActivityInfo):
 
 func emit_update_quest_text(): 
 	if active_quest == null:
-		print("emit text update with null quest")
 		update_quest_text.emit(null_quest)
 		return
-	print("emit update for quest " + str(active_quest.quest))
-
 	update_quest_text.emit(active_quest.quest)
 
 func is_questable(new_activity: QuestActivityInfo): 

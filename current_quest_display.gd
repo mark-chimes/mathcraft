@@ -4,7 +4,6 @@ extends Node2D
 @export var quest_description_label : RichTextLabel
 
 func _on_update_quest_text(quest: QuestDetails): 
-	print("    Got update quest text: " + str(quest))
 	quest_name_label.text = quest.quest_title
 	
 	quest_description_label.clear()
