@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("5_7p6i6")
 quest_id = "stone_quest"
-quest_title = "Pick up stones"
-quest_description = "Just gather some rocks"
+quest_title = "Pick Up Stones"
+quest_description = "Pick up a few nice-looking pebbles in the nearby area. Maybe they'll come in handy for something later."
 question_generator = ExtResource("3_thh00")
 item_mods = Dictionary[ExtResource("1_63knb"), int]({
 ExtResource("2_thh00"): 3

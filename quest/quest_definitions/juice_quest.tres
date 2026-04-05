@@ -9,8 +9,8 @@
 [resource]
 script = ExtResource("2_liwee")
 quest_id = "juice_quest"
-quest_title = "Juice Thaumberries"
-quest_description = "Turn the Thaumberries into magic juice"
+quest_title = "Squeeze Thaumberry Juice"
+quest_description = "Squeeze juice out of your collected Thaumberries in order to create a weak magical potion. A messy process."
 question_generator = ExtResource("1_k1vcs")
 item_mods = Dictionary[ExtResource("1_ikqel"), int]({
 ExtResource("2_wu2tj"): -3,

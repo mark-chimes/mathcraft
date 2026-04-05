@@ -1,5 +1,4 @@
 class_name QuestActivityInfo  
-# extends Resource
 
 var quest : QuestDetails
 var progress : float = 0.0

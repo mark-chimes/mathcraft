@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("1_7oypd")
 quest_id = "berry_quest"
-quest_title = "Pick Wild Thaumberries"
-quest_description = "Pick some Thaumberries"
+quest_title = "Pick Thaumberries"
+quest_description = "Each Thaumberry is naturally imbued with a tiny amount of magical power, naturally extracted from the earth itself through the roots of the Thaumberry Bush.  "
 question_generator = ExtResource("1_w646r")
 item_mods = Dictionary[ExtResource("1_5v54b"), int]({
 ExtResource("2_np71b"): 2

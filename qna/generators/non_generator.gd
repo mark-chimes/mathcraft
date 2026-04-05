@@ -6,6 +6,6 @@ extends QuestionGenerator
 func generate() -> QuestionData:
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.NONE
-	q.question_text = "No quest active"
+	q.question_text = ""
 	q.correct_answer = "no"
 	return q

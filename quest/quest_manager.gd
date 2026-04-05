@@ -3,6 +3,9 @@ extends Node
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
 @export var non_question: QuestionGenerator
+@export var null_quest: QuestDetails
+
+var null_activity : QuestActivityInfo
 
 @export var initial_quest_details: Array[QuestDetails]
 
@@ -12,9 +15,15 @@ var active_quest: QuestActivityInfo
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
-signal switch_question_generator(question_generator)
+signal switch_question_generator(question_generator: QuestionGenerator)
+signal update_quest_text(quest_details: QuestDetails)
 
 func _ready(): 
+	null_activity = QuestActivityInfo.new()
+	null_activity.quest = null_quest
+	null_activity.is_active = false
+	null_activity.is_possible = false
+	
 	if initial_quest_details.is_empty():
 		return
 	for quest_details in initial_quest_details: 
@@ -49,12 +58,12 @@ func update_quest_possibility():
 		deactivate_all_quests()
 		#activate_quest(quest_activities[0])
 	
-	
 func _on_quest_group_display_quest_activated(activated_quest: QuestActivityInfo) -> void:
 	activate_quest(activated_quest)
 	refresh_quest_display()
 	
 func refresh_quest_display(): 
+	emit_update_quest_text()
 	quest_display.refresh()
 
 func activate_quest(new_quest : QuestActivityInfo): 
@@ -67,6 +76,15 @@ func activate_quest(new_quest : QuestActivityInfo):
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_active = false
+
+func emit_update_quest_text(): 
+	if active_quest == null:
+		print("emit text update with null quest")
+		update_quest_text.emit(null_quest)
+		return
+	print("emit update for quest " + str(active_quest.quest))
+
+	update_quest_text.emit(active_quest.quest)
 
 func is_questable(new_activity: QuestActivityInfo): 
 	if new_activity == null:
@@ -86,8 +104,10 @@ func is_questable(new_activity: QuestActivityInfo):
 func deactivate_all_quests(): 
 	for quest in quest_activities: 
 		quest.is_active = false
+	active_quest = null_activity
 	switch_question_generator.emit(non_question)
-
+	emit_update_quest_text()
+	
 func remove_quest(activity: QuestActivityInfo): 
 	if not quest_activities.has(activity): 
 		printerr("Quest not found")

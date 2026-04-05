@@ -6,10 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
 [ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_4c57u"]
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="5_7mycd"]
+[ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
 [ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="6_efxa6"]
 [ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://current_quest_display.gd" id="11_efxa6"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
 
@@ -27,28 +29,64 @@ stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
 
-[node name="QuestList" type="Node2D" parent="Game" unique_id=2048841871]
+[node name="Quests" type="Node2D" parent="Game" unique_id=2048841871]
 position = Vector2(20, 157)
 
-[node name="QuestManager" parent="Game/QuestList" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control") instance=ExtResource("4_lquwl")]
+[node name="QuestManager" parent="Game/Quests" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control") instance=ExtResource("4_lquwl")]
 quest_display = NodePath("../Control/QuestGroupDisplay")
 stock_control = NodePath("../../Inventory/StockControl")
 non_question = ExtResource("10_4c57u")
+null_quest = ExtResource("5_dg77c")
 initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("6_efxa6"), ExtResource("7_dg77c")])
 
-[node name="Control" type="Control" parent="Game/QuestList" unique_id=141513222]
+[node name="Control" type="Control" parent="Game/Quests" unique_id=141513222]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 439.0
+offset_right = 588.0
 offset_bottom = 538.0
 
-[node name="QuestGroupDisplay" parent="Game/QuestList/Control" unique_id=1670799080 instance=ExtResource("5_7mycd")]
+[node name="QuestGroupDisplay" parent="Game/Quests/Control" unique_id=1670799080 instance=ExtResource("5_7mycd")]
 layout_mode = 1
 
 [node name="QnA" parent="Game" unique_id=853901431 instance=ExtResource("6_7mycd")]
-position = Vector2(760, 164)
+position = Vector2(648, 462)
 
-[connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/QuestList/QuestManager" method="_on_stock_control_stock_update"]
-[connection signal="switch_question_generator" from="Game/QuestList/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
-[connection signal="quest_activated" from="Game/QuestList/Control/QuestGroupDisplay" to="Game/QuestList/QuestManager" method="_on_quest_group_display_quest_activated"]
-[connection signal="answer_correct" from="Game/QnA" to="Game/QuestList/QuestManager" method="_on_answer_correct"]
+[node name="CurrentQuestDisplay" type="Node2D" parent="Game" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
+position = Vector2(632, 161)
+script = ExtResource("11_efxa6")
+quest_name_label = NodePath("QuestNameLabel")
+quest_description_label = NodePath("QuestDescriptionLabel")
+
+[node name="QuestNameLabel" type="Label" parent="Game/CurrentQuestDisplay" unique_id=1665496564]
+offset_right = 632.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 0.6313726, 0.42352942, 1)
+theme_override_colors/font_outline_color = Color(0.5803922, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 32
+text = "QUEST NAME"
+horizontal_alignment = 1
+
+[node name="QuestDescriptionLabel" type="RichTextLabel" parent="Game/CurrentQuestDisplay" unique_id=1769727944]
+offset_left = 2.0
+offset_top = 47.0
+offset_right = 629.0
+offset_bottom = 251.0
+theme_override_colors/default_color = Color(0.94009835, 0.905595, 0.88086873, 1)
+theme_override_font_sizes/normal_font_size = 20
+text = "Quest description goes here"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Game/CurrentQuestDisplay" unique_id=1385432241]
+visible = false
+offset_left = 6.0
+offset_top = 124.0
+offset_right = 361.0
+offset_bottom = 197.0
+text = "Requires: 0
+Provides: 0"
+
+[connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Quests/QuestManager" method="_on_stock_control_stock_update"]
+[connection signal="switch_question_generator" from="Game/Quests/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
+[connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/CurrentQuestDisplay" method="_on_update_quest_text"]
+[connection signal="quest_activated" from="Game/Quests/Control/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
+[connection signal="answer_correct" from="Game/QnA" to="Game/Quests/QuestManager" method="_on_answer_correct"]
