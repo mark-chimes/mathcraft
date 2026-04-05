@@ -6,6 +6,9 @@ extends Node
 var quest_activities: Array[QuestActivityInfo]
 var active_quest: QuestActivityInfo
 
+signal switch_question_generator(question_generator)
+signal modify_item(item, qty)
+
 func _ready(): 
 	if initial_quest_details.is_empty():
 		return
@@ -34,10 +37,10 @@ func activate_quest(new_quest):
 	if new_quest == null: 
 		deactivate_all_quests()
 		return
-	
+	print("Active quest is now: " + active_quest.quest.quest_title)
 	new_quest.is_active = true
 	active_quest = new_quest
-	print("Active quest is now: " + active_quest.quest.quest_title)
+	switch_question_generator.emit(active_quest.quest.question_generator)
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_active = false
@@ -62,12 +65,8 @@ func remove_quest(activity: QuestActivityInfo):
 		activate_quest(new_active_quest)
 	
 	refresh_quest_display()
-	
 
-func _on_timer_timeout() -> void:
-	active_quest.progress = 500.0
-	quest_display.refresh_display_for_quest(active_quest)
-	remove_quest(quest_activities[1])
-
-func _on_timer_2_timeout() -> void:
-	remove_quest(quest_activities[0])
+func _on_answer_correct() -> void:
+	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
+	for item in item_mods:
+		modify_item.emit(item, item_mods[item])

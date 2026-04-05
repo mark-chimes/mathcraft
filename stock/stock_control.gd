@@ -11,7 +11,7 @@ func _ready():
 	inventory = initial_inventory.duplicate(false)
 	stock_display.initialize_with_items(inventory.duplicate(false))
 
-func _add_item(item: ItemData, qty: int): 
+func _on_modify_item(item: ItemData, qty: int): 
 	var new_qty = inventory.get(item, 0) + qty
 	if new_qty < 0: 
 		printerr("New inventory value for: " + str(item.id) + " is " + str(new_qty) + " < 0")

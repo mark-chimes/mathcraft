@@ -1,7 +1,10 @@
 [gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://bdps74xrgqou6"]
 
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_ikqel"]
 [ext_resource type="Resource" uid="uid://cxk3mohaigffp" path="res://qna/generators/subtraction_generator.tres" id="1_k1vcs"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_liwee"]
+[ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="2_wu2tj"]
+[ext_resource type="Resource" uid="uid://bwqc15jq010hs" path="res://stock/item/thaumjuice.tres" id="3_h5vba"]
 
 [resource]
 script = ExtResource("2_liwee")
@@ -9,4 +12,8 @@ quest_id = "juice_quest"
 quest_title = "Juice Thaumberries"
 quest_description = "Turn the Thaumberries into magic juice"
 question_generator = ExtResource("1_k1vcs")
+item_mods = Dictionary[ExtResource("1_ikqel"), int]({
+ExtResource("2_wu2tj"): -3,
+ExtResource("3_h5vba"): 1
+})
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

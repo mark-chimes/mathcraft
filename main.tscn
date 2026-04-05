@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://b6edhqtrxd3xt" path="res://tasklist.gd" id="7_82xsv"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
 
@@ -25,7 +24,6 @@ stock_display = NodePath("../StockDisplay")
 
 [node name="QuestList" type="Node2D" parent="Game" unique_id=2048841871]
 position = Vector2(20, 157)
-script = ExtResource("7_82xsv")
 
 [node name="QuestManager" parent="Game/QuestList" unique_id=2095940230 node_paths=PackedStringArray("quest_display") instance=ExtResource("4_lquwl")]
 quest_display = NodePath("../Control/QuestGroupDisplay")
@@ -43,4 +41,7 @@ layout_mode = 1
 position = Vector2(760, 164)
 
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/QuestList" method="_on_stock_control_stock_update"]
+[connection signal="modify_item" from="Game/QuestList/QuestManager" to="Game/Inventory/StockControl" method="_on_modify_item"]
+[connection signal="switch_question_generator" from="Game/QuestList/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
 [connection signal="quest_activated" from="Game/QuestList/Control/QuestGroupDisplay" to="Game/QuestList/QuestManager" method="_on_quest_group_display_quest_activated"]
+[connection signal="answer_correct" from="Game/QnA" to="Game/QuestList/QuestManager" method="_on_answer_correct"]
