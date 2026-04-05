@@ -9,6 +9,9 @@ extends Node
 var quest_activities: Array[QuestActivityInfo]
 var active_quest: QuestActivityInfo
 
+const PROGRESS_BY_ANSWER = 800
+const REQUIRED_PROGRESS = 1000
+
 signal switch_question_generator(question_generator)
 
 func _ready(): 
@@ -103,6 +106,13 @@ func remove_quest(activity: QuestActivityInfo):
 	refresh_quest_display()
 
 func _on_answer_correct() -> void:
+	active_quest.progress += PROGRESS_BY_ANSWER
+	if active_quest.progress >= REQUIRED_PROGRESS:
+		active_quest.progress -= REQUIRED_PROGRESS
+		_on_quest_completed()
+	refresh_quest_display()
+	
+func _on_quest_completed() -> void:
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
