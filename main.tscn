@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://1iq786as3ggc"]
 
+[ext_resource type="Script" uid="uid://b1a7bqg74cw6i" path="res://game.gd" id="1_w48qg"]
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_kek77"]
@@ -22,6 +23,7 @@ offset_bottom = 719.0
 color = Color(0.07258432, 0.014035841, 0, 1)
 
 [node name="Game" type="Node2D" parent="." unique_id=1698628223]
+script = ExtResource("1_w48qg")
 
 [node name="Inventory" type="Node2D" parent="Game" unique_id=448375714]
 
@@ -30,7 +32,6 @@ stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
 offset_bottom = 138.0
-preview_items = null
 
 [node name="Quests" type="Node2D" parent="Game" unique_id=2048841871]
 position = Vector2(13, 151)

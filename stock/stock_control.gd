@@ -3,7 +3,7 @@ class_name StockControl
 
 signal stock_update(item, new_qty)
 
-@export var stock_display : Control #attach node that displays the inventory
+@export var stock_display : StockDisplay #attach node that displays the inventory
 @export var initial_inventory: Dictionary[ItemData, int] = {}
 
 @export var all_items_path : String = ""
@@ -49,6 +49,9 @@ func load_from_stock_save_data(save_data: StockSaveData):
 	var new_inventory: Dictionary[ItemData, int] = {}
 
 	for item_id in saved_qty_dict: 
+		if not all_items_dict.has(item_id): 
+			printerr("Item " + item_id + " not recognized")
+			continue
 		var item : ItemData = all_items_dict[item_id]
 		if saved_qty_dict.has(item_id):
 			new_inventory[item] = saved_qty_dict[item_id]

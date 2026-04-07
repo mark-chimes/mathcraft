@@ -73,7 +73,6 @@ func refresh_quest_display():
 func activate_quest(new_quest : QuestActivityInfo): 
 	if not is_questable(new_quest): 
 		return
-	print("Active quest is now: " + active_quest.quest.quest_title)
 	new_quest.is_active = true
 	active_quest = new_quest
 	switch_question_generator.emit(active_quest.quest.question_generator)
@@ -150,25 +149,32 @@ func create_quest_save_data() -> QuestSaveData:
 	for activity in quest_activities: 
 		progress_dict[activity.quest.quest_id] = activity.progress
 	save_data.quests_progress = progress_dict
+	save_data.active_quest_id = active_quest.quest.quest_id
 	return save_data
 	
 func load_from_quest_save_data(save_data: QuestSaveData): 
 	var all_quests_dict: Dictionary[StringName, QuestDetails] = construct_all_quests_dict()
 	var saved_progress_dict: Dictionary[StringName, int] = save_data.quests_progress
-	var new_quest_activities: Array[QuestActivityInfo]
-
+	var new_quest_activities: Array[QuestActivityInfo] = []
+	var active_quest_id: StringName = save_data.active_quest_id
+	var quest_to_activate = null_activity
+	
 	for quest_id in saved_progress_dict: 
 		var quest : QuestDetails = all_quests_dict[quest_id]
-		if saved_progress_dict.has(quest_id):
-			print("yes it has id " + quest_id)
-			var activity = QuestActivityInfo.new()
-			activity.quest = quest
-			activity.progress = saved_progress_dict[quest_id]
-			new_quest_activities.append(activity)
-
+		if not saved_progress_dict.has(quest_id):
+			printerr("Quest ID " + quest_id + " not recognized")
+			continue
+		var activity = QuestActivityInfo.new()
+		activity.quest = quest
+		activity.progress = saved_progress_dict[quest_id]
+		new_quest_activities.append(activity)
+		if active_quest_id == activity.quest.quest_id: 
+			quest_to_activate = activity
+	
 	quest_activities = new_quest_activities
 	deactivate_all_quests()
 	update_quest_possibility()
+	activate_quest(quest_to_activate)
 	quest_display.clear_all_quests()
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()

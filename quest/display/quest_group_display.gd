@@ -20,7 +20,6 @@ func clear_all_quests():
 	activity_displays.clear()
 
 func initialize_with_quest_activity(initial_quests : Array[QuestActivityInfo]): 
-	print("Initializing quest display with: " + str(initial_quests))
 	for quest_activity in initial_quests: 
 		_add_quest(quest_activity)
 

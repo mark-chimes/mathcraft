@@ -1,4 +1,5 @@
 extends Control
+class_name StockDisplay
 
 @export var item_display_scene: PackedScene
 @export var preview_items: Array[ItemData] = []
