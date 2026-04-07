@@ -15,10 +15,12 @@ func _ready():
 	if initial_items.size() > 0:
 		_initial_display(initial_items)
 		initial_items.clear()
-		
+
 func initialize_with_items(items: Dictionary[ItemData, int]):
 	initial_items = items
 	if is_inside_tree() and container != null:
+		for child in container.get_children():
+				child.queue_free()
 		_initial_display(initial_items)
 		initial_items.clear()
 
@@ -29,9 +31,7 @@ func update_item_qty(item: ItemData, new_qty: int):
 		create_item(item, new_qty)
 
 func _initial_display(items_dict): 
-	if not item_display_dict.is_empty(): 
-		printerr("Dictionary has already been initialized")
-		return 
+	item_display_dict.clear()
 	for item in items_dict:
 		create_item(item, items_dict[item])
 

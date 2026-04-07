@@ -1,0 +1,41 @@
+# User data should only be stored in the user:// path.
+# While res:// can be used when running from the editor, when your project is exported,
+# the res:// path becomes read-only.
+
+extends Node
+
+const save_path = "user://game.tres"
+
+
+@export var score = 3
+
+@export var stock_control: StockControl 
+@export var quest_manager: QuestManager
+	
+func save_game(): 
+	print("Saving game to file " + str(save_path))
+	var stock_save_data = stock_control.create_stock_save_data()
+	var error : Error = ResourceSaver.save(stock_save_data, save_path)
+	if error: 
+		printerr("Attempt to save game to " + save_path + " yielded error " + str(error))
+	else: 
+		print("Save successful")
+		
+func load_game(): 
+	if not FileAccess.file_exists(save_path):
+		printerr("Load file not found at " + str(save_path))
+		return
+		
+	print("Loading game from file " + str(save_path))
+	print("exists?: " + str(ResourceLoader.exists(save_path)))
+	print("really exists?: " + str(ResourceLoader.exists(save_path, "StockSaveData")))
+
+	var stock_save_data: StockSaveData = ResourceLoader.load(save_path)
+	print("Loaded save: " + str(stock_save_data))
+	stock_control.load_from_stock_save_data(stock_save_data)
+
+func _on_save_button_pressed() -> void:
+	save_game()
+	
+func _on_load_button_pressed() -> void:
+	load_game()

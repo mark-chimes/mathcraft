@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://current_quest_display.gd" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://save_load_manager.gd" id="13_ycdy4"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
 
@@ -77,8 +78,32 @@ theme_override_colors/default_color = Color(0.94009835, 0.905595, 0.88086873, 1)
 theme_override_font_sizes/normal_font_size = 20
 text = "Quest description goes here"
 
+[node name="SaveLoad" type="Node2D" parent="Game" unique_id=539084947]
+
+[node name="SaveLoadManager" type="Node" parent="Game/SaveLoad" unique_id=1253070605 node_paths=PackedStringArray("stock_control", "quest_manager")]
+script = ExtResource("13_ycdy4")
+score = 5
+stock_control = NodePath("../../Inventory/StockControl")
+quest_manager = NodePath("../../Quests/QuestManager")
+
+[node name="SaveButton" type="Button" parent="Game/SaveLoad" unique_id=1126986919]
+offset_left = 1186.0
+offset_top = 647.0
+offset_right = 1277.0
+offset_bottom = 678.0
+text = "Save game"
+
+[node name="LoadButton" type="Button" parent="Game/SaveLoad" unique_id=1976694864]
+offset_left = 1185.0
+offset_top = 682.0
+offset_right = 1276.0
+offset_bottom = 713.0
+text = "Load game"
+
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Quests/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="switch_question_generator" from="Game/Quests/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
 [connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/CurrentQuestDisplay" method="_on_update_quest_text"]
 [connection signal="quest_activated" from="Game/Quests/Control/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="answer_correct" from="Game/QnA" to="Game/Quests/QuestManager" method="_on_answer_correct"]
+[connection signal="pressed" from="Game/SaveLoad/SaveButton" to="Game/SaveLoad/SaveLoadManager" method="_on_save_button_pressed"]
+[connection signal="pressed" from="Game/SaveLoad/LoadButton" to="Game/SaveLoad/SaveLoadManager" method="_on_load_button_pressed"]

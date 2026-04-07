@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_p06yy"]
 [ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="3_pvrwk"]
 
-[node name="StockControl" type="Node" unique_id=741979544 node_paths=PackedStringArray("stock_display")]
+[node name="StockControl" type="Node" unique_id=741979544]
 script = ExtResource("1_vjfec")
-stock_display = NodePath("")
 initial_inventory = Dictionary[ExtResource("2_p06yy"), int]({
 ExtResource("3_pvrwk"): 3
 })
+all_items_path = "res://stock/item/"

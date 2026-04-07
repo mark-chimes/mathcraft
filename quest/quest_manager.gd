@@ -1,4 +1,5 @@
 extends Node
+class_name QuestManager
 
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
