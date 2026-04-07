@@ -12,7 +12,7 @@
 [ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://current_quest_display.gd" id="11_efxa6"]
-[ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://save_load_manager.gd" id="13_ycdy4"]
+[ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://saving/save_load_manager.gd" id="13_ycdy4"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
 
