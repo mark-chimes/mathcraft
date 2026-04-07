@@ -13,6 +13,9 @@ var null_activity : QuestActivityInfo
 var quest_activities: Array[QuestActivityInfo]
 var active_quest: QuestActivityInfo
 
+@export var all_quest_details_path : String = ""
+
+
 const PROGRESS_BY_ANSWER = 120
 const REQUIRED_PROGRESS = 1000
 
@@ -140,3 +143,45 @@ func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
 	#recheck quests
 	update_quest_possibility()
 	refresh_quest_display()
+	
+func create_quest_save_data() -> QuestSaveData:
+	var save_data = QuestSaveData.new()
+	var progress_dict : Dictionary[StringName, int] = {}
+	for activity in quest_activities: 
+		progress_dict[activity.quest.quest_id] = activity.progress
+	save_data.quests_progress = progress_dict
+	return save_data
+	
+func load_from_quest_save_data(save_data: QuestSaveData): 
+	var all_quests_dict: Dictionary[StringName, QuestDetails] = construct_all_quests_dict()
+	var saved_progress_dict: Dictionary[StringName, int] = save_data.quests_progress
+	var new_quest_activities: Array[QuestActivityInfo]
+
+	for quest_id in saved_progress_dict: 
+		var quest : QuestDetails = all_quests_dict[quest_id]
+		if saved_progress_dict.has(quest_id):
+			print("yes it has id " + quest_id)
+			var activity = QuestActivityInfo.new()
+			activity.quest = quest
+			activity.progress = saved_progress_dict[quest_id]
+			new_quest_activities.append(activity)
+
+	quest_activities = new_quest_activities
+	deactivate_all_quests()
+	update_quest_possibility()
+	quest_display.clear_all_quests()
+	quest_display.initialize_with_quest_activity(quest_activities)
+	refresh_quest_display()
+
+func construct_all_quests_dict() -> Dictionary[StringName, QuestDetails]:
+	var all_quests_dict: Dictionary[StringName, QuestDetails] = {}
+	var all_quest_filenames : PackedStringArray  = DirAccess.get_files_at(all_quest_details_path)
+	for filename in all_quest_filenames: 
+		var path = all_quest_details_path + filename
+		var quest : QuestDetails = ResourceLoader.load(path)
+		all_quests_dict[quest.quest_id] = quest
+	return all_quests_dict	
+	
+	
+	
+	

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://wdlbaygpdknt"]
 
-[ext_resource type="Script" uid="uid://bstrrrw0myyap" path="res://stock/item_up_effect.gd" id="1_hvsbt"]
+[ext_resource type="Script" uid="uid://bstrrrw0myyap" path="res://stock/display/item_up_effect.gd" id="1_hvsbt"]
 [ext_resource type="Texture2D" uid="uid://d4ksn268iq26c" path="res://assets/tinker.png" id="2_rjj3d"]
 
 [node name="ItemUpEffect" type="Node2D" unique_id=1597561200]

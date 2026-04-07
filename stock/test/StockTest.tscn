@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0mtsmfyp8emj"]
 
-[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="1_7rm6c"]
+[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="1_7rm6c"]
 [ext_resource type="Script" uid="uid://bk5ye38kem02s" path="res://stock/test/stock_test.gd" id="1_kmph4"]
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_45sgy"]
 [ext_resource type="Resource" uid="uid://ci3fqsaaho447" path="res://stock/item/stone_tool.tres" id="3_kmph4"]

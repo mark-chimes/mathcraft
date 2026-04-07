@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://celdnw05v2nyr"]
 
-[ext_resource type="Script" uid="uid://d31ygnrvwlg6t" path="res://stock/item_display_scene.gd" id="1_o6dm0"]
+[ext_resource type="Script" uid="uid://d31ygnrvwlg6t" path="res://stock/display/item_display_scene.gd" id="1_o6dm0"]
 [ext_resource type="Texture2D" uid="uid://d4alv36ol2bwo" path="res://assets/cherry.png" id="2_u8chd"]
 
 [node name="ItemDisplayScene" type="HBoxContainer" unique_id=849002156]

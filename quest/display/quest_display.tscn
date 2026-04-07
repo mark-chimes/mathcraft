@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://dyt80ulkxak25"]
 
-[ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/quest_display_theme.tres" id="1_4tmqi"]
-[ext_resource type="Script" uid="uid://v10ty15vhf7d" path="res://quest/quest_display.gd" id="1_ab47b"]
-[ext_resource type="ButtonGroup" uid="uid://calnqcdbrbymt" path="res://quest/QuestSelectionGroup.tres" id="4_vkuss"]
+[ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/display/quest_display_theme.tres" id="1_i776p"]
+[ext_resource type="Script" uid="uid://v10ty15vhf7d" path="res://quest/display/quest_display.gd" id="2_hemt1"]
 
 [node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "activate_button")]
 clip_contents = true
@@ -12,8 +11,8 @@ anchor_right = 1.0
 offset_bottom = 64.0
 grow_horizontal = 2
 mouse_filter = 2
-theme = ExtResource("1_4tmqi")
-script = ExtResource("1_ab47b")
+theme = ExtResource("1_i776p")
+script = ExtResource("2_hemt1")
 quest_name_label = NodePath("Control/MarginContainer/QuestName")
 progress_bar = NodePath("Control/ProgressBar")
 progress_text = NodePath("ProgressText/CurrentLabel")
@@ -33,7 +32,7 @@ theme_override_constants/margin_right = 4
 
 [node name="CurrentLabel" type="Label" parent="ProgressText" unique_id=1891541684]
 layout_mode = 2
-theme = ExtResource("1_4tmqi")
+theme = ExtResource("1_i776p")
 theme_type_variation = &"progress_text"
 theme_override_font_sizes/font_size = 16
 text = "100 progress"
@@ -64,7 +63,7 @@ theme_override_constants/margin_right = 4
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 mouse_filter = 2
-theme = ExtResource("1_4tmqi")
+theme = ExtResource("1_i776p")
 theme_override_font_sizes/font_size = 32
 max_value = 1.0
 value = 0.5
@@ -80,14 +79,6 @@ layout_mode = 2
 text = "inactive"
 alignment = 2
 
-[node name="SelectButton" type="CheckButton" parent="Control" unique_id=1917550976]
-visible = false
-layout_mode = 2
-mouse_default_cursor_shape = 2
-button_pressed = true
-button_group = ExtResource("4_vkuss")
-expand_icon = true
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1460303073]
 layout_mode = 2
 mouse_filter = 2
@@ -100,9 +91,8 @@ theme_override_constants/margin_right = 40
 
 [node name="QuestName" type="Label" parent="Control/MarginContainer" unique_id=1419850221]
 layout_mode = 2
-theme = ExtResource("1_4tmqi")
+theme = ExtResource("1_i776p")
 text = " Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
 clip_text = true
 
 [connection signal="pressed" from="Control/ActivateButton" to="." method="_on_activate_button_pressed"]
-[connection signal="toggled" from="Control/SelectButton" to="." method="_on_select_button_toggled"]

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ok7soahgj06"]
 
-[ext_resource type="Script" uid="uid://cmfgos1m64aef" path="res://quest/quest_complete_effect.gd" id="1_10cm0"]
+[ext_resource type="Script" uid="uid://cmfgos1m64aef" path="res://quest/display/quest_complete_effect.gd" id="1_10cm0"]
 [ext_resource type="Texture2D" uid="uid://d4ksn268iq26c" path="res://assets/tinker.png" id="2_2bben"]
 
 [node name="QuestCompleteEffect" type="Node2D" unique_id=1597561200]

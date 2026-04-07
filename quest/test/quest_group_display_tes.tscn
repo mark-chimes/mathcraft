@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dvak00i4o15g"]
 
-[ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="1_hbroc"]
+[ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="1_hbroc"]
 [ext_resource type="Script" uid="uid://d3u0jcobdpxtg" path="res://quest/test/quest_group_display_tes.gd" id="1_jncrp"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_u644j"]
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="5_bughn"]

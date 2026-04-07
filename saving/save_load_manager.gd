@@ -14,8 +14,13 @@ const save_path = "user://game.tres"
 func save_game(): 
 	print("Saving game to file " + str(save_path))
 	var save_data: SaveFileData = SaveFileData.new()
+	
 	var stock_save_data = stock_control.create_stock_save_data()
 	save_data.stock_data = stock_save_data
+
+	var quest_save_data = quest_manager.create_quest_save_data()
+	save_data.quest_data = quest_save_data
+
 	var error : Error = ResourceSaver.save(save_data, save_path)
 	if error: 
 		printerr("Attempt to save game to " + save_path + " yielded error " + str(error))
@@ -35,6 +40,7 @@ func load_game():
 	var save_data: SaveFileData = ResourceLoader.load(save_path)
 	print("Loaded save: " + str(save_data))
 	stock_control.load_from_stock_save_data(save_data.stock_data)
+	quest_manager.load_from_quest_save_data(save_data.quest_data)
 
 func _on_save_button_pressed() -> void:
 	save_game()

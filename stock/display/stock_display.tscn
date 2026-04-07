@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://cuc13sg5m1opb"]
 
-[ext_resource type="Script" uid="uid://bxhr3qo6krc5t" path="res://stock/stock_display.gd" id="1_t6xa1"]
-[ext_resource type="PackedScene" uid="uid://celdnw05v2nyr" path="res://stock/item_display_scene.tscn" id="2_5vwsp"]
+[ext_resource type="Script" uid="uid://bxhr3qo6krc5t" path="res://stock/display/stock_display.gd" id="1_t6xa1"]
+[ext_resource type="PackedScene" uid="uid://celdnw05v2nyr" path="res://stock/display/item_display_scene.tscn" id="2_5vwsp"]
+[ext_resource type="PackedScene" uid="uid://wdlbaygpdknt" path="res://stock/display/item_up_effect.tscn" id="3_yw480"]
 
 [node name="StockDisplay" type="VBoxContainer" unique_id=662775784]
 offset_right = 1279.0
@@ -9,6 +10,7 @@ offset_bottom = 64.0
 theme_override_constants/separation = 8
 script = ExtResource("1_t6xa1")
 item_display_scene = ExtResource("2_5vwsp")
+ItemUpEffect = ExtResource("3_yw480")
 
 [node name="StockContainer" type="HFlowContainer" parent="." unique_id=1274259486]
 layout_mode = 2

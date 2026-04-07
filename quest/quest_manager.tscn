@@ -8,3 +8,4 @@
 [node name="QuestManager" type="Node" unique_id=2095940230]
 script = ExtResource("1_fapin")
 initial_quest_details = Array[ExtResource("2_wnoul")]([ExtResource("3_t7ep5"), ExtResource("4_qbgci")])
+all_quest_details_path = "res://quest/quest_definitions/"

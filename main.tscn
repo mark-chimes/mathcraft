@@ -1,17 +1,17 @@
-[gd_scene format=3 uid="uid://bdx6w3vjguu4u"]
+[gd_scene format=3 uid="uid://1iq786as3ggc"]
 
-[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/stock_display.tscn" id="2_82xsv"]
+[ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_kek77"]
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
 [ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_4c57u"]
-[ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/quest_group_display.tscn" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
 [ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="6_efxa6"]
 [ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
-[ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://current_quest_display.gd" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://quest/display/current_quest_display.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://saving/save_load_manager.gd" id="13_ycdy4"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
@@ -30,9 +30,10 @@ stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
 offset_bottom = 138.0
+preview_items = null
 
 [node name="Quests" type="Node2D" parent="Game" unique_id=2048841871]
-position = Vector2(20, 157)
+position = Vector2(13, 151)
 
 [node name="QuestManager" parent="Game/Quests" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control") instance=ExtResource("4_lquwl")]
 quest_display = NodePath("../Control/QuestGroupDisplay")
@@ -50,16 +51,13 @@ offset_bottom = 538.0
 [node name="QuestGroupDisplay" parent="Game/Quests/Control" unique_id=1670799080 instance=ExtResource("5_7mycd")]
 layout_mode = 1
 
-[node name="QnA" parent="Game" unique_id=853901431 instance=ExtResource("6_7mycd")]
-position = Vector2(648, 462)
-
-[node name="CurrentQuestDisplay" type="Node2D" parent="Game" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
-position = Vector2(632, 161)
+[node name="CurrentQuestDisplay" type="Node2D" parent="Game/Quests" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
+position = Vector2(619, 10)
 script = ExtResource("11_efxa6")
 quest_name_label = NodePath("QuestNameLabel")
 quest_description_label = NodePath("QuestDescriptionLabel")
 
-[node name="QuestNameLabel" type="Label" parent="Game/CurrentQuestDisplay" unique_id=1665496564]
+[node name="QuestNameLabel" type="Label" parent="Game/Quests/CurrentQuestDisplay" unique_id=1665496564]
 offset_right = 632.0
 offset_bottom = 45.0
 theme_override_colors/font_color = Color(1, 0.6313726, 0.42352942, 1)
@@ -69,14 +67,17 @@ theme_override_font_sizes/font_size = 32
 text = "QUEST NAME"
 horizontal_alignment = 1
 
-[node name="QuestDescriptionLabel" type="RichTextLabel" parent="Game/CurrentQuestDisplay" unique_id=1769727944]
+[node name="QuestDescriptionLabel" type="RichTextLabel" parent="Game/Quests/CurrentQuestDisplay" unique_id=1769727944]
 offset_left = 2.0
-offset_top = 47.0
+offset_top = 46.0
 offset_right = 629.0
-offset_bottom = 287.0
+offset_bottom = 286.0
 theme_override_colors/default_color = Color(0.94009835, 0.905595, 0.88086873, 1)
 theme_override_font_sizes/normal_font_size = 20
 text = "Quest description goes here"
+
+[node name="QnA" parent="Game" unique_id=853901431 instance=ExtResource("6_7mycd")]
+position = Vector2(648, 462)
 
 [node name="SaveLoad" type="Node2D" parent="Game" unique_id=539084947]
 
@@ -102,7 +103,7 @@ text = "Load game"
 
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Quests/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="switch_question_generator" from="Game/Quests/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
-[connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/CurrentQuestDisplay" method="_on_update_quest_text"]
+[connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/Quests/CurrentQuestDisplay" method="_on_update_quest_text"]
 [connection signal="quest_activated" from="Game/Quests/Control/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="answer_correct" from="Game/QnA" to="Game/Quests/QuestManager" method="_on_answer_correct"]
 [connection signal="pressed" from="Game/SaveLoad/SaveButton" to="Game/SaveLoad/SaveLoadManager" method="_on_save_button_pressed"]

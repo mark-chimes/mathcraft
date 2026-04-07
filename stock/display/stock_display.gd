@@ -5,7 +5,7 @@ extends Control
 
 @onready var container = $StockContainer
 
-@onready var ItemUpEffect = preload("res://stock/item_up_effect.tscn")
+@export var ItemUpEffect : PackedScene
 
 const MAX_DISPLAY_VAL = 9999999
 var item_display_dict : Dictionary[ItemData, Node] = {}

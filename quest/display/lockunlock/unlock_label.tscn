@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://d2t3l7ukgf6cp"]
+[gd_scene format=3 uid="uid://deqw02vgrsve"]
 
-[ext_resource type="Script" uid="uid://bmkdtevqabn2x" path="res://locklabel.gd" id="1_rrjys"]
+[ext_resource type="Script" uid="uid://bmkdtevqabn2x" path="res://quest/display/lockunlock/locklabel.gd" id="1_p3egv"]
 
-[node name="DepletionLabel" type="Label" unique_id=1612614884]
+[node name="UnlockLabel" type="Label" unique_id=1649971417]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -15,16 +15,16 @@ offset_bottom = 33.5
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.1690728
-theme_override_colors/font_color = Color(0.30110523, 3.5195612e-07, 9.62615e-08, 1)
-theme_override_colors/font_shadow_color = Color(1, 0.53361195, 0.4686134, 0.32156864)
-theme_override_colors/font_outline_color = Color(0.74665266, 0, 0.005591542, 1)
+theme_override_colors/font_color = Color(0.08627451, 0.30588236, 0.2, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.53333336, 0.46666667, 0.32156864)
+theme_override_colors/font_outline_color = Color(8.759796e-06, 0.80609715, 0.42044088, 1)
 theme_override_constants/shadow_offset_x = -8
 theme_override_constants/shadow_offset_y = 8
 theme_override_constants/outline_size = 32
 theme_override_constants/shadow_outline_size = 32
 theme_override_font_sizes/font_size = 42
-text = "STONE DEPLETED"
+text = "Unlock"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("1_rrjys")
+script = ExtResource("1_p3egv")
 fade_seconds = 8.0

@@ -14,11 +14,17 @@ func _ready():
 	for child in quests_container_node.get_children():
 		child.queue_free()
 
+func clear_all_quests(): 
+	for activity in activity_displays: 
+		activity_displays[activity].queue_free()
+	activity_displays.clear()
+
 func initialize_with_quest_activity(initial_quests : Array[QuestActivityInfo]): 
+	print("Initializing quest display with: " + str(initial_quests))
 	for quest_activity in initial_quests: 
 		_add_quest(quest_activity)
 
-# Don't call this unless you know the quest doesn't exist
+# Don't call this unless you know the quest's display doesn't exist
 # It's recommended to use update_quest instead
 func _add_quest(quest_activity: QuestActivityInfo): 
 	var new_quest_display := QuestDisplayScene.instantiate()
