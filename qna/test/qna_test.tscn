@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://jnw6yiq8jm28"]
 
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="1_50k66"]
+[ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="2_jfiad"]
 
 [node name="QnaTest" type="Node2D" unique_id=796816239]
 
 [node name="QnA" parent="." unique_id=853901431 instance=ExtResource("1_50k66")]
 position = Vector2(363, 193)
+question_generator = ExtResource("2_jfiad")

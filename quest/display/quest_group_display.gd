@@ -3,9 +3,11 @@ class_name QuestGroupDisplay
 
 signal quest_activated(quest_activity:QuestActivityInfo) # do not fire this signal manually
 
-@export var QuestDisplayScene : PackedScene #:= preload("res://quest/quest_display.tscn")
+@export var QuestDisplayScene : PackedScene
 @export var quests_container_node : Control
-@export var level_up_disp : PackedScene #:= preload("res://quest/level_up_disp.gd")
+@export var level_up_disp : PackedScene
+@export var depletion_disp : PackedScene
+
 @export var level_up_icon : Texture2D
 
 var activity_displays: Dictionary[QuestActivityInfo, QuestDisplay] = {}
@@ -35,6 +37,7 @@ func _add_quest(quest_activity: QuestActivityInfo):
 func refresh():
 	for display in activity_displays.values(): 
 		display.refresh()
+
 
 # Does nothing if quest doesn't exist
 func refresh_display_for_quest(quest_activity: QuestActivityInfo): 
@@ -68,4 +71,9 @@ func spawn_quest_complete_effect(quest_activity:QuestActivityInfo):
 	quests_container_node.add_child(level_up)
 	level_up.position = activity_node.position
 	level_up.set_icon_text_col(level_up_icon, "quest complete!", Color(0,1.0,0.5,1))
-	
+
+func spawn_quest_depletion_effect(quest_activity: QuestActivityInfo):
+	var activity_node = activity_displays[quest_activity]
+	var depletion = depletion_disp.instantiate()
+	quests_container_node.add_child(depletion)
+	depletion.position = activity_node.position

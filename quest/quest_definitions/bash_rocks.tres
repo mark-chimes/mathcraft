@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://dahbw0xjgr6nq"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_30shw"]
+[ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="2_83km6"]
+[ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="3_30shw"]
+[ext_resource type="Resource" uid="uid://beppkl2qcqjw0" path="res://stock/item/dust.tres" id="3_83km6"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_vpb1y"]
+
+[resource]
+script = ExtResource("4_vpb1y")
+quest_id = "bash_rocks"
+quest_title = "Bash Rocks Together"
+quest_description = "Bash two rocks together like a caveman and see what you get. The bigger rock always smashes the smaller one"
+question_generator = ExtResource("3_30shw")
+item_mods = Dictionary[ExtResource("1_30shw"), int]({
+ExtResource("2_83km6"): -2,
+ExtResource("3_83km6"): 20
+})
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

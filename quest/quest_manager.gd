@@ -58,6 +58,8 @@ func update_quest_possibility():
 				if stock_qty < required_qty: 
 					print("Quest " + activity.quest.quest_title + " not possible due to resource constraints")
 					activity.is_possible = false
+					if activity.is_active: 
+						quest_display_deplete_quest(activity)
 	if not active_quest.is_possible: 
 		deactivate_all_quests()
 		#activate_quest(quest_activities[0])
@@ -65,6 +67,9 @@ func update_quest_possibility():
 func _on_quest_group_display_quest_activated(activated_quest: QuestActivityInfo) -> void:
 	activate_quest(activated_quest)
 	refresh_quest_display()
+
+func quest_display_deplete_quest(activity): 
+	quest_display.spawn_quest_depletion_effect(activity)
 	
 func refresh_quest_display(): 
 	emit_update_quest_text()
