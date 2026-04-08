@@ -66,7 +66,7 @@ func update_quest_possibility():
 			if required_qty > 0:
 				var stock_qty = stock_control.get_qty_for(item)
 				if stock_qty < required_qty: 
-					print("Quest " + activity.quest.quest_title + " not possible due to resource constraints")
+					print("Quest " + activity.quest_title + " not possible due to resource constraints")
 					activity.is_possible = false
 					if activity.is_active: 
 						quest_display_deplete_quest(activity)
