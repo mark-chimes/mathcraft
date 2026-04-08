@@ -9,8 +9,6 @@ class_name QuestManager
 @export var null_quest: QuestDetails
 
 var null_activity : ActivityInfo
-
-#@export var initial_quest_details: Array[QuestDetails]
 var locked_quests: Array[QuestDetails]
 
 var quest_activities: Array[ActivityInfo]
@@ -57,6 +55,15 @@ func load_all_quests_except_null() -> Array[QuestDetails]:
 			continue
 		all_quests.append(quest)
 	return all_quests
+
+func remove_existing_activities_from_unlockable_quests(): 
+	var to_remove: Array[QuestDetails] = []
+	for activity in quest_activities:
+		for quest in locked_quests: 
+			if  quest == activity.quest: 
+				to_remove.append(quest)
+	for quest in to_remove: 
+		locked_quests.erase(quest)
 
 func unlock_quests(): 
 	var to_unlock : Array[QuestDetails] = []
@@ -106,7 +113,6 @@ func update_quest_possibility():
 			if required_qty > 0:
 				var stock_qty = stock_control.get_qty_for(item)
 				if stock_qty < required_qty: 
-					print("Quest " + activity.quest_title + " not possible due to resource constraints")
 					activity.is_possible = false
 
 	if not active_quest.is_possible: 
@@ -195,14 +201,6 @@ func _quest_completed() -> void:
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
 	unlock_quests()
-	#TODO
-	
-	#var unlocked_quest = active_quest.quest.unlocks_quest
-	#if unlocked_quest == null: 
-		#return
-	#var new_activity = add_activity_for_quest(unlocked_quest)
-	#if new_activity != null:
-		#quest_display.update_quest(new_activity)
 
 func have_activity_with_quest(quest)  -> bool: 
 	for activity in quest_activities: 
@@ -218,15 +216,20 @@ func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
 func create_quest_save_data() -> QuestSaveData:
 	var save_data = QuestSaveData.new()
 	var progress_dict : Dictionary[StringName, int] = {}
+	var completions_dict : Dictionary[StringName, int] = {}
+
 	for activity in quest_activities: 
 		progress_dict[activity.quest.quest_id] = activity.progress
+		completions_dict[activity.quest.quest_id] = activity.completion_times
 	save_data.quests_progress = progress_dict
+	save_data.quests_completion_number = completions_dict
 	save_data.active_quest_id = active_quest.quest.quest_id
 	return save_data
 	
 func load_from_quest_save_data(save_data: QuestSaveData): 
 	var all_quests_dict: Dictionary[StringName, QuestDetails] = construct_all_quests_dict()
 	var saved_progress_dict: Dictionary[StringName, int] = save_data.quests_progress
+	var completion_qty_dict: Dictionary[StringName, int] = save_data.quests_completion_number
 	var new_quest_activities: Array[ActivityInfo] = []
 	var active_quest_id: StringName = save_data.active_quest_id
 	var quest_to_activate = null_activity
@@ -239,16 +242,22 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 		var activity = ActivityInfo.new()
 		activity.quest = quest
 		activity.progress = saved_progress_dict[quest_id]
+		activity.completion_times = completion_qty_dict.get(quest_id, 0)
 		new_quest_activities.append(activity)
 		if active_quest_id == activity.quest.quest_id: 
 			quest_to_activate = activity
 	
 	quest_activities = new_quest_activities
+	
+	locked_quests = load_all_quests_except_null()
+	remove_existing_activities_from_unlockable_quests()
+	
 	deactivate_all_quests()
 	update_quest_possibility()
 	activate_quest(quest_to_activate)
 	quest_display.clear_all_quests()
 	quest_display.initialize_with_quest_activity(quest_activities)
+	unlock_quests()
 	refresh_quest_display()
 
 func construct_all_quests_dict() -> Dictionary[StringName, QuestDetails]:
