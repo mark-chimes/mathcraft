@@ -3,17 +3,17 @@
 [ext_resource type="Script" uid="uid://b1a7bqg74cw6i" path="res://game.gd" id="1_w48qg"]
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="3_vivmo"]
+[ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="4_2cqfq"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_kek77"]
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
 [ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_4c57u"]
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
-[ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="6_efxa6"]
 [ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://quest/display/current_quest_display.gd" id="11_efxa6"]
-[ext_resource type="Resource" uid="uid://dahbw0xjgr6nq" path="res://quest/quest_definitions/bash_rocks.tres" id="11_vivmo"]
 [ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://saving/save_load_manager.gd" id="13_ycdy4"]
 
 [node name="main" type="Node2D" unique_id=1675520924]
@@ -30,6 +30,9 @@ script = ExtResource("1_w48qg")
 
 [node name="StockControl" parent="Game/Inventory" unique_id=741979544 node_paths=PackedStringArray("stock_display") instance=ExtResource("2_getpj")]
 stock_display = NodePath("../StockDisplay")
+initial_inventory = Dictionary[ExtResource("3_vivmo"), int]({
+ExtResource("4_2cqfq"): 0
+})
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
 offset_bottom = 138.0
@@ -43,7 +46,7 @@ stock_control = NodePath("../../Inventory/StockControl")
 qna = NodePath("../../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
-initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("6_efxa6"), ExtResource("7_dg77c"), ExtResource("11_vivmo")])
+initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("7_dg77c")])
 
 [node name="Control" type="Control" parent="Game/Quests" unique_id=141513222]
 layout_mode = 3

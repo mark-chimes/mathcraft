@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_6ugi3")
 question_type = 2
-question_description = "This is a comparison"
+question_description = "Press an arrow key towards the bigger value"
 metadata/_custom_type_script = "uid://dr6uugnt62skc"

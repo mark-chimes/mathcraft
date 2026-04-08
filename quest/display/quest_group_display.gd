@@ -45,6 +45,8 @@ func refresh_display_for_quest(quest_activity: QuestActivityInfo):
 	quest_display.refresh()
 
 func update_quest(quest_activity: QuestActivityInfo):
+	if quest_activity == null: 
+		return
 	if activity_displays.has(quest_activity): 
 		refresh_display_for_quest(quest_activity)
 	else:

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cxswulm64kmqe" path="res://qna/q_n_a.gd" id="1_3rh86"]
 [ext_resource type="Script" uid="uid://ciyek7jggnj6k" path="res://qna/question_display.gd" id="3_mfkg6"]
 [ext_resource type="Script" uid="uid://bli2gojp3ub66" path="res://qna/result_display.gd" id="4_1bi3d"]
+[ext_resource type="PackedScene" uid="uid://grb4fsla3p3e" path="res://qna/result_display_effect.tscn" id="4_3rh86"]
 
 [node name="QnA" type="Node2D" unique_id=853901431]
 script = ExtResource("1_3rh86")
@@ -10,6 +11,12 @@ script = ExtResource("1_3rh86")
 [node name="QuestionDisplay" type="Node2D" parent="." unique_id=578773136]
 position = Vector2(5, 4)
 script = ExtResource("3_mfkg6")
+
+[node name="QuestionDescriptionLabel" type="Label" parent="QuestionDisplay" unique_id=2030819633]
+offset_right = 187.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 24
+text = "This is a test description"
 
 [node name="Label" type="Label" parent="QuestionDisplay" unique_id=1432001482]
 offset_left = -4.0
@@ -20,11 +27,7 @@ theme_override_font_sizes/font_size = 64
 text = "2+3"
 metadata/_edit_use_anchors_ = true
 
-[node name="QuestionDescriptionLabel" type="Label" parent="QuestionDisplay" unique_id=2030819633]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "This is a test description"
-
 [node name="ResultDisplay" type="Node2D" parent="." unique_id=500437668]
 position = Vector2(9, 84)
 script = ExtResource("4_1bi3d")
+result_display_effect = ExtResource("4_3rh86")

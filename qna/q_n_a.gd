@@ -35,7 +35,7 @@ func press_num(num):
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
 	var is_correct = ( num == current_question.correct_answer)
-	result_display.display_result(is_correct, current_question, str(num))
+	result_display.display_arithmetic_result(is_correct, current_question, str(num))
 	if is_correct:
 		answer_correct.emit()
 		generate_question()
@@ -43,7 +43,8 @@ func press_num(num):
 func press_direction(is_left): 
 	if current_question.answer_type != QuestionData.AnswerType.COMPARISON:
 		return
-	var is_correct = ( is_left == current_question.correct_answer)
+	var is_correct = (is_left == current_question.correct_answer)
+	result_display.display_comparison_result(is_correct, current_question)
 	if is_correct:
 		answer_correct.emit()
 		generate_question()

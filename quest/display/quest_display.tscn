@@ -76,6 +76,7 @@ split_offset = 4
 
 [node name="ActivateButton" type="Button" parent="Control" unique_id=921258812]
 layout_mode = 2
+focus_mode = 0
 text = "inactive"
 alignment = 2
 

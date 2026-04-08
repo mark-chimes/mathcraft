@@ -53,4 +53,8 @@ func generate_single_digit_comparison() -> QuestionData:
 
 	q.question_text = str(leftnum) + " >< " + str(rightnum)
 	q.correct_answer = is_left_more
+	if is_left_more: 
+		q.answer_display_text = str(leftnum) + " >  " + str(rightnum)
+	else: 
+		q.answer_display_text = str(leftnum) + "  < " + str(rightnum)
 	return q

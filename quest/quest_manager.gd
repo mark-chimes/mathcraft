@@ -18,7 +18,7 @@ var active_quest: QuestActivityInfo
 @export var all_quest_details_path : String = ""
 
 
-const PROGRESS_BY_ANSWER = 120
+const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
 signal update_quest_text(quest_details: QuestDetails)
@@ -32,11 +32,7 @@ func _ready():
 	if initial_quest_details.is_empty():
 		return
 	for quest_details in initial_quest_details: 
-		var quest_activity = QuestActivityInfo.new()
-		quest_activity.is_active = false
-		quest_activity.progress = 0
-		quest_activity.quest = quest_details
-		quest_activities.append(quest_activity)
+		add_activity_for_quest(quest_details)
 	
 	var first_quest = quest_activities[0]
 	first_quest.is_possible = true
@@ -50,8 +46,17 @@ func _ready():
 		await quest_display.ready
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()
-	
 
+func add_activity_for_quest(quest: QuestDetails) -> QuestActivityInfo: 
+	if have_activity_with_quest_id(quest.quest_id): 
+		return null
+	var activity = QuestActivityInfo.new()
+	activity.is_active = false
+	activity.progress = 0
+	activity.quest = quest
+	quest_activities.append(activity)
+	return activity 
+	
 func update_quest_possibility(): 
 	for activity in quest_activities: 
 		activity.is_possible = true
@@ -85,7 +90,10 @@ func activate_quest(new_quest : QuestActivityInfo):
 		return
 	new_quest.is_active = true
 	active_quest = new_quest
-	qna.switch_question_generator(active_quest.quest.question_generator)
+	if active_quest.is_possible:
+		qna.switch_question_generator(active_quest.quest.question_generator)
+	else: 
+		qna.switch_question_generator(non_question)
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_active = false
@@ -107,8 +115,8 @@ func is_questable(new_activity: QuestActivityInfo):
 	if quest.question_generator == null: 
 		printerr("Quest: " + quest.quest_title + " has no question generator")
 		return false
-	if not new_activity.is_possible: 
-		return false
+	#if not new_activity.is_possible: 
+		#return false
 	return true
 
 func deactivate_all_quests(): 
@@ -147,6 +155,18 @@ func _on_quest_completed() -> void:
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
+	var unlocked_quest = active_quest.quest.unlocks_quest
+	if unlocked_quest == null: 
+		return
+	var new_activity = add_activity_for_quest(unlocked_quest)
+	if new_activity != null:
+		quest_display.update_quest(new_activity)
+
+func have_activity_with_quest_id(quest_id)  -> bool: 
+	for activity in quest_activities: 
+		if activity.quest.quest_id == quest_id:
+			return true
+	return false
 
 func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
 	#recheck quests

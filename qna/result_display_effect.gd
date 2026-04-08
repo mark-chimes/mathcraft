@@ -26,7 +26,7 @@ func set_qa(is_correct, question_string, answer_string):
 		text = question_string + " ≠ " + answer_string
 		modulate.g = 0.0
 	label.text = text
-	
+
 func set_qa_comp(is_correct, correct_string): 
 	text = correct_string
 	modulate.b = 0.0

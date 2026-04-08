@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="2_thh00"]
 [ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_thh00"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="5_7p6i6"]
+[ext_resource type="Resource" uid="uid://dahbw0xjgr6nq" path="res://quest/quest_definitions/bash_rocks.tres" id="5_63knb"]
 
 [resource]
 script = ExtResource("5_7p6i6")
@@ -14,4 +15,5 @@ question_generator = ExtResource("3_thh00")
 item_mods = Dictionary[ExtResource("1_63knb"), int]({
 ExtResource("2_thh00"): 3
 })
+unlocks_quest = ExtResource("5_63knb")
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

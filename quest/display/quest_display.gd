@@ -30,8 +30,8 @@ func refresh():
 	var is_active = quest_activity.is_active
 	var is_possible = quest_activity.is_possible
 	activate_button.set_disabled(is_active)
-	if is_active: 
-		activate_button.text = "active"
+	if is_active and is_possible:
+			activate_button.text = "active"
 	elif not is_possible:
 		activate_button.text = "impossible"
 	else: 
