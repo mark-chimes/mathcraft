@@ -1,4 +1,4 @@
-class_name QuestActivityInfo  
+class_name ActivityInfo  
 
 var quest : QuestDetails
 var progress : int = 0

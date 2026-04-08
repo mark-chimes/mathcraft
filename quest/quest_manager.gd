@@ -8,12 +8,12 @@ class_name QuestManager
 @export var non_question: QuestionGenerator
 @export var null_quest: QuestDetails
 
-var null_activity : QuestActivityInfo
+var null_activity : ActivityInfo
 
 @export var initial_quest_details: Array[QuestDetails]
 
-var quest_activities: Array[QuestActivityInfo]
-var active_quest: QuestActivityInfo
+var quest_activities: Array[ActivityInfo]
+var active_quest: ActivityInfo
 
 @export var all_quest_details_path : String = ""
 
@@ -23,8 +23,8 @@ const REQUIRED_PROGRESS = 1000
 
 signal update_quest_text(quest_details: QuestDetails)
 
-func _ready(): 
-	null_activity = QuestActivityInfo.new()
+func _ready():
+	null_activity = ActivityInfo.new()
 	null_activity.quest = null_quest
 	null_activity.is_active = false
 	null_activity.is_possible = false
@@ -47,10 +47,10 @@ func _ready():
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()
 
-func add_activity_for_quest(quest: QuestDetails) -> QuestActivityInfo: 
-	if have_activity_with_quest_id(quest.quest_id): 
+func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo: 
+	if have_activity_with_quest(quest): 
 		return null
-	var activity = QuestActivityInfo.new()
+	var activity = ActivityInfo.new()
 	activity.is_active = false
 	activity.progress = 0
 	activity.quest = quest
@@ -72,9 +72,8 @@ func update_quest_possibility():
 						quest_display_deplete_quest(activity)
 	if not active_quest.is_possible: 
 		deactivate_all_quests()
-		#activate_quest(quest_activities[0])
 	
-func _on_quest_group_display_quest_activated(activated_quest: QuestActivityInfo) -> void:
+func _on_quest_group_display_quest_activated(activated_quest: ActivityInfo) -> void:
 	activate_quest(activated_quest)
 	refresh_quest_display()
 
@@ -85,7 +84,7 @@ func refresh_quest_display():
 	emit_update_quest_text()
 	quest_display.refresh()
 
-func activate_quest(new_quest : QuestActivityInfo): 
+func activate_quest(new_quest : ActivityInfo): 
 	if not is_questable(new_quest): 
 		return
 	new_quest.is_active = true
@@ -104,7 +103,7 @@ func emit_update_quest_text():
 		return
 	update_quest_text.emit(active_quest.quest)
 
-func is_questable(new_activity: QuestActivityInfo): 
+func is_questable(new_activity: ActivityInfo): 
 	if new_activity == null:
 		printerr("Attempt to activate null quest")
 		return false
@@ -126,7 +125,7 @@ func deactivate_all_quests():
 	qna.switch_question_generator(non_question)
 	emit_update_quest_text()
 	
-func remove_quest(activity: QuestActivityInfo): 
+func remove_quest(activity: ActivityInfo): 
 	if not quest_activities.has(activity): 
 		printerr("Quest not found")
 		return
@@ -162,9 +161,9 @@ func _on_quest_completed() -> void:
 	if new_activity != null:
 		quest_display.update_quest(new_activity)
 
-func have_activity_with_quest_id(quest_id)  -> bool: 
+func have_activity_with_quest(quest)  -> bool: 
 	for activity in quest_activities: 
-		if activity.quest.quest_id == quest_id:
+		if activity.quest == quest:
 			return true
 	return false
 
@@ -185,7 +184,7 @@ func create_quest_save_data() -> QuestSaveData:
 func load_from_quest_save_data(save_data: QuestSaveData): 
 	var all_quests_dict: Dictionary[StringName, QuestDetails] = construct_all_quests_dict()
 	var saved_progress_dict: Dictionary[StringName, int] = save_data.quests_progress
-	var new_quest_activities: Array[QuestActivityInfo] = []
+	var new_quest_activities: Array[ActivityInfo] = []
 	var active_quest_id: StringName = save_data.active_quest_id
 	var quest_to_activate = null_activity
 	
@@ -194,7 +193,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 		if not saved_progress_dict.has(quest_id):
 			printerr("Quest ID " + quest_id + " not recognized")
 			continue
-		var activity = QuestActivityInfo.new()
+		var activity = ActivityInfo.new()
 		activity.quest = quest
 		activity.progress = saved_progress_dict[quest_id]
 		new_quest_activities.append(activity)

@@ -1,7 +1,7 @@
 extends Control
 class_name QuestDisplay
 
-signal quest_activated(activity:QuestActivityInfo)
+signal quest_activated(activity:ActivityInfo)
 
 @export var quest_name_label : Label
 @export var progress_bar : ProgressBar
@@ -10,9 +10,9 @@ signal quest_activated(activity:QuestActivityInfo)
 
 const MAX_PROGRESS = 1000.0
 
-var quest_activity : QuestActivityInfo # since we're using these as keys in dictionaries...
+var quest_activity : ActivityInfo # since we're using these as keys in dictionaries...
 
-func bind_quest_activity(new_quest_activity: QuestActivityInfo): 
+func bind_quest_activity(new_quest_activity: ActivityInfo): 
 	quest_activity = new_quest_activity
 	refresh()
 		

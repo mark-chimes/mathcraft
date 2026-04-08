@@ -41,20 +41,20 @@ offset_bottom = 138.0
 position = Vector2(13, 151)
 
 [node name="QuestManager" parent="Game/Quests" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
-quest_display = NodePath("../Control/QuestGroupDisplay")
+quest_display = NodePath("../QuestGroupDisplayHolder/QuestGroupDisplay")
 stock_control = NodePath("../../Inventory/StockControl")
 qna = NodePath("../../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
 initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("7_dg77c")])
 
-[node name="Control" type="Control" parent="Game/Quests" unique_id=141513222]
+[node name="QuestGroupDisplayHolder" type="Control" parent="Game/Quests" unique_id=141513222]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 588.0
 offset_bottom = 538.0
 
-[node name="QuestGroupDisplay" parent="Game/Quests/Control" unique_id=1670799080 instance=ExtResource("5_7mycd")]
+[node name="QuestGroupDisplay" parent="Game/Quests/QuestGroupDisplayHolder" unique_id=1670799080 instance=ExtResource("5_7mycd")]
 layout_mode = 1
 
 [node name="CurrentQuestDisplay" type="Node2D" parent="Game/Quests" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
@@ -110,7 +110,7 @@ text = "Load game"
 
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Quests/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/Quests/CurrentQuestDisplay" method="_on_update_quest_text"]
-[connection signal="quest_activated" from="Game/Quests/Control/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
+[connection signal="quest_activated" from="Game/Quests/QuestGroupDisplayHolder/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="answer_correct" from="Game/QnA" to="Game/Quests/QuestManager" method="_on_answer_correct"]
 [connection signal="pressed" from="Game/SaveLoad/SaveButton" to="Game/SaveLoad/SaveLoadManager" method="_on_save_button_pressed"]
 [connection signal="pressed" from="Game/SaveLoad/LoadButton" to="Game/SaveLoad/SaveLoadManager" method="_on_load_button_pressed"]
