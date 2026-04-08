@@ -16,7 +16,6 @@ var active_quest: ActivityInfo
 
 @export var all_quest_details_path : String = ""
 
-
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
@@ -159,8 +158,6 @@ func is_questable(new_activity: ActivityInfo):
 	if quest.question_generator == null: 
 		printerr("Quest: " + quest.quest_title + " has no question generator")
 		return false
-	#if not new_activity.is_possible: 
-		#return false
 	return true
 
 func deactivate_all_quests(): 
@@ -192,6 +189,7 @@ func _on_answer_correct() -> void:
 	if active_quest.progress >= REQUIRED_PROGRESS:
 		active_quest.progress -= REQUIRED_PROGRESS
 		_quest_completed()
+	update_quest_possibility()
 	refresh_quest_display()
 	
 func _quest_completed() -> void:
