@@ -1,22 +1,22 @@
-class_name ArithmeticGenerator
 extends QuestionGenerator
+class_name ArithmeticGenerator
 
 enum Operator {ADD, MINUS, COMPARE}
 @export var question_type : Operator
 
-func generate() -> QuestionData:
-	var q = QuestionData.new()
 
+func generate() -> QuestionData:
 	match(question_type):
 		Operator.ADD: return generate_single_digit_addition()
 		Operator.MINUS: return generate_single_digit_subtraction()
 		Operator.COMPARE: return generate_single_digit_comparison()
 		_: return super.generate()
 		
-func generate_single_digit_addition() -> QuestionData:
+func generate_single_digit_addition() -> QuestionData:	
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.INTEGER
-
+	q.question_description = question_description
+	
 	var firstnum = randi_range(0,9)
 	var secondnum = randi_range(0, 9-firstnum)
 	
@@ -27,6 +27,7 @@ func generate_single_digit_addition() -> QuestionData:
 func generate_single_digit_subtraction() -> QuestionData: 	
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.INTEGER
+	q.question_description = question_description
 
 	var firstnum = randi_range(0,9)
 	var secondnum = randi_range(0, firstnum)
@@ -38,6 +39,7 @@ func generate_single_digit_subtraction() -> QuestionData:
 func generate_single_digit_comparison() -> QuestionData:
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.COMPARISON
+	q.question_description = question_description
 
 	var is_left_more = randi_range(0,1) == 1
 	var rightnum 

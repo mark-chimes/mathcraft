@@ -37,9 +37,10 @@ offset_bottom = 138.0
 [node name="Quests" type="Node2D" parent="Game" unique_id=2048841871]
 position = Vector2(13, 151)
 
-[node name="QuestManager" parent="Game/Quests" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control") instance=ExtResource("4_lquwl")]
+[node name="QuestManager" parent="Game/Quests" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
 quest_display = NodePath("../Control/QuestGroupDisplay")
 stock_control = NodePath("../../Inventory/StockControl")
+qna = NodePath("../../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
 initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("6_efxa6"), ExtResource("7_dg77c"), ExtResource("11_vivmo")])
@@ -80,6 +81,7 @@ text = "Quest description goes here"
 
 [node name="QnA" parent="Game" unique_id=853901431 instance=ExtResource("6_7mycd")]
 position = Vector2(648, 462)
+question_generator = ExtResource("10_4c57u")
 
 [node name="SaveLoad" type="Node2D" parent="Game" unique_id=539084947]
 
@@ -104,7 +106,6 @@ offset_bottom = 713.0
 text = "Load game"
 
 [connection signal="stock_update" from="Game/Inventory/StockControl" to="Game/Quests/QuestManager" method="_on_stock_control_stock_update"]
-[connection signal="switch_question_generator" from="Game/Quests/QuestManager" to="Game/QnA" method="_on_switch_question_generator"]
 [connection signal="update_quest_text" from="Game/Quests/QuestManager" to="Game/Quests/CurrentQuestDisplay" method="_on_update_quest_text"]
 [connection signal="quest_activated" from="Game/Quests/Control/QuestGroupDisplay" to="Game/Quests/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="answer_correct" from="Game/QnA" to="Game/Quests/QuestManager" method="_on_answer_correct"]

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_ohp77")
+question_description = "This is an addition"
 metadata/_custom_type_script = "uid://dr6uugnt62skc"

@@ -3,6 +3,8 @@ class_name QuestManager
 
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
+@export var qna : QnA
+
 @export var non_question: QuestionGenerator
 @export var null_quest: QuestDetails
 
@@ -19,7 +21,6 @@ var active_quest: QuestActivityInfo
 const PROGRESS_BY_ANSWER = 120
 const REQUIRED_PROGRESS = 1000
 
-signal switch_question_generator(question_generator: QuestionGenerator)
 signal update_quest_text(quest_details: QuestDetails)
 
 func _ready(): 
@@ -36,16 +37,20 @@ func _ready():
 		quest_activity.progress = 0
 		quest_activity.quest = quest_details
 		quest_activities.append(quest_activity)
-	active_quest = quest_activities[0]
-	active_quest.is_active = true
-	active_quest.is_possible = true # Make sure the first quest is possible
+	
+	var first_quest = quest_activities[0]
+	first_quest.is_possible = true
+	activate_quest(first_quest)
+	
 	if not stock_control.is_node_ready():
 		await stock_control.ready
 	update_quest_possibility()
+
 	if not quest_display.is_node_ready():
 		await quest_display.ready
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()
+	
 
 func update_quest_possibility(): 
 	for activity in quest_activities: 
@@ -80,7 +85,7 @@ func activate_quest(new_quest : QuestActivityInfo):
 		return
 	new_quest.is_active = true
 	active_quest = new_quest
-	switch_question_generator.emit(active_quest.quest.question_generator)
+	qna.switch_question_generator(active_quest.quest.question_generator)
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_active = false
@@ -110,7 +115,7 @@ func deactivate_all_quests():
 	for quest in quest_activities: 
 		quest.is_active = false
 	active_quest = null_activity
-	switch_question_generator.emit(non_question)
+	qna.switch_question_generator(non_question)
 	emit_update_quest_text()
 	
 func remove_quest(activity: QuestActivityInfo): 

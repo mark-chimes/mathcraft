@@ -1,4 +1,5 @@
 extends Node2D
+class_name QnA
 
 signal answer_correct
 
@@ -8,9 +9,10 @@ var current_question : QuestionData
 
 @onready var question_display = $QuestionDisplay
 @onready var result_display = $ResultDisplay
-
+	
 func _ready(): 
-	generate_question()
+	if question_generator != null: 
+		generate_question()
 	
 func generate_question(): 
 	if question_generator == null: 
@@ -46,6 +48,7 @@ func press_direction(is_left):
 		answer_correct.emit()
 		generate_question()
 
-func _on_switch_question_generator(new_question_generator: QuestionGenerator) -> void:
+func switch_question_generator(new_question_generator: QuestionGenerator) -> void:
 	question_generator = new_question_generator
-	generate_question()
+	if is_node_ready(): 
+		generate_question()
