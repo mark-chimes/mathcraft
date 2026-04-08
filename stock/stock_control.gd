@@ -32,6 +32,19 @@ func modify_item(item: ItemData, qty: int):
 	
 	stock_update.emit(item, new_qty)
 
+func has_required_resources(required_resources: Dictionary[StringName, int]) -> bool:
+	for req_id in required_resources: 
+		var inventory_knows_item = false
+		for item in inventory: 
+			if item.id != req_id: 
+				continue
+			inventory_knows_item = true
+			if inventory[item] < required_resources[req_id]:
+				return false
+		if not inventory_knows_item:
+			return false
+	return true
+		
 func get_qty_for(item): 
 	return inventory.get(item, 0)
 

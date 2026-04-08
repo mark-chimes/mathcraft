@@ -5,6 +5,14 @@
 [ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="3_30shw"]
 [ext_resource type="Resource" uid="uid://beppkl2qcqjw0" path="res://stock/item/dust.tres" id="3_83km6"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_vpb1y"]
+[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="6_xd6s5"]
+
+[sub_resource type="Resource" id="Resource_vpb1y"]
+script = ExtResource("6_xd6s5")
+required_resources = Dictionary[StringName, int]({
+&"stone": 4
+})
+metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
 
 [resource]
 script = ExtResource("4_vpb1y")
@@ -16,4 +24,5 @@ item_mods = Dictionary[ExtResource("1_30shw"), int]({
 ExtResource("2_83km6"): -2,
 ExtResource("3_83km6"): 20
 })
+unlock_requirements = SubResource("Resource_vpb1y")
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

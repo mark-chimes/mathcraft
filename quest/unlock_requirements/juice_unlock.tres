@@ -5,4 +5,7 @@
 [resource]
 script = ExtResource("2_x3upb")
 completed_quests = Array[StringName]([&"berry_quest"])
+required_resources = Dictionary[StringName, int]({
+&"thaumberry": 3
+})
 metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
