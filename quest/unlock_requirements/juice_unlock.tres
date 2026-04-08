@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="QuestUnlockRequirements" format=3 uid="uid://dmsoxjq3dcyq2"]
+
+[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="2_x3upb"]
+
+[resource]
+script = ExtResource("2_x3upb")
+completed_quests = Array[StringName]([&"berry_quest"])
+metadata/_custom_type_script = "uid://ca0nf5otmwtgb"

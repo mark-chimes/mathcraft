@@ -23,7 +23,6 @@ func refresh():
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
 	progress_bar.value = quest_activity.progress / 1000.0
 	progress_text.text = " " + str(quest_activity.progress) + " progress"
-	# active_button.button_pressed = quest_activity.is_active
 
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
 	# This button should be clickable iff the quest is not active so it can be
@@ -38,6 +37,5 @@ func refresh():
 		activate_button.text = ""
 		
 func _on_activate_button_pressed() -> void:
-	print("Got button press")
 	if not quest_activity.is_active:
 		quest_activated.emit(quest_activity)

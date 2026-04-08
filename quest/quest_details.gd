@@ -7,4 +7,4 @@ extends Resource
 @export var question_generator: QuestionGenerator
 @export var item_mods : Dictionary[ItemData, int] = {}
 
-@export var unlocks_quest: QuestDetails #NOTE: Optional
+@export var unlock_requirements : QuestUnlockRequirements #NOTE: Optional

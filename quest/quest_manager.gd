@@ -10,7 +10,8 @@ class_name QuestManager
 
 var null_activity : ActivityInfo
 
-@export var initial_quest_details: Array[QuestDetails]
+#@export var initial_quest_details: Array[QuestDetails]
+var locked_quests: Array[QuestDetails]
 
 var quest_activities: Array[ActivityInfo]
 var active_quest: ActivityInfo
@@ -29,10 +30,8 @@ func _ready():
 	null_activity.is_active = false
 	null_activity.is_possible = false
 	
-	if initial_quest_details.is_empty():
-		return
-	for quest_details in initial_quest_details: 
-		add_activity_for_quest(quest_details)
+	locked_quests = load_all_quests_except_null()
+	unlock_quests()
 	
 	var first_quest = quest_activities[0]
 	first_quest.is_possible = true
@@ -47,7 +46,48 @@ func _ready():
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()
 
-func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo: 
+func load_all_quests_except_null() -> Array[QuestDetails]: 
+	var all_quests: Array[QuestDetails] = []
+	var all_quest_filenames : PackedStringArray  = DirAccess.get_files_at(all_quest_details_path)
+	print("Loading all quests from path: " + all_quest_details_path)
+	for filename in all_quest_filenames: 
+		var path = all_quest_details_path + filename
+		var quest : QuestDetails = ResourceLoader.load(path)
+		if quest.quest_id == "null_quest": 
+			continue
+		all_quests.append(quest)
+	return all_quests
+
+func unlock_quests(): 
+	var to_unlock : Array[QuestDetails] = []
+
+	for quest in locked_quests:
+		if quest.unlock_requirements == null: 
+			to_unlock.append(quest)
+		elif quest.unlock_requirements.is_unlocked(stock_control, self):
+			to_unlock.append(quest)
+
+	for quest in to_unlock:
+		print("Unlocking quest: " + quest.quest_title)
+		var new_activity = add_activity_for_quest(quest)
+		if new_activity != null:
+			quest_display.update_quest(new_activity)
+		locked_quests.erase(quest)
+	
+func are_quests_completed(query_quests: Array[StringName]) -> bool: 
+	for query in query_quests: 
+		var activities_contains_quest = false
+
+		for activity in quest_activities: 
+			if activity.quest.quest_id == query:
+				activities_contains_quest = true
+				if activity.completion_times <= 0: 
+					return false
+		if not activities_contains_quest: 
+			return false
+	return true	
+
+func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo:
 	if have_activity_with_quest(quest): 
 		return null
 	var activity = ActivityInfo.new()
@@ -68,8 +108,7 @@ func update_quest_possibility():
 				if stock_qty < required_qty: 
 					print("Quest " + activity.quest_title + " not possible due to resource constraints")
 					activity.is_possible = false
-					if activity.is_active: 
-						quest_display_deplete_quest(activity)
+
 	if not active_quest.is_possible: 
 		deactivate_all_quests()
 	
@@ -146,20 +185,24 @@ func _on_answer_correct() -> void:
 	active_quest.progress += PROGRESS_BY_ANSWER
 	if active_quest.progress >= REQUIRED_PROGRESS:
 		active_quest.progress -= REQUIRED_PROGRESS
-		_on_quest_completed()
+		_quest_completed()
 	refresh_quest_display()
 	
-func _on_quest_completed() -> void:
+func _quest_completed() -> void:
 	quest_display.quest_complete(active_quest)
+	active_quest.completion_times += 1
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
-	var unlocked_quest = active_quest.quest.unlocks_quest
-	if unlocked_quest == null: 
-		return
-	var new_activity = add_activity_for_quest(unlocked_quest)
-	if new_activity != null:
-		quest_display.update_quest(new_activity)
+	unlock_quests()
+	#TODO
+	
+	#var unlocked_quest = active_quest.quest.unlocks_quest
+	#if unlocked_quest == null: 
+		#return
+	#var new_activity = add_activity_for_quest(unlocked_quest)
+	#if new_activity != null:
+		#quest_display.update_quest(new_activity)
 
 func have_activity_with_quest(quest)  -> bool: 
 	for activity in quest_activities: 

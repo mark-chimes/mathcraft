@@ -5,13 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="3_vivmo"]
 [ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="4_2cqfq"]
-[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_kek77"]
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
-[ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="5_4c57u"]
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
-[ext_resource type="Resource" uid="uid://dd6ogktfak25g" path="res://quest/quest_definitions/stone_quest.tres" id="7_dg77c"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://quest/display/current_quest_display.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://saving/save_load_manager.gd" id="13_ycdy4"]
@@ -46,7 +43,6 @@ stock_control = NodePath("../../Inventory/StockControl")
 qna = NodePath("../../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
-initial_quest_details = Array[ExtResource("4_kek77")]([ExtResource("5_4c57u"), ExtResource("7_dg77c")])
 
 [node name="QuestGroupDisplayHolder" type="Control" parent="Game/Quests" unique_id=141513222]
 layout_mode = 3
