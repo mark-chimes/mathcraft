@@ -57,6 +57,7 @@ offset_bottom = 538.0
 layout_mode = 1
 offset_top = -1.0
 offset_bottom = -1.0
+is_big_size = true
 
 [node name="CurrentQuestDisplay" type="Node2D" parent="Game/Quests" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
 position = Vector2(619, 10)
