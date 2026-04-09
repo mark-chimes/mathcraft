@@ -65,26 +65,32 @@ func remove_existing_activities_from_unlockable_quests():
 		locked_quests.erase(quest)
 
 func unlock_quests(): 
-	
 	var to_unlock : Array[QuestDetails] = []
 	
 	if is_unlock_all:
 		to_unlock = locked_quests.duplicate()
 	else: 
-		
 		for quest in locked_quests:
 			if quest.unlock_requirements == null: 
 				to_unlock.append(quest)
 			elif quest.unlock_requirements.is_unlocked(stock_control, self):
 				to_unlock.append(quest)
-
-			
+				
 	for quest in to_unlock:
 		print("Unlocking quest: " + quest.quest_title)
 		var new_activity = add_activity_for_quest(quest)
 		if new_activity != null:
 			quest_display.update_quest(new_activity)
 		locked_quests.erase(quest)
+
+func delete_deletable_quests(): 
+	var to_delete : Array[ActivityInfo] = []
+	for activity in quest_activities:
+		for item in activity.quest.delete_quest_item_requirements:
+			if stock_control.get_qty_for(item) <= 0: 
+				to_delete.append(activity)
+	for activity in to_delete: 
+		remove_quest(activity)
 
 func are_quests_completed(query_quests: Array[StringName]) -> bool: 
 	for query in query_quests: 
@@ -97,7 +103,7 @@ func are_quests_completed(query_quests: Array[StringName]) -> bool:
 					return false
 		if not activities_contains_quest: 
 			return false
-	return true	
+	return true
 
 func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo:
 	if have_activity_with_quest(quest): 
@@ -177,14 +183,13 @@ func remove_quest(activity: ActivityInfo):
 	if not quest_activities.has(activity): 
 		printerr("Quest not found")
 		return
-	# len(quest_activies) == 0 not possible by previous check
-			
+	
 	quest_activities.erase(activity)
 	quest_display.remove_quest(activity)
 	
 	if quest_activities.is_empty():
 		deactivate_all_quests()
-	else: 
+	else:
 		var new_active_quest = quest_activities[0]
 		activate_quest(new_active_quest)
 	
@@ -211,8 +216,9 @@ func _quest_completed() -> void:
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
-		
+	
 	unlock_quests()
+	delete_deletable_quests()
 
 func have_activity_with_quest(quest)  -> bool: 
 	for activity in quest_activities: 
@@ -270,6 +276,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 	quest_display.clear_all_quests()
 	quest_display.initialize_with_quest_activity(quest_activities)
 	unlock_quests()
+	delete_deletable_quests()
 	refresh_quest_display()
 
 func construct_all_quests_dict() -> Dictionary[StringName, QuestDetails]:

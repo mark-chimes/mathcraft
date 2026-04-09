@@ -18,7 +18,7 @@ metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
 [resource]
 script = ExtResource("2_h03on")
 quest_id = "grow_food"
-quest_title = "Grow Food"
+quest_title = "Grow Plant"
 quest_description = "Let the bush grow into a fruit that can be harvested"
 question_generator = ExtResource("3_5hajo")
 item_mods = Dictionary[ExtResource("1_1k51l"), int]({

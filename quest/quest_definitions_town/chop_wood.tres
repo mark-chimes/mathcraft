@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://rpeaarc21ns3" path="res://stock/item_town/wood.tres" id="2_mkk76"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_pbnpl"]
 [ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_mkk76"]
+[ext_resource type="Resource" uid="uid://c4u65dahkdx7a" path="res://stock/item_town/tree.tres" id="3_sl15i"]
 [ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="5_sl15i"]
 
 [resource]
@@ -13,6 +14,8 @@ quest_title = "Chop Wood"
 quest_description = "Chop some wood from a nearby tree"
 question_generator = ExtResource("3_mkk76")
 item_mods = Dictionary[ExtResource("1_noges"), int]({
-ExtResource("2_mkk76"): 2
+ExtResource("2_mkk76"): 2,
+ExtResource("3_sl15i"): -1
 })
+delete_quest_item_requirements = Array[ExtResource("1_noges")]([ExtResource("3_sl15i")])
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

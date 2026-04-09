@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_cf87p"]
 [ext_resource type="Script" uid="uid://ciars6sww88f0" path="res://qna/generators/non_generator.gd" id="2_5njkv"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="3_bu74x"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="4_5njkv"]
 
 [sub_resource type="Resource" id="Resource_o5blm"]
 script = ExtResource("2_5njkv")

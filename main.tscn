@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="2_82xsv"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="2_getpj"]
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="3_vivmo"]
+[ext_resource type="Resource" uid="uid://c4u65dahkdx7a" path="res://stock/item_town/tree.tres" id="4_dg77c"]
 [ext_resource type="PackedScene" uid="uid://csh7j5mt7hv5r" path="res://quest/quest_manager.tscn" id="4_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
@@ -26,7 +27,9 @@ script = ExtResource("1_w48qg")
 
 [node name="StockControl" parent="Game/Inventory" unique_id=741979544 node_paths=PackedStringArray("stock_display") instance=ExtResource("2_getpj")]
 stock_display = NodePath("../StockDisplay")
-initial_inventory = Dictionary[ExtResource("3_vivmo"), int]({})
+initial_inventory = Dictionary[ExtResource("3_vivmo"), int]({
+ExtResource("4_dg77c"): 5
+})
 all_items_path = "res://stock/item_town/"
 
 [node name="StockDisplay" parent="Game/Inventory" unique_id=662775784 instance=ExtResource("2_82xsv")]
@@ -52,6 +55,8 @@ offset_bottom = 538.0
 
 [node name="QuestGroupDisplay" parent="Game/Quests/QuestGroupDisplayHolder" unique_id=1670799080 instance=ExtResource("5_7mycd")]
 layout_mode = 1
+offset_top = -1.0
+offset_bottom = -1.0
 
 [node name="CurrentQuestDisplay" type="Node2D" parent="Game/Quests" unique_id=670325124 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
 position = Vector2(619, 10)

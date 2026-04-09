@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://ci58p7j3mhx3j"]
 
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_rnhqh"]
-[ext_resource type="Resource" uid="uid://uhy4skqkperu" path="res://stock/item_town/berry_bush.tres" id="2_3lh0s"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_xy02a"]
 [ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="3_8nmo6"]
 [ext_resource type="Resource" uid="uid://rpeaarc21ns3" path="res://stock/item_town/wood.tres" id="3_fyrl4"]
 [ext_resource type="Resource" uid="uid://bc8l0atchnf6i" path="res://stock/item_town/farmer.tres" id="4_cf7xb"]
+[ext_resource type="Resource" uid="uid://bocrre7ypedg2" path="res://stock/item_town/fruit.tres" id="4_fyrl4"]
 [ext_resource type="Resource" uid="uid://cxk3mohaigffp" path="res://qna/generators/subtraction_generator.tres" id="5_oq4dm"]
 [ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="7_fyrl4"]
 
@@ -23,9 +23,9 @@ quest_title = "Chop Down Fruit Plant"
 quest_description = "Chop down a fruit plant to get some wood"
 question_generator = ExtResource("5_oq4dm")
 item_mods = Dictionary[ExtResource("1_rnhqh"), int]({
-ExtResource("2_3lh0s"): -1,
 ExtResource("3_fyrl4"): 5,
-ExtResource("4_cf7xb"): 1
+ExtResource("4_cf7xb"): 1,
+ExtResource("4_fyrl4"): -1
 })
 unlock_requirements = SubResource("Resource_cf7xb")
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

@@ -12,10 +12,8 @@ func _on_update_quest_text(quest: QuestDetails):
 	quest_description_label.newline()
 	quest_description_label.newline()
 		
-	print("quest.yield_specifiers: " + str(quest.yield_specifiers))
 	for specifier in quest.yield_specifiers:
 		var yield_description = specifier.description()
-		print("yield_description " + yield_description)
 		quest_description_label.append_text(yield_description)
 		quest_description_label.newline()
  
