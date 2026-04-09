@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c4u65dahkdx7a"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_q6kke"]
+[ext_resource type="Texture2D" uid="uid://dvbf7nawhkvyl" path="res://assets/art/item/pine-tree.png" id="1_uqdj7"]
+
+[resource]
+script = ExtResource("1_q6kke")
+id = &"tree"
+display_name = "Tree"
+icon = ExtResource("1_uqdj7")
+description = "A lone pine tree"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

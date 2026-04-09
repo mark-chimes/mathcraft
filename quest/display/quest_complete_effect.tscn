@@ -8,17 +8,18 @@ script = ExtResource("1_10cm0")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1131093446]
 modulate = Color(1, 0.38039216, 1, 1)
-position = Vector2(76.000015, 61)
+position = Vector2(36, 32.000008)
 rotation = -0.4207157
-scale = Vector2(0.085, 0.085)
+scale = Vector2(0.043, 0.043)
 texture = ExtResource("2_2bben")
 
 [node name="Label" type="Label" parent="." unique_id=925920061]
-offset_left = -67.0
-offset_top = 49.0
-offset_right = 181.0
-offset_bottom = 94.0
+offset_left = -87.0
+offset_top = 57.0
+offset_right = 161.0
+offset_bottom = 69.0
 rotation = -0.40472054
+theme_override_font_sizes/font_size = 8
 text = "quest complete!"
 horizontal_alignment = 1
 vertical_alignment = 2

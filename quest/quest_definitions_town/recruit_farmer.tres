@@ -7,10 +7,13 @@
 [ext_resource type="Resource" uid="uid://drllynphootd1" path="res://stock/item_town/food.tres" id="4_ukan4"]
 [ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="5_133pj"]
 [ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="7_l25wv"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="8_12jsc"]
 
 [sub_resource type="Resource" id="Resource_flhrq"]
 script = ExtResource("7_l25wv")
-completed_quests = Array[StringName]([&"build_house"])
+required_resources = Dictionary[StringName, int]({
+&"food": 3
+})
 metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
 
 [resource]

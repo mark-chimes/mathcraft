@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_5hajo"]
 [ext_resource type="Resource" uid="uid://bocrre7ypedg2" path="res://stock/item_town/fruit.tres" id="3_kq8uk"]
 [ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="5_kq8uk"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="8_t5ru7"]
 
 [sub_resource type="Resource" id="Resource_p77as"]
 script = ExtResource("5_kq8uk")

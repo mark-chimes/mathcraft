@@ -5,10 +5,10 @@
 
 [node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "progress_text", "activate_button")]
 clip_contents = true
-custom_minimum_size = Vector2(360, 80)
+custom_minimum_size = Vector2(360, 40)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 64.0
+offset_bottom = 40.0
 grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("1_i776p")
@@ -32,13 +32,15 @@ theme_override_constants/margin_right = 4
 
 [node name="CurrentLabel" type="Label" parent="ProgressText" unique_id=1891541684]
 layout_mode = 2
+size_flags_vertical = 0
 theme = ExtResource("1_i776p")
 theme_type_variation = &"progress_text"
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 8
 text = "100 progress"
 metadata/_edit_use_anchors_ = true
 
 [node name="TargetLabel" type="Label" parent="ProgressText" unique_id=1588460411]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "/ 1000"
@@ -60,8 +62,9 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 4
 
 [node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=367140504]
-custom_minimum_size = Vector2(0, 42)
+custom_minimum_size = Vector2(0, 21)
 layout_mode = 2
+size_flags_vertical = 8
 mouse_filter = 2
 theme = ExtResource("1_i776p")
 theme_override_font_sizes/font_size = 32
@@ -93,7 +96,9 @@ theme_override_constants/margin_right = 40
 
 [node name="QuestName" type="Label" parent="Control/MarginContainer" unique_id=1419850221]
 layout_mode = 2
+size_flags_vertical = 8
 theme = ExtResource("1_i776p")
+theme_override_font_sizes/font_size = 12
 text = " Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
 clip_text = true
 

@@ -1,16 +1,17 @@
 [gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://bqcenm1cipt2l"]
 
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_noges"]
-[ext_resource type="Resource" uid="uid://cxk3mohaigffp" path="res://qna/generators/subtraction_generator.tres" id="2_h7t2e"]
 [ext_resource type="Resource" uid="uid://rpeaarc21ns3" path="res://stock/item_town/wood.tres" id="2_mkk76"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_pbnpl"]
+[ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_mkk76"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="5_sl15i"]
 
 [resource]
 script = ExtResource("2_pbnpl")
 quest_id = "chop_wood"
 quest_title = "Chop Wood"
 quest_description = "Chop some wood from a nearby tree"
-question_generator = ExtResource("2_h7t2e")
+question_generator = ExtResource("3_mkk76")
 item_mods = Dictionary[ExtResource("1_noges"), int]({
 ExtResource("2_mkk76"): 2
 })

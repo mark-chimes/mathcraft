@@ -9,10 +9,20 @@ func _on_update_quest_text(quest: QuestDetails):
 	quest_description_label.clear()
 	
 	quest_description_label.append_text(quest.quest_description)
-
+	quest_description_label.newline()
+	quest_description_label.newline()
+		
+	print("quest.yield_specifiers: " + str(quest.yield_specifiers))
+	for specifier in quest.yield_specifiers:
+		var yield_description = specifier.description()
+		print("yield_description " + yield_description)
+		quest_description_label.append_text(yield_description)
+		quest_description_label.newline()
+ 
 	var items_needed = []
 	var items_produced = []
 	var item_mods = quest.item_mods
+	
 	for item in item_mods: 
 		var qty = item_mods[item]
 		var item_name = item.display_name
@@ -20,8 +30,6 @@ func _on_update_quest_text(quest: QuestDetails):
 			items_produced.append(item_name + ": +" + str(qty))
 		elif qty < 0: 
 			items_needed.append(item_name + ": " + str(qty))
-	quest_description_label.newline()
-	quest_description_label.newline()
 
 	if len(items_needed) > 0: 
 		for item_str in items_needed: 

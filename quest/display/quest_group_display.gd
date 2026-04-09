@@ -12,13 +12,15 @@ signal quest_activated(quest_activity:ActivityInfo) # do not fire this signal ma
 
 var activity_displays: Dictionary[ActivityInfo, QuestDisplay] = {}
 
+@export var is_big_size = true
+
 func _ready(): 
 	for child in quests_container_node.get_children():
 		child.queue_free()
 
 func clear_all_quests(): 
-	for activity in activity_displays: 
-		activity_displays[activity].queue_free()
+	for display in activity_displays.values(): 
+		display.queue_free()
 	activity_displays.clear()
 
 func initialize_with_quest_activity(initial_quests : Array[ActivityInfo]): 
@@ -33,6 +35,10 @@ func _add_quest(quest_activity: ActivityInfo):
 	activity_displays[quest_activity] = new_quest_display
 	new_quest_display.bind_quest_activity(quest_activity)
 	new_quest_display.quest_activated.connect(_on_quest_activated)
+	if is_big_size: 
+		new_quest_display.set_to_big_size()
+	else: 
+		new_quest_display.set_to_small_size()
 
 func refresh():
 	for display in activity_displays.values(): 
@@ -78,3 +84,13 @@ func spawn_quest_depletion_effect(quest_activity: ActivityInfo):
 	var depletion = depletion_disp.instantiate()
 	quests_container_node.add_child(depletion)
 	depletion.position = activity_node.position
+
+func _on_bigger_text_button_pressed() -> void:
+	is_big_size = true
+	for display in activity_displays.values(): 
+		display.set_to_big_size()
+		
+func _on_smaller_text_button_pressed() -> void:
+	is_big_size = false
+	for display in activity_displays.values(): 
+		display.set_to_small_size()

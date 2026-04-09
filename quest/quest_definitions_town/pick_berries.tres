@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://ducioeprpd6qm"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_jn5jv"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_2fvw1"]
+[ext_resource type="Resource" uid="uid://drllynphootd1" path="res://stock/item_town/food.tres" id="2_pmsva"]
+[ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="3_j8tw4"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="5_j8tw4"]
+
+[resource]
+script = ExtResource("2_2fvw1")
+quest_id = "pick_berries"
+quest_title = "Pick Wild Berries"
+quest_description = "Pick some berries from the forest to get some food"
+question_generator = ExtResource("3_j8tw4")
+item_mods = Dictionary[ExtResource("1_jn5jv"), int]({
+ExtResource("2_pmsva"): 1
+})
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

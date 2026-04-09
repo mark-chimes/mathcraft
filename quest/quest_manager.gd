@@ -1,5 +1,6 @@
 extends Node
 class_name QuestManager
+signal update_quest_text(quest_details: QuestDetails)
 
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
@@ -8,20 +9,17 @@ class_name QuestManager
 @export var non_question: QuestionGenerator
 @export var null_quest: QuestDetails
 
+@export var all_quest_details_path : String = ""
+@export var is_unlock_all = true # CHEAT to unlock all quests immediately
+
 var null_activity : ActivityInfo
 var locked_quests: Array[QuestDetails]
 
 var quest_activities: Array[ActivityInfo]
 var active_quest: ActivityInfo
 
-@export var all_quest_details_path : String = ""
-
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
-
-signal update_quest_text(quest_details: QuestDetails)
-
-var is_unlock_all = true # CHEAT to unlock all quests immediately
 
 func _ready():
 	null_activity = ActivityInfo.new()
@@ -203,9 +201,17 @@ func _on_answer_correct() -> void:
 func _quest_completed() -> void:
 	quest_display.quest_complete(active_quest)
 	active_quest.completion_times += 1
+
+	var yield_specifiers = active_quest.quest.yield_specifiers
+	for specifier in yield_specifiers: 
+		var yields : Dictionary[ItemData, int] = specifier.stock_modifications(stock_control)
+		for yield_item in yields: 
+			stock_control.modify_item(yield_item, yields[yield_item])
+			
 	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
+		
 	unlock_quests()
 
 func have_activity_with_quest(quest)  -> bool: 
