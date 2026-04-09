@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://5220nkt44kx0"]
+
+[ext_resource type="Texture2D" uid="uid://cslfxe66dmqhe" path="res://assets/art/item/hut.png" id="1_4lwoi"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_j6xb6"]
+
+[resource]
+script = ExtResource("1_j6xb6")
+id = &"hut"
+display_name = "Wooden Hut"
+icon = ExtResource("1_4lwoi")
+description = "A simple wooden hut"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

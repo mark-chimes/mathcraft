@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://bltif7kwe41n2"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_q53dp"]
+[ext_resource type="Resource" uid="uid://uhy4skqkperu" path="res://stock/item_town/berry_bush.tres" id="2_kckxo"]
+[ext_resource type="Resource" uid="uid://bc8l0atchnf6i" path="res://stock/item_town/farmer.tres" id="3_kckxo"]
+[ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="3_umrp7"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_mqewp"]
+[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="5_btlkm"]
+
+[sub_resource type="Resource" id="Resource_p77as"]
+script = ExtResource("5_btlkm")
+required_resources = Dictionary[StringName, int]({
+&"farmer": 1
+})
+metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
+
+[resource]
+script = ExtResource("4_mqewp")
+quest_id = "plant_bush"
+quest_title = "Plant Bush"
+quest_description = "Have your farmer plant a bush to tend that will eventually grow food."
+question_generator = ExtResource("3_umrp7")
+item_mods = Dictionary[ExtResource("1_q53dp"), int]({
+ExtResource("2_kckxo"): 1,
+ExtResource("3_kckxo"): -1
+})
+unlock_requirements = SubResource("Resource_p77as")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

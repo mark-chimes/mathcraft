@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://muu0g3dxn6k5"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_rksy6"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_75qtr"]
+[ext_resource type="Resource" uid="uid://bc8l0atchnf6i" path="res://stock/item_town/farmer.tres" id="2_g2h4b"]
+[ext_resource type="Resource" uid="uid://5220nkt44kx0" path="res://stock/item_town/hut.tres" id="3_12jsc"]
+[ext_resource type="Resource" uid="uid://drllynphootd1" path="res://stock/item_town/food.tres" id="4_ukan4"]
+[ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="5_133pj"]
+[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="7_l25wv"]
+
+[sub_resource type="Resource" id="Resource_flhrq"]
+script = ExtResource("7_l25wv")
+completed_quests = Array[StringName]([&"build_house"])
+metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
+
+[resource]
+script = ExtResource("2_75qtr")
+quest_id = "recruit_farmer"
+quest_title = "Recruit Farmer"
+quest_description = "Recruit a farmer to come tend your lands and grow crops"
+question_generator = ExtResource("5_133pj")
+item_mods = Dictionary[ExtResource("1_rksy6"), int]({
+ExtResource("2_g2h4b"): 1,
+ExtResource("3_12jsc"): -1,
+ExtResource("4_ukan4"): -4
+})
+unlock_requirements = SubResource("Resource_flhrq")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

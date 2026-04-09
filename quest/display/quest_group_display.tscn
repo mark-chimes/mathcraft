@@ -52,7 +52,6 @@ theme_override_constants/margin_right = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=2058660074]
 layout_mode = 2
-mouse_filter = 2
 theme = ExtResource("1_755ly")
 horizontal_scroll_mode = 0
 
@@ -70,3 +69,4 @@ theme_override_constants/separation = 16
 
 [node name="QuestDisplay" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=639139388 instance=ExtResource("1_u5pbd")]
 layout_mode = 2
+mouse_filter = 2

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bocrre7ypedg2"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_4pa6c"]
+[ext_resource type="Texture2D" uid="uid://exbnrtsvwoex" path="res://assets/art/item/fruiting.png" id="1_ctse3"]
+
+[resource]
+script = ExtResource("1_4pa6c")
+id = &"fruit"
+display_name = "Fruiting Plant"
+icon = ExtResource("1_ctse3")
+description = "A fruiting bud that can be harvested for food"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

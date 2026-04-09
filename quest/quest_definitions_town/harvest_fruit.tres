@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://cp0mcg7de5m3"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_6n6a1"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_6rjwk"]
+[ext_resource type="Resource" uid="uid://bocrre7ypedg2" path="res://stock/item_town/fruit.tres" id="2_510vk"]
+[ext_resource type="Resource" uid="uid://drllynphootd1" path="res://stock/item_town/food.tres" id="3_y7t0o"]
+[ext_resource type="Resource" uid="uid://cxk3mohaigffp" path="res://qna/generators/subtraction_generator.tres" id="4_11kvf"]
+[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="6_fr54f"]
+
+[sub_resource type="Resource" id="Resource_wiety"]
+script = ExtResource("6_fr54f")
+required_resources = Dictionary[StringName, int]({
+&"fruit": 1
+})
+metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
+
+[resource]
+script = ExtResource("2_6rjwk")
+quest_id = "harvest_fruit"
+quest_title = "Harvest Fruit"
+quest_description = "Harvest the fruit, so that it may be eaten as food"
+question_generator = ExtResource("4_11kvf")
+item_mods = Dictionary[ExtResource("1_6n6a1"), int]({
+ExtResource("2_510vk"): -1,
+ExtResource("3_y7t0o"): 4
+})
+unlock_requirements = SubResource("Resource_wiety")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

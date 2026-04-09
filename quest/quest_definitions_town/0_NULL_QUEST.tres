@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://cwdxdga43gwhp"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_cf87p"]
+[ext_resource type="Script" uid="uid://ciars6sww88f0" path="res://qna/generators/non_generator.gd" id="2_5njkv"]
+[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="3_bu74x"]
+
+[sub_resource type="Resource" id="Resource_o5blm"]
+script = ExtResource("2_5njkv")
+metadata/_custom_type_script = "uid://ciars6sww88f0"
+
+[resource]
+script = ExtResource("3_bu74x")
+quest_id = "null_quest"
+quest_title = "No Quest Active"
+question_generator = SubResource("Resource_o5blm")
+metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

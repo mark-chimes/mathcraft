@@ -21,6 +21,8 @@ const REQUIRED_PROGRESS = 1000
 
 signal update_quest_text(quest_details: QuestDetails)
 
+var is_unlock_all = true # CHEAT to unlock all quests immediately
+
 func _ready():
 	null_activity = ActivityInfo.new()
 	null_activity.quest = null_quest
@@ -65,21 +67,27 @@ func remove_existing_activities_from_unlockable_quests():
 		locked_quests.erase(quest)
 
 func unlock_quests(): 
+	
 	var to_unlock : Array[QuestDetails] = []
+	
+	if is_unlock_all:
+		to_unlock = locked_quests.duplicate()
+	else: 
+		
+		for quest in locked_quests:
+			if quest.unlock_requirements == null: 
+				to_unlock.append(quest)
+			elif quest.unlock_requirements.is_unlocked(stock_control, self):
+				to_unlock.append(quest)
 
-	for quest in locked_quests:
-		if quest.unlock_requirements == null: 
-			to_unlock.append(quest)
-		elif quest.unlock_requirements.is_unlocked(stock_control, self):
-			to_unlock.append(quest)
-
+			
 	for quest in to_unlock:
 		print("Unlocking quest: " + quest.quest_title)
 		var new_activity = add_activity_for_quest(quest)
 		if new_activity != null:
 			quest_display.update_quest(new_activity)
 		locked_quests.erase(quest)
-	
+
 func are_quests_completed(query_quests: Array[StringName]) -> bool: 
 	for query in query_quests: 
 		var activities_contains_quest = false

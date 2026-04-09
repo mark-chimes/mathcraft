@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://rpeaarc21ns3"]
+
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_1wc2x"]
+[ext_resource type="Texture2D" uid="uid://bcn8qksldrabr" path="res://assets/art/item/wood-pile.png" id="1_2ghvh"]
+
+[resource]
+script = ExtResource("1_1wc2x")
+id = &"wood"
+display_name = "Wood"
+icon = ExtResource("1_2ghvh")
+description = "Logs - useful building material"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"

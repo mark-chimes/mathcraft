@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://uhy4skqkperu"]
+
+[ext_resource type="Texture2D" uid="uid://1uyvtqlqrgqc" path="res://assets/art/item/berry-bush.png" id="1_83c1l"]
+[ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="2_1tmip"]
+
+[resource]
+script = ExtResource("2_1tmip")
+id = &"berry_bush"
+display_name = "Berry Bush"
+icon = ExtResource("1_83c1l")
+description = "A berry bush that can grow berries"
+metadata/_custom_type_script = "uid://c5sxrd4eoxsv6"
