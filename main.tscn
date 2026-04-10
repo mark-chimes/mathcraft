@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://c0jylxnlmvvcp" path="res://quest/display/quest_group_display.tscn" id="5_7mycd"]
 [ext_resource type="Resource" uid="uid://brtf57wuqnvl" path="res://quest/quest_definitions/0_NULL_QUEST.tres" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://diigyjc17jbcl" path="res://tab_bar.gd" id="9_ycdy4"]
 [ext_resource type="Resource" uid="uid://tguudnm7na35" path="res://qna/generators/non_generator.tres" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cyruhkev45o2p" path="res://quest/display/current_quest_display.gd" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://cjyv4cfnp1k84" path="res://saving/save_load_manager.gd" id="13_ycdy4"]
@@ -31,7 +30,7 @@ ExtResource("4_dg77c"): 5
 all_items_path = "res://stock/item_town/"
 
 [node name="QuestManager" parent="Game/Logic" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
-quest_display = NodePath("../../UI/QuestsBuildings/TabBar/QuestGroupDisplay")
+quest_display = NodePath("../../UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay")
 stock_control = NodePath("../StockControl")
 qna = NodePath("../QnA")
 non_question = ExtResource("10_4c57u")
@@ -66,39 +65,60 @@ color = Color(0.07258432, 0.014035841, 0, 1)
 layout_mode = 0
 offset_bottom = 138.0
 
-[node name="QuestsBuildings" type="Control" parent="Game/UI" unique_id=141513222]
+[node name="Tabs" type="Control" parent="Game/UI" unique_id=141513222]
 anchors_preset = 0
 offset_left = 13.0
-offset_top = 151.0
+offset_top = 82.0
 offset_right = 601.0
-offset_bottom = 689.0
+offset_bottom = 709.0
 
-[node name="TabBar" type="TabContainer" parent="Game/UI/QuestsBuildings" unique_id=837293237]
-layout_mode = 0
-offset_left = -6.0
-offset_right = 595.0
-offset_bottom = 560.0
-current_tab = 1
+[node name="TabOverview" type="TabContainer" parent="Game/UI/Tabs" unique_id=837293237]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
 tab_focus_mode = 0
-script = ExtResource("9_ycdy4")
 
-[node name="QuestGroupDisplay" parent="Game/UI/QuestsBuildings/TabBar" unique_id=1670799080 instance=ExtResource("5_7mycd")]
-visible = false
+[node name="Places" type="TabContainer" parent="Game/UI/Tabs/TabOverview" unique_id=1117949154]
 layout_mode = 2
-is_big_size = true
+current_tab = 2
 metadata/_tab_index = 0
 
-[node name="StructureDisplay" type="Panel" parent="Game/UI/QuestsBuildings/TabBar" unique_id=110656688]
+[node name="Home" type="Control" parent="Game/UI/Tabs/TabOverview/Places" unique_id=475520056]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Town" type="Control" parent="Game/UI/Tabs/TabOverview/Places" unique_id=1788997343]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Label" type="Label" parent="Game/UI/QuestsBuildings/TabBar/StructureDisplay" unique_id=1281873018]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 27.0
-offset_right = 92.0
-offset_bottom = 50.0
-text = "todo later"
+[node name="Meadow" type="TabContainer" parent="Game/UI/Tabs/TabOverview/Places" unique_id=422506603]
+layout_mode = 2
+current_tab = 0
+metadata/_tab_index = 2
+
+[node name="Actions" type="Control" parent="Game/UI/Tabs/TabOverview/Places/Meadow" unique_id=1412008936]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="QuestGroupDisplay" parent="Game/UI/Tabs/TabOverview/Places/Meadow/Actions" unique_id=1670799080 instance=ExtResource("5_7mycd")]
+layout_mode = 1
+is_big_size = true
+
+[node name="Upgrades" type="Control" parent="Game/UI/Tabs/TabOverview/Places/Meadow" unique_id=1367945196]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Log" type="Control" parent="Game/UI/Tabs/TabOverview" unique_id=1899333010]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="CurrentQuestDisplay" type="Control" parent="Game/UI" unique_id=207910432 node_paths=PackedStringArray("quest_name_label", "quest_description_label")]
 anchors_preset = 0
@@ -140,9 +160,17 @@ offset_bottom = 514.0
 
 [node name="QuestionDisplay" parent="Game/UI/QnAUI" unique_id=1951215962 instance=ExtResource("14_vivmo")]
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="ResultDisplay" parent="Game/UI/QnAUI" unique_id=690561646 instance=ExtResource("15_2cqfq")]
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="SaveLoad" type="Control" parent="Game/UI" unique_id=1011446015]
 anchors_preset = 0
@@ -166,6 +194,6 @@ text = "Load game"
 [connection signal="stock_update" from="Game/Logic/StockControl" to="Game/Logic/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="update_quest_text" from="Game/Logic/QuestManager" to="Game/UI/CurrentQuestDisplay" method="_on_update_quest_text"]
 [connection signal="answer_correct" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_correct"]
-[connection signal="quest_activated" from="Game/UI/QuestsBuildings/TabBar/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
+[connection signal="quest_activated" from="Game/UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="pressed" from="Game/UI/SaveLoad/SaveButton" to="Game/Logic/SaveLoadManager" method="_on_save_button_pressed"]
 [connection signal="pressed" from="Game/UI/SaveLoad/LoadButton" to="Game/Logic/SaveLoadManager" method="_on_load_button_pressed"]

@@ -27,7 +27,7 @@ depletion_disp = ExtResource("5_37hqy")
 level_up_icon = ExtResource("5_d8gqt")
 is_big_size = false
 
-[node name="Label" type="Label" parent="." unique_id=1248802906]
+[node name="TitleLabel" type="Label" parent="." unique_id=1248802906]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -37,7 +37,7 @@ theme_override_colors/font_color = Color(1, 0.79235935, 0.6886196, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 32
 theme_override_font_sizes/font_size = 32
-text = "QUESTS"
+text = "MEADOW"
 horizontal_alignment = 1
 vertical_alignment = 1
 
