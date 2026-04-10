@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cu8rnxwtwn50h"]
+
+[ext_resource type="Script" uid="uid://bli2gojp3ub66" path="res://qna/result_display.gd" id="1_wmby0"]
+[ext_resource type="PackedScene" uid="uid://grb4fsla3p3e" path="res://qna/result_display_effect.tscn" id="2_dwwxp"]
+
+[node name="ResultDisplay" type="Control" unique_id=690561646]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 9.0
+offset_top = 84.0
+offset_right = 9.0
+offset_bottom = 84.0
+script = ExtResource("1_wmby0")
+result_display_effect = ExtResource("2_dwwxp")

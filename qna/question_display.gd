@@ -1,4 +1,5 @@
-extends Node2D
+extends Control
+class_name QuestionDisplay
 
 func display_question(question: QuestionData): 
 	$Label.text = question.question_text

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 class_name QnA
 
 signal answer_correct
@@ -7,8 +7,8 @@ signal answer_correct
 
 var current_question : QuestionData
 
-@onready var question_display = $QuestionDisplay
-@onready var result_display = $ResultDisplay
+@export var question_display : QuestionDisplay
+@export var result_display : ResultDisplay
 	
 func _ready(): 
 	if question_generator != null: 

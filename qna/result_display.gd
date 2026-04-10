@@ -1,4 +1,5 @@
-extends Node2D
+extends Control
+class_name ResultDisplay
 
 @export var result_display_effect: PackedScene # := preload("res://qna/result_display_effect.tscn")
 

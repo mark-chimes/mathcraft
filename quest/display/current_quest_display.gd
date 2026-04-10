@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @export var quest_name_label : Label
 @export var quest_description_label : RichTextLabel
