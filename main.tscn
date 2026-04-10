@@ -79,6 +79,7 @@ offset_left = -6.0
 offset_right = 595.0
 offset_bottom = 560.0
 current_tab = 1
+tab_focus_mode = 0
 script = ExtResource("9_ycdy4")
 
 [node name="QuestGroupDisplay" parent="Game/UI/QuestsBuildings/TabBar" unique_id=1670799080 instance=ExtResource("5_7mycd")]
@@ -164,6 +165,7 @@ text = "Load game"
 
 [connection signal="stock_update" from="Game/Logic/StockControl" to="Game/Logic/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="update_quest_text" from="Game/Logic/QuestManager" to="Game/UI/CurrentQuestDisplay" method="_on_update_quest_text"]
+[connection signal="answer_correct" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_correct"]
 [connection signal="quest_activated" from="Game/UI/QuestsBuildings/TabBar/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="pressed" from="Game/UI/SaveLoad/SaveButton" to="Game/Logic/SaveLoadManager" method="_on_save_button_pressed"]
 [connection signal="pressed" from="Game/UI/SaveLoad/LoadButton" to="Game/Logic/SaveLoadManager" method="_on_load_button_pressed"]
