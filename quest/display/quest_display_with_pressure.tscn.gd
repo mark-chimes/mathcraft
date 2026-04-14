@@ -57,12 +57,12 @@ func set_to_big_size() -> void:
 	quest_name_label.add_theme_font_size_override("font_size", 24)
 	progress_text.add_theme_font_size_override("font_size", 16)
 	activate_button.add_theme_font_size_override("font_size", 16)
-	progress_bar.custom_minimum_size.y = 42
+	pressure_bar.custom_minimum_size.y = 42
 	custom_minimum_size.y = 80
 	
 func set_to_small_size() -> void: 
 	quest_name_label.add_theme_font_size_override("font_size", 12)
 	progress_text.add_theme_font_size_override("font_size", 8)
 	activate_button.add_theme_font_size_override("font_size", 8)
-	progress_bar.custom_minimum_size.y = 21
+	pressure_bar.custom_minimum_size.y = 21
 	custom_minimum_size.y = 40
