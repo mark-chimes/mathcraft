@@ -167,10 +167,10 @@ offset_bottom = 0.0
 
 [node name="ResultDisplay" parent="Game/UI/QnAUI" unique_id=690561646 instance=ExtResource("15_2cqfq")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_left = 4.0
+offset_top = 127.0
+offset_right = 4.0
+offset_bottom = 127.0
 
 [node name="SaveLoad" type="Control" parent="Game/UI" unique_id=1011446015]
 anchors_preset = 0

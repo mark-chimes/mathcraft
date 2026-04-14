@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://cy5wdfvdtmmmm"]
+
+[ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/display/quest_display_theme.tres" id="1_f7oun"]
+[ext_resource type="Script" uid="uid://clpch1f7kq7xn" path="res://quest/display/quest_display_with_pressure.tscn.gd" id="2_f7oun"]
+
+[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "pressure_bar", "progress_text", "activate_button")]
+clip_contents = true
+custom_minimum_size = Vector2(360, 40)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("1_f7oun")
+script = ExtResource("2_f7oun")
+quest_name_label = NodePath("Control/MarginContainer/QuestName")
+progress_bar = NodePath("Control/ProgressBar")
+pressure_bar = NodePath("Control/PressureBar")
+progress_text = NodePath("ProgressText/CurrentLabel")
+activate_button = NodePath("Control/ActivateButton")
+
+[node name="ProgressText" type="MarginContainer" parent="." unique_id=1984435301]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -1.0
+offset_right = -1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+
+[node name="CurrentLabel" type="Label" parent="ProgressText" unique_id=1891541684]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_f7oun")
+theme_type_variation = &"progress_text"
+theme_override_font_sizes/font_size = 8
+text = "100 progress"
+metadata/_edit_use_anchors_ = true
+
+[node name="TargetLabel" type="Label" parent="ProgressText" unique_id=1588460411]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "/ 1000"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="MarginContainer" parent="." unique_id=1141262189]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 4
+
+[node name="ProgressBar" type="ProgressBar" parent="Control" unique_id=367140504]
+custom_minimum_size = Vector2(0, 21)
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+theme = ExtResource("1_f7oun")
+theme_override_font_sizes/font_size = 32
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="PressureBar" type="ProgressBar" parent="Control" unique_id=63505589]
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_f7oun")
+theme_override_font_sizes/font_size = 32
+max_value = 5000.0
+value = 2500.0
+show_percentage = false
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Control" unique_id=1990951352]
+layout_mode = 2
+split_offsets = PackedInt32Array(4)
+split_offset = 4
+
+[node name="ActivateButton" type="Button" parent="Control" unique_id=921258812]
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+text = "inactive"
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1460303073]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=940071443]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 40
+
+[node name="QuestName" type="Label" parent="Control/MarginContainer" unique_id=1419850221]
+layout_mode = 2
+size_flags_vertical = 8
+theme = ExtResource("1_f7oun")
+theme_override_font_sizes/font_size = 12
+text = " Pick Lots of Wild Thaumberries in order to satisfy the Thaumberry gods"
+clip_text = true
+
+[connection signal="pressed" from="Control/ActivateButton" to="." method="_on_activate_button_pressed"]

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c0jylxnlmvvcp"]
 
 [ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/display/quest_display_theme.tres" id="1_755ly"]
-[ext_resource type="PackedScene" uid="uid://dyt80ulkxak25" path="res://quest/display/quest_display.tscn" id="1_u5pbd"]
 [ext_resource type="Script" uid="uid://173evua3y8k1" path="res://quest/display/quest_group_display.gd" id="2_31adv"]
+[ext_resource type="PackedScene" uid="uid://cy5wdfvdtmmmm" path="res://quest/display/quest_display_with_pressure.tscn" id="3_imho4"]
 [ext_resource type="PackedScene" uid="uid://ok7soahgj06" path="res://quest/display/quest_complete_effect.tscn" id="4_d8gqt"]
 [ext_resource type="PackedScene" uid="uid://der6uijjriqod" path="res://quest/display/lockunlock/depletion_effect.tscn" id="5_37hqy"]
 [ext_resource type="Texture2D" uid="uid://h3ea0a1jda8w" path="res://assets/check-mark.png" id="5_d8gqt"]
@@ -20,7 +20,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme = ExtResource("1_755ly")
 script = ExtResource("2_31adv")
-QuestDisplayScene = ExtResource("1_u5pbd")
+QuestDisplayScene = ExtResource("3_imho4")
 quests_container_node = NodePath("MarginContainer/ScrollContainer/MarginContainer/VBoxContainer")
 level_up_disp = ExtResource("4_d8gqt")
 depletion_disp = ExtResource("5_37hqy")
@@ -70,7 +70,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 16
 
-[node name="QuestDisplay" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=639139388 instance=ExtResource("1_u5pbd")]
+[node name="QuestDisplay" parent="MarginContainer/ScrollContainer/MarginContainer/VBoxContainer" unique_id=639139388 instance=ExtResource("3_imho4")]
 layout_mode = 2
 
 [node name="BiggerTextButton" type="Button" parent="." unique_id=1977514908]

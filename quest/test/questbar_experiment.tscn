@@ -57,4 +57,49 @@ stock_display = NodePath("../StockDisplay")
 
 [node name="StockDisplay" parent="." unique_id=662775784 instance=ExtResource("9_dpd2w")]
 
+[node name="Label" type="Label" parent="." unique_id=567844555]
+offset_left = 22.0
+offset_top = 87.0
+offset_right = 149.0
+offset_bottom = 110.0
+text = "Qty Per Second: "
+
+[node name="qty_per_second_label" type="Label" parent="Label" unique_id=1312970382]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 1.0
+offset_right = 255.0
+offset_bottom = 24.0
+text = "0"
+
+[node name="Label2" type="Label" parent="." unique_id=1649019462]
+offset_left = 211.0
+offset_top = 90.0
+offset_right = 338.0
+offset_bottom = 113.0
+text = "Progress to acc"
+
+[node name="progress_to_acc_label" type="Label" parent="Label2" unique_id=1560293883]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 1.0
+offset_right = 255.0
+offset_bottom = 24.0
+text = "0"
+
+[node name="Label3" type="Label" parent="." unique_id=1836182114]
+offset_left = 444.0
+offset_top = 91.0
+offset_right = 571.0
+offset_bottom = 114.0
+text = "Progress Acc'd"
+
+[node name="progress_accd_label" type="Label" parent="Label3" unique_id=431876708]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 1.0
+offset_right = 255.0
+offset_bottom = 24.0
+text = "0"
+
 [connection signal="answer_correct" from="QnAStuff/QnA" to="." method="_on_qn_a_answer_correct"]
