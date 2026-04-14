@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cu8rnxwtwn50h" path="res://qna/result_display.tscn" id="6_yel5l"]
 [ext_resource type="PackedScene" uid="uid://cpoa0e671quv4" path="res://stock/stock_control.tscn" id="8_jyi13"]
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="9_dpd2w"]
+[ext_resource type="PackedScene" uid="uid://m3qlrycu06ek" path="res://quest/quest_progressor.tscn" id="10_dpd2w"]
 
 [node name="QuestbarExperiment" type="Node2D" unique_id=607221540 node_paths=PackedStringArray("quest_display")]
 script = ExtResource("1_y8rxp")
@@ -101,5 +102,7 @@ offset_top = 1.0
 offset_right = 255.0
 offset_bottom = 24.0
 text = "0"
+
+[node name="QuestProgressor" parent="." unique_id=1733344410 instance=ExtResource("10_dpd2w")]
 
 [connection signal="answer_correct" from="QnAStuff/QnA" to="." method="_on_qn_a_answer_correct"]

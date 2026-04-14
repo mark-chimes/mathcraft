@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://csh7j5mt7hv5r"]
 
 [ext_resource type="Script" uid="uid://darqe0cwt7ge1" path="res://quest/quest_manager.gd" id="1_fapin"]
-[ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="2_wnoul"]
-[ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="3_t7ep5"]
-[ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="4_qbgci"]
+[ext_resource type="PackedScene" uid="uid://m3qlrycu06ek" path="res://quest/quest_progressor.tscn" id="2_aiuod"]
 
 [node name="QuestManager" type="Node" unique_id=2095940230]
 script = ExtResource("1_fapin")
-initial_quest_details = Array[ExtResource("2_wnoul")]([ExtResource("3_t7ep5"), ExtResource("4_qbgci")])
+quest_progresser = ExtResource("2_aiuod")
 all_quest_details_path = "res://quest/quest_definitions/"
+is_unlock_all = null

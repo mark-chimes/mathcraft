@@ -5,6 +5,7 @@ signal update_quest_text(quest_details: QuestDetails)
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
 @export var qna : QnA
+@export var quest_progresser: PackedScene
 
 @export var non_question: QuestionGenerator
 @export var null_quest: QuestDetails
@@ -16,6 +17,8 @@ var null_activity : ActivityInfo
 var locked_quests: Array[QuestDetails]
 
 var quest_activities: Array[ActivityInfo]
+var progressors_by_activities: Dictionary[ActivityInfo, QuestProgressor]
+
 var active_quest: ActivityInfo
 
 const PROGRESS_BY_ANSWER = 800
@@ -79,10 +82,18 @@ func unlock_quests():
 	for quest in to_unlock:
 		print("Unlocking quest: " + quest.quest_title)
 		var new_activity = add_activity_for_quest(quest)
+		var new_progressor = add_progressor_for_activity(new_activity)
 		if new_activity != null:
 			quest_display.update_quest(new_activity)
 		locked_quests.erase(quest)
 
+func add_progressor_for_activity(activity: ActivityInfo):
+	var progressor : QuestProgressor = quest_progresser.instantiate()
+	progressor.initialize(activity, quest_display)
+	progressors_by_activities[activity] = progressor
+	progressor.quest_complete.connect(_quest_completed)
+	add_child(progressor)
+	
 func delete_deletable_quests(): 
 	var to_delete : Array[ActivityInfo] = []
 	for activity in quest_activities:
@@ -186,7 +197,11 @@ func remove_quest(activity: ActivityInfo):
 	
 	quest_activities.erase(activity)
 	quest_display.remove_quest(activity)
-	
+	var progressor = progressors_by_activities[activity]
+	progressors_by_activities.erase(activity)
+	if progressor:
+		progressor.queue_free()
+		
 	if quest_activities.is_empty():
 		deactivate_all_quests()
 	else:
@@ -196,15 +211,14 @@ func remove_quest(activity: ActivityInfo):
 	refresh_quest_display()
 
 func _on_answer_correct() -> void:
-	active_quest.progress += PROGRESS_BY_ANSWER
-	if active_quest.progress >= REQUIRED_PROGRESS:
-		active_quest.progress -= REQUIRED_PROGRESS
-		_quest_completed()
-	update_quest_possibility()
-	refresh_quest_display()
-	
-func _quest_completed() -> void:
-	quest_display.quest_complete(active_quest)
+	var progressor = progressors_by_activities[active_quest]
+	if not progressor: 
+		printerr("NO PROGRESSOR FOR QUEST " + active_quest.quest_title)
+		return
+	progressor.on_correct_answer()
+
+func _quest_completed(completed_quest) -> void:
+	quest_display.quest_complete(completed_quest)
 	active_quest.completion_times += 1
 
 	var yield_specifiers = active_quest.quest.yield_specifiers
