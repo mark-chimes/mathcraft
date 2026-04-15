@@ -6,14 +6,15 @@ class_name QuestProgressor
 # The progressor sends signals back up to the manager
 
 signal quest_complete(activity)
-signal refresh_display_for_activity(activity)
 
 const PRESSURE_PER_ANSWER = 2000
 const MAX_PRESSURE = 10000
 const MAX_ADDED_PROGRESS = 1000
 	
-const PRESSURE_DECAY = 50
 const REQUIRED_PROGRESS = 1000
+
+const PRESSURE_USE_DIVIDER = 50
+const PRESSURE_LEAK_DIVIDER = 1
 
 func on_correct_answer(activity) -> void:
 	increase_pressure(activity, PRESSURE_PER_ANSWER)
@@ -23,11 +24,18 @@ func increase_pressure(activity, pressure_increase) -> void:
 	increase_progress(activity, pressure_increase/10)
 
 func process_activity(activity: ActivityInfo, delta) -> void: 
+	if not activity.has_resources: 
+		if activity.pressure >= 0:
+			print("activity.pressure: " + str(activity.pressure))
+			activity.pressure -= activity.pressure * delta / PRESSURE_LEAK_DIVIDER
+			#activity.pressure = max(activity.pressure, 0.0)
+		return 
+		
 	var pressure = activity.pressure
 	if pressure > 0.0: 
 		#var progress_increase = pressure * delta
 		#pressure -= pressure * PRESSURE_DECAY * delta
-		var per_second_increase = (pressure / PRESSURE_DECAY) 
+		var per_second_increase = (pressure / PRESSURE_USE_DIVIDER) 
 		per_second_increase = clamp(per_second_increase, 0, pressure)
 
 		var progress_increase = per_second_increase * delta 
@@ -39,7 +47,6 @@ func process_activity(activity: ActivityInfo, delta) -> void:
 		activity.pressure = pressure
 
 		increase_progress(activity, progress_increase)
-		refresh_display_for_activity.emit(activity)
 	
 func increase_progress(activity, qty): 
 	#progress_accumulated += qty

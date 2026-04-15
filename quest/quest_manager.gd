@@ -39,7 +39,7 @@ func _ready():
 	
 	if not stock_control.is_node_ready():
 		await stock_control.ready
-	update_quest_resource_lock()
+	update_quest_availability()
 
 	if not quest_display.is_node_ready():
 		await quest_display.ready
@@ -48,15 +48,12 @@ func _ready():
 
 	if not progressor.is_node_ready(): 
 		await progressor.ready
-	progressor.refresh_display_for_activity.connect(_on_quest_progressor_refresh)
 	progressor.quest_complete.connect(_quest_completed)
-	
-func _on_quest_progressor_refresh(activity): 
-	quest_display.refresh()
 	
 func _process(delta) -> void : 
 	for activity in quest_activities: 
 		progressor.process_activity(activity, delta)
+	quest_display.refresh()
 
 func deinitialize(): 
 	quest_display.clear_all_quests()
@@ -138,7 +135,8 @@ func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo:
 	quest_activities.append(activity)
 	return activity 
 	
-func update_quest_resource_lock(): 
+func update_quest_availability(): 
+	var focused_quest_had_resources = focused_quest.has_resources
 	for activity in quest_activities: 
 		activity.has_resources = true
 		var item_mods = activity.quest.item_mods
@@ -148,9 +146,13 @@ func update_quest_resource_lock():
 				var stock_qty = stock_control.get_qty_for(item)
 				if stock_qty < required_qty: 
 					activity.has_resources = false
-
+	
+	# We used to not have resources, now we do
+	if focused_quest.has_resources and not focused_quest_had_resources:  
+		qna.switch_question_generator(focused_quest.quest.question_generator)
+	
 	if not focused_quest.has_resources: 
-		deactivate_all_quests()
+		qna.switch_question_generator(non_question)
 	
 func _on_quest_group_display_quest_activated(activated_quest: ActivityInfo) -> void:
 	activate_quest(activated_quest)
@@ -251,7 +253,7 @@ func have_activity_with_quest(quest)  -> bool:
 
 func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
 	#recheck quests
-	update_quest_resource_lock()
+	update_quest_availability()
 	refresh_quest_display()
 	
 func create_quest_save_data() -> QuestSaveData:
@@ -301,7 +303,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 	locked_quests = load_all_quests_except_null()
 	remove_existing_activities_from_unlockable_quests()
 	deactivate_all_quests()
-	update_quest_resource_lock()
+	update_quest_availability()
 	unlock_quests()
 	activate_quest(quest_to_activate)
 	quest_display.initialize_with_quest_activity(quest_activities)

@@ -31,8 +31,10 @@ func refresh():
 	progress_bar.value = int(quest_activity.progress)
 	pressure_bar.value = quest_activity.pressure
 	progress_text.text = " " + str(int(quest_activity.progress)) + " progress"
-	pressure_text.text = " " + str(int(quest_activity.pressure / 50.0)) + " /s"
-
+	if quest_activity.has_resources: 
+		pressure_text.text = " " + str(int(quest_activity.pressure / 50.0)) + " /s"
+	else: 
+		pressure_text.text = " inactive"
 
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
 	# This button should be clickable iff the quest is not active so it can be
