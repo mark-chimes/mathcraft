@@ -3,15 +3,20 @@ class_name ArithmeticGenerator
 
 enum Operator {ADD, MINUS, COMPARE}
 @export var question_type : Operator
-
+@export var digits: int = 0
 
 func generate() -> QuestionData:
 	match(question_type):
-		Operator.ADD: return generate_single_digit_addition()
+		Operator.ADD: return generate_addition() 
 		Operator.MINUS: return generate_single_digit_subtraction()
 		Operator.COMPARE: return generate_single_digit_comparison()
 		_: return super.generate()
-		
+
+func generate_addition() -> QuestionData: 
+	if digits == 2:
+		return generate_double_digit_addition()
+	return generate_single_digit_addition()
+	
 func generate_single_digit_addition() -> QuestionData:	
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.INTEGER
@@ -22,6 +27,26 @@ func generate_single_digit_addition() -> QuestionData:
 	
 	q.question_text = str(firstnum) + " + " + str(secondnum)
 	q.correct_answer = firstnum + secondnum
+	return q
+	
+func generate_double_digit_addition() -> QuestionData: 
+	var q = QuestionData.new()
+	q.answer_type = QuestionData.AnswerType.INTEGER
+	q.question_description = question_description
+	
+	var firstnum = randi_range(0,99)
+	var secondnum = randi_range(0, 99-firstnum)
+	
+	q.question_text = str(firstnum) + " + " + str(secondnum)
+	q.correct_answer = firstnum + secondnum
+	q.should_display_player_answer = true
+	q.answer_digits = str(q.correct_answer ).length()
+	print("Generated question: " + str(q))
+	print(" -- question_text " + str(q.question_text))
+	print(" -- correct_answer " + str(q.correct_answer))
+	print(" -- should_display_player_answer " + str(q.should_display_player_answer))
+	print(" -- answer_digits " + str(q.answer_digits))
+
 	return q
 	
 func generate_single_digit_subtraction() -> QuestionData: 	

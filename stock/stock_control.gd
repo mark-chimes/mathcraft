@@ -8,7 +8,6 @@ signal stock_update(item, new_qty)
 
 @export var all_items_path : String = ""
 
-
 var inventory: Dictionary[ItemData, int] = {}
 
 func _ready():
