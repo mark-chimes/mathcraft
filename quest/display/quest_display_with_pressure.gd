@@ -47,7 +47,7 @@ func refresh():
 		activate_button.text = ""
 		
 func _on_activate_button_pressed() -> void:
-	if not quest_activity.is_active:
+	if not quest_activity.is_focused:
 		quest_activated.emit(quest_activity)
 		
 func set_to_big_size() -> void: 
