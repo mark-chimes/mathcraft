@@ -19,7 +19,7 @@ var locked_quests: Array[QuestDetails]
 var quest_activities: Array[ActivityInfo]
 @onready var progressor : QuestProgressor = $QuestProgressor
 
-var active_quest: ActivityInfo
+var focused_quest: ActivityInfo
 
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
@@ -62,7 +62,7 @@ func deinitialize():
 	quest_display.clear_all_quests()
 	quest_activities.clear()
 	locked_quests.clear()
-	active_quest = null_activity
+	focused_quest = null_activity
 	
 func load_all_quests_except_null() -> Array[QuestDetails]: 
 	var all_quests: Array[QuestDetails] = []
@@ -149,7 +149,7 @@ func update_quest_possibility():
 				if stock_qty < required_qty: 
 					activity.is_possible = false
 
-	if not active_quest.is_possible: 
+	if not focused_quest.is_possible: 
 		deactivate_all_quests()
 	
 func _on_quest_group_display_quest_activated(activated_quest: ActivityInfo) -> void:
@@ -170,9 +170,9 @@ func activate_quest(new_quest : ActivityInfo):
 	if not is_questable(new_quest): 
 		return
 	new_quest.is_active = true
-	active_quest = new_quest
-	if active_quest.is_possible:
-		qna.switch_question_generator(active_quest.quest.question_generator)
+	focused_quest = new_quest
+	if focused_quest.is_possible:
+		qna.switch_question_generator(focused_quest.quest.question_generator)
 	else: 
 		qna.switch_question_generator(non_question)
 	for quest in quest_activities: 
@@ -180,10 +180,10 @@ func activate_quest(new_quest : ActivityInfo):
 			quest.is_active = false
 
 func emit_update_quest_text(): 
-	if active_quest == null:
+	if focused_quest == null:
 		update_quest_text.emit(null_quest)
 		return
-	update_quest_text.emit(active_quest.quest)
+	update_quest_text.emit(focused_quest.quest)
 
 func is_questable(new_activity: ActivityInfo): 
 	if new_activity == null:
@@ -201,7 +201,7 @@ func is_questable(new_activity: ActivityInfo):
 func deactivate_all_quests(): 
 	for quest in quest_activities: 
 		quest.is_active = false
-	active_quest = null_activity
+	focused_quest = null_activity
 	qna.switch_question_generator(non_question)
 	emit_update_quest_text()
 	
@@ -216,14 +216,14 @@ func remove_quest(activity: ActivityInfo):
 	if quest_activities.is_empty():
 		deactivate_all_quests()
 	else:
-		var new_active_quest = quest_activities[0]
-		activate_quest(new_active_quest)
+		var new_focused_quest = quest_activities[0]
+		activate_quest(new_focused_quest)
 	
 	refresh_quest_display()
 
 func _on_answer_correct() -> void:
-	print("Answer correct for activity: " + active_quest.quest_title + ": " + str(active_quest))
-	progressor.on_correct_answer(active_quest)
+	print("Answer correct for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
+	progressor.on_correct_answer(focused_quest)
 
 func _quest_completed(completed_quest) -> void:
 	quest_display.quest_complete(completed_quest)
@@ -268,7 +268,7 @@ func create_quest_save_data() -> QuestSaveData:
 	save_data.quests_progress = progress_dict
 	save_data.quests_completion_number = completions_dict
 	save_data.quests_pressure = pressure_dict
-	save_data.active_quest_id = active_quest.quest.quest_id
+	save_data.focused_quest_id = focused_quest.quest.quest_id
 	return save_data
 	
 func load_from_quest_save_data(save_data: QuestSaveData): 
@@ -279,7 +279,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 	var pressure_dict: Dictionary[StringName, int] = save_data.quests_pressure
 
 	var new_quest_activities: Array[ActivityInfo] = []
-	var active_quest_id: StringName = save_data.active_quest_id
+	var focused_quest_id: StringName = save_data.focused_quest_id
 	var quest_to_activate = null_activity
 	
 	for quest_id in saved_progress_dict: 
@@ -293,7 +293,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 		activity.pressure = pressure_dict[quest_id]
 		activity.completion_times = completion_qty_dict.get(quest_id, 0)
 		new_quest_activities.append(activity)
-		if active_quest_id == activity.quest.quest_id: 
+		if focused_quest_id == activity.quest.quest_id: 
 			quest_to_activate = activity
 	
 	quest_activities = new_quest_activities
