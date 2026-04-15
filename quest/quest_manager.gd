@@ -27,19 +27,19 @@ const REQUIRED_PROGRESS = 1000
 func _ready():
 	null_activity = ActivityInfo.new()
 	null_activity.quest = null_quest
-	null_activity.is_active = false
-	null_activity.is_possible = false
+	null_activity.is_focused = false
+	null_activity.has_resources = false
 	
 	locked_quests = load_all_quests_except_null()
 	unlock_quests()
 	
 	var first_quest = quest_activities[0]
-	first_quest.is_possible = true
+	first_quest.has_resources = true
 	activate_quest(first_quest)
 	
 	if not stock_control.is_node_ready():
 		await stock_control.ready
-	update_quest_possibility()
+	update_quest_resource_lock()
 
 	if not quest_display.is_node_ready():
 		await quest_display.ready
@@ -132,24 +132,24 @@ func add_activity_for_quest(quest: QuestDetails) -> ActivityInfo:
 	if have_activity_with_quest(quest): 
 		return null
 	var activity = ActivityInfo.new()
-	activity.is_active = false
+	activity.is_focused = false
 	activity.progress = 0
 	activity.quest = quest
 	quest_activities.append(activity)
 	return activity 
 	
-func update_quest_possibility(): 
+func update_quest_resource_lock(): 
 	for activity in quest_activities: 
-		activity.is_possible = true
+		activity.has_resources = true
 		var item_mods = activity.quest.item_mods
 		for item in item_mods: 
 			var required_qty = - item_mods[item] # note negative
 			if required_qty > 0:
 				var stock_qty = stock_control.get_qty_for(item)
 				if stock_qty < required_qty: 
-					activity.is_possible = false
+					activity.has_resources = false
 
-	if not focused_quest.is_possible: 
+	if not focused_quest.has_resources: 
 		deactivate_all_quests()
 	
 func _on_quest_group_display_quest_activated(activated_quest: ActivityInfo) -> void:
@@ -169,15 +169,15 @@ func refresh_quest_display_for_activity(activity: ActivityInfo):
 func activate_quest(new_quest : ActivityInfo): 
 	if not is_questable(new_quest): 
 		return
-	new_quest.is_active = true
+	new_quest.is_focused = true
 	focused_quest = new_quest
-	if focused_quest.is_possible:
+	if focused_quest.has_resources:
 		qna.switch_question_generator(focused_quest.quest.question_generator)
 	else: 
 		qna.switch_question_generator(non_question)
 	for quest in quest_activities: 
 		if quest!= new_quest:
-			quest.is_active = false
+			quest.is_focused = false
 
 func emit_update_quest_text(): 
 	if focused_quest == null:
@@ -200,7 +200,7 @@ func is_questable(new_activity: ActivityInfo):
 
 func deactivate_all_quests(): 
 	for quest in quest_activities: 
-		quest.is_active = false
+		quest.is_focused = false
 	focused_quest = null_activity
 	qna.switch_question_generator(non_question)
 	emit_update_quest_text()
@@ -251,7 +251,7 @@ func have_activity_with_quest(quest)  -> bool:
 
 func _on_stock_control_stock_update(item: ItemData, new_qty: int) -> void:
 	#recheck quests
-	update_quest_possibility()
+	update_quest_resource_lock()
 	refresh_quest_display()
 	
 func create_quest_save_data() -> QuestSaveData:
@@ -301,7 +301,7 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 	locked_quests = load_all_quests_except_null()
 	remove_existing_activities_from_unlockable_quests()
 	deactivate_all_quests()
-	update_quest_possibility()
+	update_quest_resource_lock()
 	unlock_quests()
 	activate_quest(quest_to_activate)
 	quest_display.initialize_with_quest_activity(quest_activities)

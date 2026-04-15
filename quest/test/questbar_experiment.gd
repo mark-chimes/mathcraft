@@ -9,7 +9,7 @@ var activity1 : ActivityInfo
 func _ready() -> void: 
 	activity1 =  ActivityInfo.new()
 	activity1.quest = quest1
-	activity1.is_possible = true
+	activity1.has_resources = true
 	activity1.is_active = true
 	activity1.pressure = 0.0
 	
