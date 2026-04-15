@@ -1,7 +1,7 @@
 class_name ActivityInfo  
 
 var quest : QuestDetails
-var progress : int = 0
+var progress : float = 0.0
 var is_active: bool = false
 var is_possible: bool = false # Whether this quest can be completed based on resources
 var completion_times: int = 0

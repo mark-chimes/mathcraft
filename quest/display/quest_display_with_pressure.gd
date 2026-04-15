@@ -1,6 +1,11 @@
 extends QuestDisplay
 
 @export var pressure_bar : ProgressBar
+@export var pressure_text: Label
+
+const PRESSURE_DECAY = 50
+
+
 
 func _ready(): 
 	if not quest_name_label.is_node_ready():
@@ -23,9 +28,12 @@ func refresh():
 	# https://github.com/godotengine/godot/issues/80499
 	# https://github.com/godotengine/godot/issues/78523
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
-	progress_bar.value = quest_activity.progress
+	progress_bar.value = int(quest_activity.progress)
 	pressure_bar.value = quest_activity.pressure
-	progress_text.text = " " + str(quest_activity.progress) + " progress"
+	progress_text.text = " " + str(int(quest_activity.progress)) + " progress"
+	pressure_text.text = " " + str(int(quest_activity.pressure / 50.0)) + " /s"
+
+
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
 	# This button should be clickable iff the quest is not active so it can be
 	var is_active = quest_activity.is_active

@@ -87,7 +87,6 @@ func remove_existing_activities_from_unlockable_quests():
 		
 	
 func unlock_quests(): 
-	print("Unlocking quests")
 	var to_unlock : Array[QuestDetails] = []
 	
 	if is_unlock_all:
@@ -102,7 +101,6 @@ func unlock_quests():
 	for quest in to_unlock:
 		print("Unlocking quest: " + quest.quest_title)
 		var new_activity = add_activity_for_quest(quest)
-		print("new_activity: " + str(new_activity))
 		if new_activity != null:
 			quest_display.update_quest(new_activity)
 		locked_quests.erase(quest)
@@ -294,7 +292,6 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 		activity.progress = saved_progress_dict[quest_id]
 		activity.pressure = pressure_dict[quest_id]
 		activity.completion_times = completion_qty_dict.get(quest_id, 0)
-		progressor.apply_pressure()
 		new_quest_activities.append(activity)
 		if active_quest_id == activity.quest.quest_id: 
 			quest_to_activate = activity
@@ -303,10 +300,6 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 
 	locked_quests = load_all_quests_except_null()
 	remove_existing_activities_from_unlockable_quests()
-	print("locked_quests: " + str(locked_quests))
-	print("quest_activities: " + str(quest_activities))
-	print("active_quest: " + str(active_quest))
-
 	deactivate_all_quests()
 	update_quest_possibility()
 	unlock_quests()
