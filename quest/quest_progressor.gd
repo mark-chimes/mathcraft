@@ -26,7 +26,6 @@ func increase_pressure(activity, pressure_increase) -> void:
 func process_activity(activity: ActivityInfo, delta) -> void: 
 	if not activity.has_resources: 
 		if activity.pressure >= 0:
-			print("activity.pressure: " + str(activity.pressure))
 			activity.pressure -= activity.pressure * delta / PRESSURE_LEAK_DIVIDER
 			#activity.pressure = max(activity.pressure, 0.0)
 		return 

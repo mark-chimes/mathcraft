@@ -39,13 +39,9 @@ func generate_double_digit_addition() -> QuestionData:
 	
 	q.question_text = str(firstnum) + " + " + str(secondnum)
 	q.correct_answer = firstnum + secondnum
-	q.should_display_player_answer = true
-	q.answer_digits = str(q.correct_answer ).length()
 	print("Generated question: " + str(q))
 	print(" -- question_text " + str(q.question_text))
 	print(" -- correct_answer " + str(q.correct_answer))
-	print(" -- should_display_player_answer " + str(q.should_display_player_answer))
-	print(" -- answer_digits " + str(q.answer_digits))
 
 	return q
 	

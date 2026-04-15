@@ -2,28 +2,31 @@
 
 [ext_resource type="Script" uid="uid://ciyek7jggnj6k" path="res://qna/question_display.gd" id="1_vvtnu"]
 
-[node name="QuestionDisplay" type="Control" unique_id=1951215962]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 5.0
-offset_top = 4.0
-offset_right = 5.0
-offset_bottom = 4.0
+[node name="QuestionDisplay" type="VBoxContainer" unique_id=517415130]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -529.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -20
 script = ExtResource("1_vvtnu")
 
 [node name="QuestionDescriptionLabel" type="Label" parent="." unique_id=259328418]
-layout_mode = 0
-offset_right = 187.0
-offset_bottom = 23.0
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "This is a test description"
 
 [node name="Label" type="Label" parent="." unique_id=207302077]
-layout_mode = 0
-offset_left = -4.0
-offset_top = 24.0
-offset_right = 106.0
-offset_bottom = 112.0
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
 theme_override_font_sizes/font_size = 64
-text = "2+3"
+text = "  2+3"
+metadata/_edit_use_anchors_ = true
+
+[node name="AnswerLabel" type="Label" parent="." unique_id=1234320339]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "=5"
 metadata/_edit_use_anchors_ = true

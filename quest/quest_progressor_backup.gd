@@ -1,5 +1,5 @@
 extends Node
-class_name QuestProgressor
+#class_name QuestProgressor
 
 signal quest_complete(activity)
 

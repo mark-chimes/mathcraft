@@ -22,7 +22,7 @@ func generate_question():
 		printerr("QnA Question Generator is null")
 		return
 	current_question = question_generator.generate()
-	question_display.display_question(current_question)
+	question_display.display_question(current_question, "")
 
 func _process(delta) -> void: 
 	# only goes up to 9
@@ -36,6 +36,8 @@ func _process(delta) -> void:
 	elif Input.is_action_just_pressed("right"):
 		press_direction(false)
 
+var player_answer : int = 0
+
 func press_back(): 
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
@@ -44,53 +46,42 @@ func press_back():
 	if num_digits_typed <= 0: 
 		return 
 	
-	current_question.player_answer = int(current_question.player_answer /10)
+	player_answer = int(player_answer /10)
 	num_digits_typed -= 1
-	question_display.display_question(current_question)
-
+	if num_digits_typed == 0: 
+		question_display.display_question(current_question, "")
+	else: 
+		question_display.display_question(current_question, str(player_answer))
+		
 func press_num(num):
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
 		
-	if current_question.should_display_player_answer:
-		if num_digits_typed == 0 and num == 0: 
-			if current_question.correct_answer == 0: 
-				result_display.display_arithmetic_result(true, current_question, str(0))
-				answer_correct.emit()
-				generate_question() 
-			return
-				
-		num_digits_typed += 1
-		var old_answer = current_question.player_answer
-		
-		current_question.player_answer = old_answer*10 + num
-		print("current_question.player_answer: " + str(current_question.player_answer))
-		print("num_digits_typed: " + str(num_digits_typed))
-		print("current_question.answer_digits: " + str(current_question.answer_digits))
-
-		if num_digits_typed >= current_question.answer_digits: 
-			var is_correct = ( current_question.player_answer  == current_question.correct_answer)
-			print("is_correct: " + str(is_correct))
-
-			result_display.display_arithmetic_result(is_correct, current_question, str( current_question.player_answer))
-			if is_correct:
-				answer_correct.emit()
-				generate_question()
-				return
-			num_digits_typed = 0
-			current_question.player_answer = 0
-			return 
-		question_display.display_question(current_question)
-		return
-
-	else: 
-		var is_correct = ( num == current_question.correct_answer)
-		result_display.display_arithmetic_result(is_correct, current_question, str(num))
-		if is_correct:
+	if num_digits_typed == 0 and num == 0: 
+		if current_question.correct_answer == 0: 
+			result_display.display_arithmetic_result(true, current_question, str(0))
 			answer_correct.emit()
 			generate_question() 
-			return
+		return
+			
+	num_digits_typed += 1
+	player_answer = player_answer * 10 + num
+	var answer_digits = str(current_question.correct_answer).length()
 
+	if num_digits_typed >= answer_digits: 
+		var is_correct = ( player_answer  == current_question.correct_answer)
+		result_display.display_arithmetic_result(is_correct, current_question, str( player_answer))
+		if is_correct:
+			answer_correct.emit()
+			generate_question()
+			
+		num_digits_typed = 0
+		player_answer = 0
+	if (player_answer == 0):
+		question_display.display_question(current_question, "")
+	else: 
+		question_display.display_question(current_question, str(player_answer))
+	return
 
 func press_direction(is_left): 
 	if current_question.answer_type != QuestionData.AnswerType.COMPARISON:

@@ -24,12 +24,12 @@ script = ExtResource("1_w48qg")
 stock_display = NodePath("../../UI/StockDisplay")
 
 [node name="QuestManager" parent="Game/Logic" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
-quest_display = NodePath("../../UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay")
-stock_control = NodePath("../StockControl")
-qna = NodePath("../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
 is_unlock_all = false
+quest_display = NodePath("../../UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay")
+stock_control = NodePath("../StockControl")
+qna = NodePath("../QnA")
 
 [node name="SaveLoadManager" type="Node" parent="Game/Logic" unique_id=1253070605 node_paths=PackedStringArray("stock_control", "quest_manager")]
 script = ExtResource("13_ycdy4")
@@ -153,17 +153,19 @@ offset_bottom = 514.0
 
 [node name="QuestionDisplay" parent="Game/UI/QnAUI" unique_id=1951215962 instance=ExtResource("14_vivmo")]
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="ResultDisplay" parent="Game/UI/QnAUI" unique_id=690561646 instance=ExtResource("15_2cqfq")]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 127.0
-offset_right = 4.0
-offset_bottom = 127.0
+offset_left = 53.0
+offset_top = 101.0
+offset_right = 53.0
+offset_bottom = 101.0
 
 [node name="SaveLoad" type="Control" parent="Game/UI" unique_id=1011446015]
 anchors_preset = 0
@@ -185,7 +187,6 @@ offset_bottom = 713.0
 text = "Load game"
 
 [connection signal="stock_update" from="Game/Logic/StockControl" to="Game/Logic/QuestManager" method="_on_stock_control_stock_update"]
-[connection signal="update_quest_text" from="Game/Logic/QuestManager" to="Game/UI/CurrentQuestDisplay" method="_on_update_quest_text"]
 [connection signal="answer_correct" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_correct"]
 [connection signal="quest_activated" from="Game/UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="pressed" from="Game/UI/SaveLoad/SaveButton" to="Game/Logic/SaveLoadManager" method="_on_save_button_pressed"]
