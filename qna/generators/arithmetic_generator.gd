@@ -14,7 +14,13 @@ func generate() -> QuestionData:
 
 func generate_addition() -> QuestionData: 
 	if digits == 2:
-		return generate_double_digit_addition()
+		var maybe = randi_range(0,2)
+		if maybe == 0: 
+			return generate_double_digit_addition()
+		elif maybe == 1: 
+			return generate_six_seven()
+		else: 
+			return generate_sixty_nine()
 	return generate_single_digit_addition()
 	
 func generate_single_digit_addition() -> QuestionData:	
@@ -28,7 +34,40 @@ func generate_single_digit_addition() -> QuestionData:
 	q.question_text = str(firstnum) + " + " + str(secondnum)
 	q.correct_answer = firstnum + secondnum
 	return q
+
+func generate_sixty_nine() -> QuestionData: 
+	var q = QuestionData.new()
+	q.answer_type = QuestionData.AnswerType.INTEGER
+	q.question_description = question_description
 	
+	var firstnum = randi_range(0,69)
+	var secondnum = 69-firstnum
+	
+	q.question_text = str(firstnum) + " + " + str(secondnum)
+	q.correct_answer = firstnum + secondnum
+	print("Generated question: " + str(q))
+	print(" -- question_text " + str(q.question_text))
+	print(" -- correct_answer " + str(q.correct_answer))
+
+	return q
+
+func generate_six_seven() -> QuestionData: 
+	var q = QuestionData.new()
+	q.answer_type = QuestionData.AnswerType.INTEGER
+	q.question_description = question_description
+	
+	var firstnum = randi_range(0,67)
+	var secondnum = 67-firstnum
+	
+	q.question_text = str(firstnum) + " + " + str(secondnum)
+	q.correct_answer = firstnum + secondnum
+	print("Generated question: " + str(q))
+	print(" -- question_text " + str(q.question_text))
+	print(" -- correct_answer " + str(q.correct_answer))
+
+	return q
+		
+
 func generate_double_digit_addition() -> QuestionData: 
 	var q = QuestionData.new()
 	q.answer_type = QuestionData.AnswerType.INTEGER

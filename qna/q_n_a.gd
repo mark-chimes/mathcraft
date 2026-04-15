@@ -11,6 +11,7 @@ var current_question : QuestionData
 @export var result_display : ResultDisplay
 	
 var num_digits_typed = 0
+var player_answer : int = 0
 
 func _ready(): 
 	if question_generator != null: 
@@ -22,7 +23,7 @@ func generate_question():
 		printerr("QnA Question Generator is null")
 		return
 	current_question = question_generator.generate()
-	question_display.display_question(current_question, "")
+	update_display()
 
 func _process(delta) -> void: 
 	# only goes up to 9
@@ -36,19 +37,37 @@ func _process(delta) -> void:
 	elif Input.is_action_just_pressed("right"):
 		press_direction(false)
 
-var player_answer : int = 0
 
 func press_back(): 
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
-		return
-	if not current_question.should_display_player_answer:
 		return
 	if num_digits_typed <= 0: 
 		return 
 	
 	player_answer = int(player_answer /10)
 	num_digits_typed -= 1
-	if num_digits_typed == 0: 
+	update_display()
+	
+func submit_answer(player_answer): 
+	var is_correct = ( player_answer  == current_question.correct_answer)
+	var player_answer_string = str(player_answer)
+	if is_correct:
+		if current_question.correct_answer == 69: 
+			player_answer_string += " nice"
+		elif current_question.correct_answer == 67: 
+			player_answer_string = "six seven"
+	result_display.display_arithmetic_result(is_correct, current_question, player_answer_string)
+	if is_correct:
+		answer_correct.emit()
+		generate_question()
+	reset_input()
+
+func reset_input(): 
+	num_digits_typed = 0
+	player_answer = 0
+	
+func update_display():	
+	if (num_digits_typed == 0):
 		question_display.display_question(current_question, "")
 	else: 
 		question_display.display_question(current_question, str(player_answer))
@@ -56,31 +75,28 @@ func press_back():
 func press_num(num):
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
+	var answer_digits = str(current_question.correct_answer).length()
+	
+	# Special case: single-digit answer, player types zero
+	if num == 0 and num_digits_typed == 0 and answer_digits == 1: 
+		num_digits_typed = 1
+		submit_answer(0)
+		update_display()
 		
-	if num_digits_typed == 0 and num == 0: 
-		if current_question.correct_answer == 0: 
-			result_display.display_arithmetic_result(true, current_question, str(0))
-			answer_correct.emit()
-			generate_question() 
-		return
-			
+	# Special case: leading zero. Overwrite
+	if num_digits_typed == 1 and player_answer == 0:
+		player_answer = num
+		num_digits_typed = 1
+		update_display()
+		return 
+
+	# Normal case
 	num_digits_typed += 1
 	player_answer = player_answer * 10 + num
-	var answer_digits = str(current_question.correct_answer).length()
 
 	if num_digits_typed >= answer_digits: 
-		var is_correct = ( player_answer  == current_question.correct_answer)
-		result_display.display_arithmetic_result(is_correct, current_question, str( player_answer))
-		if is_correct:
-			answer_correct.emit()
-			generate_question()
-			
-		num_digits_typed = 0
-		player_answer = 0
-	if (player_answer == 0):
-		question_display.display_question(current_question, "")
-	else: 
-		question_display.display_question(current_question, str(player_answer))
+		submit_answer(player_answer)
+	update_display()
 	return
 
 func press_direction(is_left): 
