@@ -17,7 +17,7 @@ var null_activity : ActivityInfo
 var locked_quests: Array[QuestDetails]
 
 var quest_activities: Array[ActivityInfo]
-var progressors_by_activities: Dictionary[ActivityInfo, QuestProgressor]
+@onready var progressor : QuestProgressor = $QuestProgressor
 
 var active_quest: ActivityInfo
 
@@ -46,6 +46,24 @@ func _ready():
 	quest_display.initialize_with_quest_activity(quest_activities)
 	refresh_quest_display()
 
+	if not progressor.is_node_ready(): 
+		await progressor.ready
+	progressor.refresh_display_for_activity.connect(_on_quest_progressor_refresh)
+	progressor.quest_complete.connect(_quest_completed)
+	
+func _on_quest_progressor_refresh(activity): 
+	quest_display.refresh()
+	
+func _process(delta) -> void : 
+	for activity in quest_activities: 
+		progressor.process_activity(activity, delta)
+
+func deinitialize(): 
+	quest_display.clear_all_quests()
+	quest_activities.clear()
+	locked_quests.clear()
+	active_quest = null_activity
+	
 func load_all_quests_except_null() -> Array[QuestDetails]: 
 	var all_quests: Array[QuestDetails] = []
 	var all_quest_filenames : PackedStringArray  = DirAccess.get_files_at(all_quest_details_path)
@@ -66,8 +84,10 @@ func remove_existing_activities_from_unlockable_quests():
 				to_remove.append(quest)
 	for quest in to_remove: 
 		locked_quests.erase(quest)
-
+		
+	
 func unlock_quests(): 
+	print("Unlocking quests")
 	var to_unlock : Array[QuestDetails] = []
 	
 	if is_unlock_all:
@@ -82,18 +102,12 @@ func unlock_quests():
 	for quest in to_unlock:
 		print("Unlocking quest: " + quest.quest_title)
 		var new_activity = add_activity_for_quest(quest)
-		var new_progressor = add_progressor_for_activity(new_activity)
+		print("new_activity: " + str(new_activity))
 		if new_activity != null:
 			quest_display.update_quest(new_activity)
 		locked_quests.erase(quest)
 
-func add_progressor_for_activity(activity: ActivityInfo):
-	var progressor : QuestProgressor = quest_progresser.instantiate()
-	progressor.initialize(activity, quest_display)
-	progressors_by_activities[activity] = progressor
-	progressor.quest_complete.connect(_quest_completed)
-	add_child(progressor)
-	
+
 func delete_deletable_quests(): 
 	var to_delete : Array[ActivityInfo] = []
 	for activity in quest_activities:
@@ -151,6 +165,9 @@ func refresh_quest_display():
 	emit_update_quest_text()
 	quest_display.refresh()
 
+func refresh_quest_display_for_activity(activity: ActivityInfo): 
+	quest_display.refresh_display_for_quest(activity)
+
 func activate_quest(new_quest : ActivityInfo): 
 	if not is_questable(new_quest): 
 		return
@@ -197,11 +214,7 @@ func remove_quest(activity: ActivityInfo):
 	
 	quest_activities.erase(activity)
 	quest_display.remove_quest(activity)
-	var progressor = progressors_by_activities[activity]
-	progressors_by_activities.erase(activity)
-	if progressor:
-		progressor.queue_free()
-		
+	
 	if quest_activities.is_empty():
 		deactivate_all_quests()
 	else:
@@ -211,23 +224,20 @@ func remove_quest(activity: ActivityInfo):
 	refresh_quest_display()
 
 func _on_answer_correct() -> void:
-	var progressor = progressors_by_activities[active_quest]
-	if not progressor: 
-		printerr("NO PROGRESSOR FOR QUEST " + active_quest.quest_title)
-		return
-	progressor.on_correct_answer()
+	print("Answer correct for activity: " + active_quest.quest_title + ": " + str(active_quest))
+	progressor.on_correct_answer(active_quest)
 
 func _quest_completed(completed_quest) -> void:
 	quest_display.quest_complete(completed_quest)
-	active_quest.completion_times += 1
+	completed_quest.completion_times += 1
 
-	var yield_specifiers = active_quest.quest.yield_specifiers
+	var yield_specifiers = completed_quest.quest.yield_specifiers
 	for specifier in yield_specifiers: 
 		var yields : Dictionary[ItemData, int] = specifier.stock_modifications(stock_control)
 		for yield_item in yields: 
 			stock_control.modify_item(yield_item, yields[yield_item])
 			
-	var item_mods : Dictionary[ItemData, int] = active_quest.quest.item_mods
+	var item_mods : Dictionary[ItemData, int] = completed_quest.quest.item_mods
 	for item in item_mods:
 		stock_control.modify_item(item, item_mods[item])
 	
@@ -235,6 +245,7 @@ func _quest_completed(completed_quest) -> void:
 	delete_deletable_quests()
 
 func have_activity_with_quest(quest)  -> bool: 
+	print("Already have activity for quest: " + quest.quest_title)
 	for activity in quest_activities: 
 		if activity.quest == quest:
 			return true
@@ -249,19 +260,26 @@ func create_quest_save_data() -> QuestSaveData:
 	var save_data = QuestSaveData.new()
 	var progress_dict : Dictionary[StringName, int] = {}
 	var completions_dict : Dictionary[StringName, int] = {}
+	var pressure_dict : Dictionary[StringName, int] = {}
 
 	for activity in quest_activities: 
-		progress_dict[activity.quest.quest_id] = activity.progress
-		completions_dict[activity.quest.quest_id] = activity.completion_times
+		var id = activity.quest.quest_id
+		progress_dict[id] = activity.progress
+		completions_dict[id] = activity.completion_times
+		pressure_dict[id] = activity.pressure
 	save_data.quests_progress = progress_dict
 	save_data.quests_completion_number = completions_dict
+	save_data.quests_pressure = pressure_dict
 	save_data.active_quest_id = active_quest.quest.quest_id
 	return save_data
 	
 func load_from_quest_save_data(save_data: QuestSaveData): 
+	deinitialize()
 	var all_quests_dict: Dictionary[StringName, QuestDetails] = construct_all_quests_dict()
 	var saved_progress_dict: Dictionary[StringName, int] = save_data.quests_progress
 	var completion_qty_dict: Dictionary[StringName, int] = save_data.quests_completion_number
+	var pressure_dict: Dictionary[StringName, int] = save_data.quests_pressure
+
 	var new_quest_activities: Array[ActivityInfo] = []
 	var active_quest_id: StringName = save_data.active_quest_id
 	var quest_to_activate = null_activity
@@ -274,22 +292,26 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 		var activity = ActivityInfo.new()
 		activity.quest = quest
 		activity.progress = saved_progress_dict[quest_id]
+		activity.pressure = pressure_dict[quest_id]
 		activity.completion_times = completion_qty_dict.get(quest_id, 0)
+		progressor.apply_pressure()
 		new_quest_activities.append(activity)
 		if active_quest_id == activity.quest.quest_id: 
 			quest_to_activate = activity
 	
 	quest_activities = new_quest_activities
-	
+
 	locked_quests = load_all_quests_except_null()
 	remove_existing_activities_from_unlockable_quests()
-	
+	print("locked_quests: " + str(locked_quests))
+	print("quest_activities: " + str(quest_activities))
+	print("active_quest: " + str(active_quest))
+
 	deactivate_all_quests()
 	update_quest_possibility()
-	activate_quest(quest_to_activate)
-	quest_display.clear_all_quests()
-	quest_display.initialize_with_quest_activity(quest_activities)
 	unlock_quests()
+	activate_quest(quest_to_activate)
+	quest_display.initialize_with_quest_activity(quest_activities)
 	delete_deletable_quests()
 	refresh_quest_display()
 

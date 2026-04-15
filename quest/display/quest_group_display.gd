@@ -44,8 +44,9 @@ func refresh():
 	for display in activity_displays.values(): 
 		display.refresh()
 
-# Does nothing if quest doesn't exist
 func refresh_display_for_quest(quest_activity: ActivityInfo): 
+	# THIS IS SOMETIMES GIVING A BUG
+	# BECAUSE THE QUEST PROGRESSOR IS TRYING TO CALL IT
 	var quest_display = activity_displays[quest_activity]
 	quest_display.refresh()
 

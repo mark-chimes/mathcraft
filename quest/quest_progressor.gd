@@ -1,87 +1,47 @@
 extends Node
 class_name QuestProgressor
 
+# TODO QuestManager owns QuestProgressor
+# The manager passes in activities 
+# The progressor sends signals back up to the manager
+
 signal quest_complete(activity)
+signal refresh_display_for_activity(activity)
 
-@export var quest_display: QuestGroupDisplay
-var activity : ActivityInfo
-var is_initialized = false
+const PRESSURE_PER_ANSWER = 100
+const MAX_PRESSURE = 10000
+	
+func apply_pressure(): 
+	#allow_progress(activity.pressure)
+	pass # TODO
+	
+const PRESSURE_DECAY = 0.05
+const REQUIRED_PROGRESS = 5000
 
-func _ready() -> void: 
-	pass
-	
-func initialize(new_activity: ActivityInfo, new_quest_display: QuestGroupDisplay): 
-	activity = new_activity
-	quest_display = new_quest_display
-	if not quest_display.is_node_ready():
-		await quest_display.ready
-	is_initialized = true
-	
-func _process(delta) -> void: 
-	if not is_initialized: 
-		return
-	apply_progress(delta)
-	
-var time_since_start = 0 
-var progress_acc : float = 0.0
+func on_correct_answer(activity) -> void:
+	increase_pressure(activity, PRESSURE_PER_ANSWER)
 
-const MAX_PROGRESS = 5000
-const PROGRESS_PER_ANSWER = 200
+func increase_pressure(activity, pressure_increase) -> void: 
+	activity.pressure = clamp(activity.pressure+pressure_increase, 0, MAX_PRESSURE)
 
-func on_correct_answer() -> void:
-	allow_progress(PROGRESS_PER_ANSWER)
-	
-var progress_to_accumulate = 0
-var progress_accumulated = 0
+func process_activity(activity, delta) -> void: 
+	var pressure = activity.pressure
+	if pressure > 0.0: 
+		var progress_increase = pressure * delta
+		pressure -= pressure * PRESSURE_DECAY * delta
+		activity.pressure = pressure
 
-var PROGRESS_DECREASE_RATE = -1.0	#m
-var SECONDS_TO_EMPTY = 0 # w
-# w = sqrt(-2P/m)
-var MAX_PROGRESS_RATE = 0 # h = -mw
-var leftover_progress = 0.0
-
-func allow_progress(progress_to_increase):
-	leftover_progress = progress_to_accumulate - progress_accumulated
-	progress_to_accumulate = clamp(progress_to_increase + leftover_progress, 0, MAX_PROGRESS)
-	activity.pressure = progress_to_accumulate
-	print("progress_to_accumulate: " + str(progress_to_accumulate))
-	SECONDS_TO_EMPTY = sqrt(-(2.0*progress_to_accumulate) / PROGRESS_DECREASE_RATE) # w
-	# w = sqrt(-2P/m)
-	MAX_PROGRESS_RATE = -PROGRESS_DECREASE_RATE * SECONDS_TO_EMPTY # h = -mw
-	time_since_start = 0.0
-	progress_accumulated = 0
-	activity.progress += progress_to_increase/5.0
+		increase_progress(activity, progress_increase)
+		refresh_display_for_activity.emit(activity)
 	
-func apply_progress(delta): 
-	var midpoint = time_since_start + delta/2.0
-	var progress = - PROGRESS_DECREASE_RATE * (SECONDS_TO_EMPTY - midpoint) * delta
-	if progress <= 0.0:
-		progress = 0.0
-		return
-	
-	var progress_int : int = int(progress)
-	progress_acc += (progress - progress_int)
-	progress_int += int(progress_acc)
-	progress_acc -= int(progress_acc)*1.0
-	
-	increase_progress(progress_int)
-	
-	var progress_per_second = progress / delta
-	time_since_start += delta
-
-const REQUIRED_PROGRESS = 1000
-	
-func increase_progress(qty): 
-	progress_accumulated += qty
+func increase_progress(activity, qty): 
+	#progress_accumulated += qty
 	var int_qty : int = int(qty)
 
 	activity.progress += int_qty
-	if activity.progress >= REQUIRED_PROGRESS:
+	while activity.progress >= REQUIRED_PROGRESS:
 		activity.progress -= REQUIRED_PROGRESS
-		_quest_completed()
-	leftover_progress = progress_to_accumulate - progress_accumulated
-	activity.pressure = leftover_progress
-	quest_display.refresh_display_for_quest(activity)
+		quest_completed(activity)
 
-func _quest_completed(): 
+func quest_completed(activity): 
 	quest_complete.emit(activity)

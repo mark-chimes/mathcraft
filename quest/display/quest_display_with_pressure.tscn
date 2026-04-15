@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cy5wdfvdtmmmm"]
 
 [ext_resource type="Theme" uid="uid://duljwydysj88n" path="res://quest/display/quest_display_theme.tres" id="1_f7oun"]
-[ext_resource type="Script" uid="uid://clpch1f7kq7xn" path="res://quest/display/quest_display_with_pressure.tscn.gd" id="2_f7oun"]
+[ext_resource type="Script" uid="uid://clpch1f7kq7xn" path="res://quest/display/quest_display_with_pressure.gd" id="2_f7oun"]
 
-[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("quest_name_label", "progress_bar", "pressure_bar", "progress_text", "activate_button")]
+[node name="QuestDisplay" type="Panel" unique_id=639139388 node_paths=PackedStringArray("pressure_bar", "quest_name_label", "progress_bar", "progress_text", "activate_button")]
 clip_contents = true
 custom_minimum_size = Vector2(360, 40)
 anchors_preset = 10
@@ -13,9 +13,9 @@ grow_horizontal = 2
 mouse_filter = 2
 theme = ExtResource("1_f7oun")
 script = ExtResource("2_f7oun")
+pressure_bar = NodePath("Control/ProgressBar")
 quest_name_label = NodePath("Control/MarginContainer/QuestName")
 progress_bar = NodePath("Control/PressureBar")
-pressure_bar = NodePath("Control/ProgressBar")
 progress_text = NodePath("ProgressText/CurrentLabel")
 activate_button = NodePath("Control/ActivateButton")
 
@@ -69,8 +69,8 @@ size_flags_vertical = 8
 mouse_filter = 2
 theme = ExtResource("1_f7oun")
 theme_override_font_sizes/font_size = 32
-max_value = 5000.0
-value = 2500.0
+max_value = 10000.0
+value = 1000.0
 show_percentage = false
 
 [node name="PressureBar" type="ProgressBar" parent="Control" unique_id=63505589]
@@ -78,8 +78,10 @@ layout_mode = 2
 mouse_filter = 2
 theme = ExtResource("1_f7oun")
 theme_override_font_sizes/font_size = 32
-max_value = 1.0
-value = 0.5
+max_value = 5000.0
+step = 1.0
+value = 5000.0
+rounded = true
 show_percentage = false
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Control" unique_id=1990951352]

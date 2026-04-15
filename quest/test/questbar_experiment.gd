@@ -18,9 +18,19 @@ func _ready() -> void:
 	if not quest_display.is_node_ready():
 		await quest_display.ready
 		
-	$QuestProgressor.initialize(activity1, quest_display)
+	$QuestProgressor.refresh_display_for_activity.connect(_on_quest_progressor_refresh)
+	$QuestProgressor.quest_complete.connect(_on_quest_complete)
 	quest_display.initialize_with_quest_activity(activities)
 	quest_display.refresh()
 
+func _process(delta: float) -> void:
+	$QuestProgressor.process_activity(activity1, delta)
+
 func _on_qn_a_answer_correct(): 
-	$QuestProgressor.on_correct_answer()
+	$QuestProgressor.on_correct_answer(activity1)
+
+func _on_quest_progressor_refresh(activity): 
+	quest_display.refresh()
+
+func _on_quest_complete(activity: ActivityInfo): 
+	pass

@@ -1,17 +1,6 @@
-extends Control
-class_name QuestDisplay
+extends QuestDisplay
 
-signal quest_activated(activity:ActivityInfo)
-
-@export var quest_name_label : Label
-@export var progress_bar : ProgressBar
 @export var pressure_bar : ProgressBar
-@export var progress_text : Label
-@export var activate_button : Button
-
-const MAX_PROGRESS = 1000.0
-
-var quest_activity : ActivityInfo # since we're using these as keys in dictionaries...
 
 func _ready(): 
 	if not quest_name_label.is_node_ready():
@@ -34,7 +23,7 @@ func refresh():
 	# https://github.com/godotengine/godot/issues/80499
 	# https://github.com/godotengine/godot/issues/78523
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
-	progress_bar.value = quest_activity.progress / 1000.0
+	progress_bar.value = quest_activity.progress
 	pressure_bar.value = quest_activity.pressure
 	progress_text.text = " " + str(quest_activity.progress) + " progress"
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
