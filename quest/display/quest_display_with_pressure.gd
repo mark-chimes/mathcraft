@@ -7,6 +7,9 @@ const DISPLAYED_PRESSURE_CHANGE = 100
 var target_pressure = 0.0
 var displayed_pressure = 0.0
 
+const MAX_PRESSURE =  QuestConstants.MAX_PRESSURE
+const REQUIRED_PROGRESS =  QuestConstants.REQUIRED_PROGRESS
+
 func _ready(): 
 	if not quest_name_label.is_node_ready():
 		await quest_name_label.ready
@@ -36,6 +39,10 @@ func refresh():
 	# https://github.com/godotengine/godot/issues/80499
 	# https://github.com/godotengine/godot/issues/78523
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
+	
+	progress_bar.max_value = quest_activity.quest.progress_for_upgrade_mult * REQUIRED_PROGRESS
+	pressure_bar.max_value = quest_activity.quest.pressure_per_answer_mult * MAX_PRESSURE
+
 	progress_bar.value = int(quest_activity.progress)
 	# pressure_bar.value = quest_activity.pressure
 	progress_text.text = " " + str(int(quest_activity.progress)) + " progress"
