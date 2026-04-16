@@ -14,17 +14,21 @@ var current_question : QuestionData
 var num_digits_typed = 0
 var player_answer : int = 0
 
+var is_question_timed_out = false
+
 func _ready(): 
 	if question_generator != null: 
 		generate_question()
 		
 func set_question_timed_out(): 
-	pass
-	# TODO
-
+	is_question_timed_out = true
+	print("Question timed out")
+	question_display.set_question_timed_out()
+	
 func remove_question_timeout(): 
-	pass
-	# TODO
+	is_question_timed_out = false
+	print("Question timeout removed")
+	question_display.remove_question_timed_out()
 
 func generate_question(): 
 	num_digits_typed = 0
@@ -35,6 +39,7 @@ func generate_question():
 	update_display()
 
 func _process(delta) -> void: 
+
 	# only goes up to 9
 	for x in range(0,10): 
 		if Input.is_action_just_pressed("num" + str(x)):
@@ -48,6 +53,9 @@ func _process(delta) -> void:
 
 
 func press_back(): 
+	if is_question_timed_out: 
+		result_display.display_timeout()
+		return
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
 	if num_digits_typed <= 0: 
@@ -86,6 +94,9 @@ func update_display():
 		question_display.display_question(current_question, str(player_answer))
 		
 func press_num(num):
+	if is_question_timed_out: 
+		result_display.display_timeout()
+		return
 	if current_question.answer_type != QuestionData.AnswerType.INTEGER:
 		return
 	var answer_digits = str(current_question.correct_answer).length()
@@ -113,6 +124,9 @@ func press_num(num):
 	return
 
 func press_direction(is_left): 
+	if is_question_timed_out: 
+		result_display.display_timeout()
+		return
 	if current_question.answer_type != QuestionData.AnswerType.COMPARISON:
 		return
 	var is_correct = (is_left == current_question.correct_answer)

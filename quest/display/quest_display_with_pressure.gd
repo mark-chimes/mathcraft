@@ -23,6 +23,9 @@ func bind_quest_activity(new_quest_activity: ActivityInfo):
 	quest_activity = new_quest_activity
 	refresh()
 		
+const TIMEOUT_TIME_REMAINING_EPSILON = 5
+
+
 func refresh(): 
 	# space added to text because of Godot bug 
 	# https://github.com/godotengine/godot/issues/80499
@@ -31,10 +34,13 @@ func refresh():
 	progress_bar.value = int(quest_activity.progress)
 	pressure_bar.value = quest_activity.pressure
 	progress_text.text = " " + str(int(quest_activity.progress)) + " progress"
-	if quest_activity.has_resources: 
-		pressure_text.text = " " + str(int(quest_activity.pressure / 50.0)) + " /s"
+	if quest_activity.timeout_remaining_ms >= TIMEOUT_TIME_REMAINING_EPSILON: 
+		pressure_text.text = " " + str(quest_activity.timeout_remaining_ms) + " ms timeout"
 	else: 
-		pressure_text.text = " inactive"
+		if quest_activity.has_resources: 
+			pressure_text.text = " " + str(int(quest_activity.pressure / 50.0)) + " /s"
+		else: 
+			pressure_text.text = " inactive"
 
 	# Don't get confused between Godot's "disabled" and the quest's "is_active" 
 	# This button should be clickable iff the quest is not active so it can be

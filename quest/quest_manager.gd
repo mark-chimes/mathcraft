@@ -24,7 +24,7 @@ var focused_quest: ActivityInfo
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
-const TIMEOUT_TIME_REMAINING_EPSILON = 0.05
+const TIMEOUT_TIME_REMAINING_EPSILON = 5
 
 func _ready():
 	null_activity = ActivityInfo.new()
@@ -54,8 +54,11 @@ func _ready():
 	
 func _process(delta) -> void : 
 	for activity in quest_activities: 
-		if activity.timeout_remaining >= TIMEOUT_TIME_REMAINING_EPSILON: 
-			activity.timeout_remaining = max(activity.timeout_remaining - delta, 0.0)
+		if activity.timeout_remaining_ms >= TIMEOUT_TIME_REMAINING_EPSILON: 
+			activity.timeout_remaining_ms = max(activity.timeout_remaining_ms - int(delta*1000), 0)
+			# Focused activity just stopped being timed-out
+			if activity == focused_quest and activity.timeout_remaining_ms <= 0: 
+				qna.remove_question_timeout()
 		else: 
 			progressor.process_activity(activity, delta)
 	quest_display.refresh()
@@ -188,7 +191,7 @@ func activate_quest(new_quest : ActivityInfo):
 
 func switch_qna_to_focused_question(): 
 	qna.switch_question_generator(focused_quest.quest.question_generator)
-	if focused_quest.timeout_remaining > 0.0: 
+	if focused_quest.timeout_remaining_ms > TIMEOUT_TIME_REMAINING_EPSILON: 
 		qna.set_question_timed_out()
 	else: 
 		qna.remove_question_timeout()
@@ -240,13 +243,13 @@ func _on_answer_correct() -> void:
 	print("Answer correct for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
 	progressor.on_correct_answer(focused_quest)
 
-const TIMEOUT_FOR_WRONG_ANSWER = 1.0
+const TIMEOUT_FOR_WRONG_ANSWER_MS = 1000
 
 func _on_answer_wrong() -> void:
 	print("Answer wrong for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
 	if not focused_quest.quest.punish_on_wrong:
 		return
-	focused_quest.timeout_remaining = TIMEOUT_FOR_WRONG_ANSWER
+	focused_quest.timeout_remaining_ms = TIMEOUT_FOR_WRONG_ANSWER_MS
 	qna.set_question_timed_out()
 	progressor.punish_for_wrong_answer(focused_quest)
 	

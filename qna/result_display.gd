@@ -19,3 +19,7 @@ func display_comparison_result(is_correct: bool, question_data: QuestionData):
 	add_child(cur_effect)
 	cur_effect.set_qa_comp(is_correct,  question_data.answer_display_text)
  
+func display_timeout(): 
+	cur_effect = result_display_effect.instantiate()
+	add_child(cur_effect)
+	cur_effect.display_text_red("TIMED OUT!")

@@ -22,6 +22,10 @@ func _process(delta):
 	if alpha_amount == 0.0:
 		queue_free()
 
+func display_text_red(special_text): 
+	modulate = Color(.6,0.2,1)
+	label.text = special_text
+
 func set_qa(is_correct, question_string, answer_string): 
 	modulate.b = 0.0
 	if is_correct: 
