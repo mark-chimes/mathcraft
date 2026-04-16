@@ -164,6 +164,7 @@ text = "Load game"
 
 [connection signal="stock_update" from="Game/Logic/StockControl" to="Game/Logic/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="answer_correct" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_correct"]
+[connection signal="answer_wrong" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_wrong"]
 [connection signal="quest_activated" from="Game/UI/Tabs/TabOverview/Actions/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="pressed" from="Game/UI/SaveLoad/SaveButton" to="Game/Logic/SaveLoadManager" method="_on_save_button_pressed"]
 [connection signal="pressed" from="Game/UI/SaveLoad/LoadButton" to="Game/Logic/SaveLoadManager" method="_on_load_button_pressed"]

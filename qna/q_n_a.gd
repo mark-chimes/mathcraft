@@ -2,6 +2,7 @@ extends Node
 class_name QnA
 
 signal answer_correct
+signal answer_wrong
 
 @export var question_generator: QuestionGenerator
 
@@ -16,7 +17,15 @@ var player_answer : int = 0
 func _ready(): 
 	if question_generator != null: 
 		generate_question()
-	
+		
+func set_question_timed_out(): 
+	pass
+	# TODO
+
+func remove_question_timeout(): 
+	pass
+	# TODO
+
 func generate_question(): 
 	num_digits_typed = 0
 	if question_generator == null: 
@@ -56,10 +65,14 @@ func submit_answer(player_answer):
 			player_answer_string += " nice"
 		elif current_question.correct_answer == 67: 
 			player_answer_string = "six seven"
+	else: 
+		answer_wrong.emit()
 	result_display.display_arithmetic_result(is_correct, current_question, player_answer_string)
 	if is_correct:
 		answer_correct.emit()
 		generate_question()
+	else: 
+		answer_wrong.emit()
 	reset_input()
 
 func reset_input(): 
@@ -107,6 +120,8 @@ func press_direction(is_left):
 	if is_correct:
 		answer_correct.emit()
 		generate_question()
+	else: 
+		answer_wrong.emit()
 
 func switch_question_generator(new_question_generator: QuestionGenerator) -> void:
 	question_generator = new_question_generator

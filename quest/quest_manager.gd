@@ -24,6 +24,8 @@ var focused_quest: ActivityInfo
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
+const TIMEOUT_TIME_REMAINING_EPSILON = 0.05
+
 func _ready():
 	null_activity = ActivityInfo.new()
 	null_activity.quest = null_quest
@@ -52,7 +54,10 @@ func _ready():
 	
 func _process(delta) -> void : 
 	for activity in quest_activities: 
-		progressor.process_activity(activity, delta)
+		if activity.timeout_remaining >= TIMEOUT_TIME_REMAINING_EPSILON: 
+			activity.timeout_remaining = max(activity.timeout_remaining - delta, 0.0)
+		else: 
+			progressor.process_activity(activity, delta)
 	quest_display.refresh()
 
 func deinitialize(): 
@@ -147,11 +152,11 @@ func update_quest_availability():
 				if stock_qty < required_qty: 
 					activity.has_resources = false
 	
-	# We used to not have resources, now we do
-	if focused_quest.has_resources and not focused_quest_had_resources:  
-		qna.switch_question_generator(focused_quest.quest.question_generator)
-	
-	if not focused_quest.has_resources: 
+	if focused_quest.has_resources:
+		if not focused_quest_had_resources:  
+			# We used to not have resources, now we do
+			switch_qna_to_focused_question()
+	else: 
 		qna.switch_question_generator(non_question)
 	
 func _on_quest_group_display_quest_activated(activated_quest: ActivityInfo) -> void:
@@ -174,12 +179,20 @@ func activate_quest(new_quest : ActivityInfo):
 	new_quest.is_focused = true
 	focused_quest = new_quest
 	if focused_quest.has_resources:
-		qna.switch_question_generator(focused_quest.quest.question_generator)
+		switch_qna_to_focused_question()
 	else: 
 		qna.switch_question_generator(non_question)
 	for quest in quest_activities: 
 		if quest!= new_quest:
 			quest.is_focused = false
+
+func switch_qna_to_focused_question(): 
+	qna.switch_question_generator(focused_quest.quest.question_generator)
+	if focused_quest.timeout_remaining > 0.0: 
+		qna.set_question_timed_out()
+	else: 
+		qna.remove_question_timeout()
+	
 
 func update_quest_text(): 
 	if focused_quest == null:
@@ -227,6 +240,16 @@ func _on_answer_correct() -> void:
 	print("Answer correct for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
 	progressor.on_correct_answer(focused_quest)
 
+const TIMEOUT_FOR_WRONG_ANSWER = 1.0
+
+func _on_answer_wrong() -> void:
+	print("Answer wrong for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
+	if not focused_quest.quest.punish_on_wrong:
+		return
+	focused_quest.timeout_remaining = TIMEOUT_FOR_WRONG_ANSWER
+	qna.set_question_timed_out()
+	progressor.punish_for_wrong_answer(focused_quest)
+	
 func _quest_completed(completed_quest) -> void:
 	quest_display.quest_complete(completed_quest)
 	completed_quest.completion_times += 1
@@ -243,6 +266,7 @@ func _quest_completed(completed_quest) -> void:
 	
 	unlock_quests()
 	delete_deletable_quests()
+	update_quest_availability()
 
 func have_activity_with_quest(quest)  -> bool: 
 	print("Already have activity for quest: " + quest.quest_title)
@@ -303,8 +327,8 @@ func load_from_quest_save_data(save_data: QuestSaveData):
 	locked_quests = load_all_quests_except_null()
 	remove_existing_activities_from_unlockable_quests()
 	deactivate_all_quests()
-	update_quest_availability()
 	unlock_quests()
+	update_quest_availability()
 	activate_quest(quest_to_activate)
 	quest_display.initialize_with_quest_activity(quest_activities)
 	delete_deletable_quests()

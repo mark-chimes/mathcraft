@@ -7,7 +7,9 @@ class_name QuestProgressor
 
 signal quest_complete(activity)
 
-const PRESSURE_PER_ANSWER = 2000
+const PRESSURE_INCREASE_PER_CORRECT_ANSWER = 2000
+const PRESSURE_DECREASE_PER_WRONG_ANSWER = 10000
+
 const MAX_PRESSURE = 10000
 const MAX_ADDED_PROGRESS = 1000
 	
@@ -16,12 +18,18 @@ const REQUIRED_PROGRESS = 1000
 const PRESSURE_USE_DIVIDER = 50
 const PRESSURE_LEAK_DIVIDER = 1
 
-func on_correct_answer(activity) -> void:
-	increase_pressure(activity, PRESSURE_PER_ANSWER)
+func on_correct_answer(activity: ActivityInfo) -> void:
+	increase_pressure(activity, PRESSURE_INCREASE_PER_CORRECT_ANSWER)
 
-func increase_pressure(activity, pressure_increase) -> void: 
+func punish_for_wrong_answer(activity: ActivityInfo) -> void: 
+	reduce_pressure(activity, PRESSURE_DECREASE_PER_WRONG_ANSWER)
+
+func increase_pressure(activity: ActivityInfo, pressure_increase) -> void: 
 	activity.pressure = clamp(activity.pressure+pressure_increase, 0, MAX_PRESSURE)
 	increase_progress(activity, pressure_increase/10)
+
+func reduce_pressure(activity: ActivityInfo, pressure_decrease) -> void: 
+	activity.pressure = max(activity.pressure - pressure_decrease, 0)
 
 func process_activity(activity: ActivityInfo, delta) -> void: 
 	if not activity.has_resources: 
@@ -47,12 +55,12 @@ func process_activity(activity: ActivityInfo, delta) -> void:
 
 		increase_progress(activity, progress_increase)
 	
-func increase_progress(activity, qty): 
+func increase_progress(activity: ActivityInfo, qty): 
 	#progress_accumulated += qty
 	activity.progress += qty
 	while activity.progress >= REQUIRED_PROGRESS:
 		activity.progress -= REQUIRED_PROGRESS
 		quest_completed(activity)
 
-func quest_completed(activity): 
+func quest_completed(activity: ActivityInfo): 
 	quest_complete.emit(activity)

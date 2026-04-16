@@ -1,19 +1,10 @@
 [gd_resource type="Resource" script_class="QuestDetails" format=3 uid="uid://dahbw0xjgr6nq"]
 
 [ext_resource type="Script" uid="uid://c5sxrd4eoxsv6" path="res://stock/item_data.gd" id="1_30shw"]
-[ext_resource type="Resource" uid="uid://dfl78xharku8q" path="res://stock/item/stone.tres" id="2_83km6"]
 [ext_resource type="Resource" uid="uid://bs5xtd71n0o1n" path="res://qna/generators/comparison_generator.tres" id="3_30shw"]
 [ext_resource type="Resource" uid="uid://beppkl2qcqjw0" path="res://stock/item/dust.tres" id="3_83km6"]
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="4_vpb1y"]
-[ext_resource type="Script" uid="uid://ca0nf5otmwtgb" path="res://quest/quest_unlock_requirements.gd" id="6_xd6s5"]
 [ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="7_vpb1y"]
-
-[sub_resource type="Resource" id="Resource_vpb1y"]
-script = ExtResource("6_xd6s5")
-required_resources = Dictionary[StringName, int]({
-&"stone": 6
-})
-metadata/_custom_type_script = "uid://ca0nf5otmwtgb"
 
 [resource]
 script = ExtResource("4_vpb1y")
@@ -22,8 +13,7 @@ quest_title = "Bash Rocks Together"
 quest_description = "Bash two rocks together like a caveman and see what you get. The bigger rock always smashes the smaller one"
 question_generator = ExtResource("3_30shw")
 item_mods = Dictionary[ExtResource("1_30shw"), int]({
-ExtResource("2_83km6"): -2,
-ExtResource("3_83km6"): 20
+ExtResource("3_83km6"): 1
 })
-unlock_requirements = SubResource("Resource_vpb1y")
+punish_on_wrong = true
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"
