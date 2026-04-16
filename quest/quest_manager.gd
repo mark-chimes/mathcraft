@@ -1,7 +1,7 @@
 extends Node
 class_name QuestManager
-signal update_quest_text(quest_details: QuestDetails)
 
+@export var current_quest_display : CurrentQuestDisplay
 @export var quest_display : QuestGroupDisplay
 @export var stock_control : StockControl
 @export var qna : QnA
@@ -162,7 +162,7 @@ func quest_display_deplete_quest(activity):
 	quest_display.spawn_quest_depletion_effect(activity)
 	
 func refresh_quest_display(): 
-	emit_update_quest_text()
+	update_quest_text()
 	quest_display.refresh()
 
 func refresh_quest_display_for_activity(activity: ActivityInfo): 
@@ -181,11 +181,11 @@ func activate_quest(new_quest : ActivityInfo):
 		if quest!= new_quest:
 			quest.is_focused = false
 
-func emit_update_quest_text(): 
+func update_quest_text(): 
 	if focused_quest == null:
-		update_quest_text.emit(null_quest)
+		current_quest_display.update_quest_text(null_quest)
 		return
-	update_quest_text.emit(focused_quest.quest)
+	current_quest_display.update_quest_text(focused_quest.quest)
 
 func is_questable(new_activity: ActivityInfo): 
 	if new_activity == null:
@@ -205,7 +205,7 @@ func deactivate_all_quests():
 		quest.is_focused = false
 	focused_quest = null_activity
 	qna.switch_question_generator(non_question)
-	emit_update_quest_text()
+	update_quest_text()
 	
 func remove_quest(activity: ActivityInfo): 
 	if not quest_activities.has(activity): 

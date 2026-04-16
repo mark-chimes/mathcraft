@@ -23,13 +23,14 @@ script = ExtResource("1_w48qg")
 [node name="StockControl" parent="Game/Logic" unique_id=741979544 node_paths=PackedStringArray("stock_display") instance=ExtResource("2_getpj")]
 stock_display = NodePath("../../UI/StockDisplay")
 
-[node name="QuestManager" parent="Game/Logic" unique_id=2095940230 node_paths=PackedStringArray("quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
+[node name="QuestManager" parent="Game/Logic" unique_id=2095940230 node_paths=PackedStringArray("current_quest_display", "quest_display", "stock_control", "qna") instance=ExtResource("4_lquwl")]
+current_quest_display = NodePath("../../UI/CurrentQuestDisplay")
+quest_display = NodePath("../../UI/Tabs/TabOverview/Actions/QuestGroupDisplay")
+stock_control = NodePath("../StockControl")
+qna = NodePath("../QnA")
 non_question = ExtResource("10_4c57u")
 null_quest = ExtResource("5_dg77c")
 is_unlock_all = false
-quest_display = NodePath("../../UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay")
-stock_control = NodePath("../StockControl")
-qna = NodePath("../QnA")
 
 [node name="SaveLoadManager" type="Node" parent="Game/Logic" unique_id=1253070605 node_paths=PackedStringArray("stock_control", "quest_manager")]
 script = ExtResource("13_ycdy4")
@@ -75,40 +76,15 @@ grow_vertical = 2
 current_tab = 0
 tab_focus_mode = 0
 
-[node name="Places" type="TabContainer" parent="Game/UI/Tabs/TabOverview" unique_id=1117949154]
-layout_mode = 2
-current_tab = 2
-metadata/_tab_index = 0
-
-[node name="Home" type="Control" parent="Game/UI/Tabs/TabOverview/Places" unique_id=475520056]
-visible = false
+[node name="Actions" type="Control" parent="Game/UI/Tabs/TabOverview" unique_id=1412008936]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Town" type="Control" parent="Game/UI/Tabs/TabOverview/Places" unique_id=1788997343]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Meadow" type="TabContainer" parent="Game/UI/Tabs/TabOverview/Places" unique_id=422506603]
-layout_mode = 2
-current_tab = 0
-metadata/_tab_index = 2
-
-[node name="Actions" type="Control" parent="Game/UI/Tabs/TabOverview/Places/Meadow" unique_id=1412008936]
-layout_mode = 2
-metadata/_tab_index = 0
-
-[node name="QuestGroupDisplay" parent="Game/UI/Tabs/TabOverview/Places/Meadow/Actions" unique_id=1670799080 instance=ExtResource("5_7mycd")]
+[node name="QuestGroupDisplay" parent="Game/UI/Tabs/TabOverview/Actions" unique_id=1670799080 instance=ExtResource("5_7mycd")]
 layout_mode = 1
 is_big_size = true
 
-[node name="Upgrades" type="Control" parent="Game/UI/Tabs/TabOverview/Places/Meadow" unique_id=1367945196]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Log" type="Control" parent="Game/UI/Tabs/TabOverview" unique_id=1899333010]
+[node name="Upgrades" type="Control" parent="Game/UI/Tabs/TabOverview" unique_id=1367945196]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
@@ -188,6 +164,6 @@ text = "Load game"
 
 [connection signal="stock_update" from="Game/Logic/StockControl" to="Game/Logic/QuestManager" method="_on_stock_control_stock_update"]
 [connection signal="answer_correct" from="Game/Logic/QnA" to="Game/Logic/QuestManager" method="_on_answer_correct"]
-[connection signal="quest_activated" from="Game/UI/Tabs/TabOverview/Places/Meadow/Actions/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
+[connection signal="quest_activated" from="Game/UI/Tabs/TabOverview/Actions/QuestGroupDisplay" to="Game/Logic/QuestManager" method="_on_quest_group_display_quest_activated"]
 [connection signal="pressed" from="Game/UI/SaveLoad/SaveButton" to="Game/Logic/SaveLoadManager" method="_on_save_button_pressed"]
 [connection signal="pressed" from="Game/UI/SaveLoad/LoadButton" to="Game/Logic/SaveLoadManager" method="_on_load_button_pressed"]

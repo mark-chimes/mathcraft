@@ -1,9 +1,10 @@
 extends Control
+class_name CurrentQuestDisplay
 
 @export var quest_name_label : Label
 @export var quest_description_label : RichTextLabel
 
-func _on_update_quest_text(quest: QuestDetails): 
+func update_quest_text(quest: QuestDetails): 
 	quest_name_label.text = quest.quest_title
 	
 	quest_description_label.clear()
