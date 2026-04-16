@@ -3,9 +3,9 @@ extends QuestDisplay
 @export var pressure_bar : ProgressBar
 @export var pressure_text: Label
 
-const PRESSURE_DECAY = 50
-
-
+const DISPLAYED_PRESSURE_CHANGE = 100
+var target_pressure = 0.0
+var displayed_pressure = 0.0
 
 func _ready(): 
 	if not quest_name_label.is_node_ready():
@@ -24,15 +24,20 @@ func bind_quest_activity(new_quest_activity: ActivityInfo):
 	refresh()
 		
 const TIMEOUT_TIME_REMAINING_EPSILON = 5
+const INTERPOLATION_SPEED = 10000
 
-
+func _process(delta) -> void: 
+	if quest_activity == null: 
+		return
+	pressure_bar.value = move_toward(pressure_bar.value, quest_activity.pressure,  INTERPOLATION_SPEED * delta)
+	
 func refresh(): 
 	# space added to text because of Godot bug 
 	# https://github.com/godotengine/godot/issues/80499
 	# https://github.com/godotengine/godot/issues/78523
 	quest_name_label.text = " "+quest_activity.quest.quest_title 
 	progress_bar.value = int(quest_activity.progress)
-	pressure_bar.value = quest_activity.pressure
+	# pressure_bar.value = quest_activity.pressure
 	progress_text.text = " " + str(int(quest_activity.progress)) + " progress"
 	if quest_activity.timeout_remaining_ms >= TIMEOUT_TIME_REMAINING_EPSILON: 
 		pressure_text.text = " " + str(quest_activity.timeout_remaining_ms) + " ms timeout"

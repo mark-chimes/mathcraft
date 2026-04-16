@@ -24,6 +24,7 @@ var focused_quest: ActivityInfo
 const PROGRESS_BY_ANSWER = 800
 const REQUIRED_PROGRESS = 1000
 
+const TIMEOUT_FOR_WRONG_ANSWER_MS = 2000
 const TIMEOUT_TIME_REMAINING_EPSILON = 5
 
 func _ready():
@@ -242,8 +243,6 @@ func remove_quest(activity: ActivityInfo):
 func _on_answer_correct() -> void:
 	print("Answer correct for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
 	progressor.on_correct_answer(focused_quest)
-
-const TIMEOUT_FOR_WRONG_ANSWER_MS = 1000
 
 func _on_answer_wrong() -> void:
 	print("Answer wrong for activity: " + focused_quest.quest_title + ": " + str(focused_quest))
