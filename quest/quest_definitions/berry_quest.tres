@@ -4,16 +4,16 @@
 [ext_resource type="Script" uid="uid://bat5xbmp1mw6y" path="res://quest/quest_details.gd" id="1_7oypd"]
 [ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="1_w646r"]
 [ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="2_np71b"]
-[ext_resource type="Resource" uid="uid://bdps74xrgqou6" path="res://quest/quest_definitions/juice_quest.tres" id="5_np71b"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="5_np71b"]
 
 [resource]
 script = ExtResource("1_7oypd")
 quest_id = "berry_quest"
-quest_title = "Pick Thaumberries"
+quest_title = "Pick Wild Thaumberries"
 quest_description = "Each Thaumberry is naturally imbued with a tiny amount of magical power, naturally extracted from the earth itself through the roots of the Thaumberry Bush.  "
 question_generator = ExtResource("1_w646r")
 item_mods = Dictionary[ExtResource("1_5v54b"), int]({
 ExtResource("2_np71b"): 2
 })
-unlocks_quest = ExtResource("5_np71b")
+pressure_per_answer_mult = 2.0
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

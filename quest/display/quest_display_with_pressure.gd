@@ -1,4 +1,13 @@
-extends QuestDisplay
+extends Control
+class_name QuestDisplay
+
+signal quest_activated(activity:ActivityInfo)
+var quest_activity : ActivityInfo # since we're using these as keys in dictionaries...
+
+@export var quest_name_label : Label
+@export var progress_bar : ProgressBar
+@export var progress_text : Label
+@export var activate_button : Button
 
 @export var pressure_bar : ProgressBar
 @export var pressure_text: Label
@@ -62,7 +71,7 @@ func refresh():
 	if is_focused and has_resources:
 			activate_button.text = "active"
 	elif not has_resources:
-		activate_button.text = "impossible"
+		activate_button.text = "resources depleted"
 	else: 
 		activate_button.text = ""
 		

@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://decx3hdd3kxrg" path="res://stock/item/thaumberry.tres" id="2_wu2tj"]
 [ext_resource type="Resource" uid="uid://bwqc15jq010hs" path="res://stock/item/thaumjuice.tres" id="3_h5vba"]
 [ext_resource type="Resource" uid="uid://dmsoxjq3dcyq2" path="res://quest/unlock_requirements/juice_unlock.tres" id="6_wu2tj"]
+[ext_resource type="Script" uid="uid://6j0ynyj8e34w" path="res://quest/yield/yield_specifier.gd" id="7_h5vba"]
 
 [resource]
 script = ExtResource("2_liwee")
@@ -17,5 +18,7 @@ item_mods = Dictionary[ExtResource("1_ikqel"), int]({
 ExtResource("2_wu2tj"): -3,
 ExtResource("3_h5vba"): 1
 })
+progress_for_upgrade_mult = 4.0
+pressure_per_answer_mult = 0.5
 unlock_requirements = ExtResource("6_wu2tj")
 metadata/_custom_type_script = "uid://bat5xbmp1mw6y"

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://diuhsvga0mdmg"]
 
 [ext_resource type="PackedScene" uid="uid://dx3jljlqi1k5e" path="res://qna/question_display.tscn" id="1_fsmfo"]
-[ext_resource type="Script" uid="uid://bbv2llsigons6" path="res://quest/test/questbar_experiment.gd" id="1_y8rxp"]
 [ext_resource type="Resource" uid="uid://6yhktebqke58" path="res://quest/quest_definitions/berry_quest.tres" id="2_gplrd"]
 [ext_resource type="PackedScene" uid="uid://cc71g6jbkpr0j" path="res://qna/q_n_a.tscn" id="3_nfovh"]
 [ext_resource type="Resource" uid="uid://cg1ldy25qcqes" path="res://qna/generators/addition_generator.tres" id="4_gplrd"]
@@ -11,8 +10,44 @@
 [ext_resource type="PackedScene" uid="uid://cuc13sg5m1opb" path="res://stock/display/stock_display.tscn" id="9_dpd2w"]
 [ext_resource type="PackedScene" uid="uid://m3qlrycu06ek" path="res://quest/quest_progressor.tscn" id="10_dpd2w"]
 
+[sub_resource type="GDScript" id="GDScript_jyi13"]
+script/source = "extends Node2D
+
+@export var quest_display: QuestGroupDisplay
+
+@export var quest1: QuestDetails
+
+var activity1 : ActivityInfo
+
+func _ready() -> void: 
+	activity1 =  ActivityInfo.new()
+	activity1.quest = quest1
+	activity1.has_resources = false
+	activity1.is_focused = true
+	activity1.pressure = 5000.0
+	
+	var activities: Array[ActivityInfo] = [activity1]
+	
+	if not quest_display.is_node_ready():
+		await quest_display.ready
+		
+	$QuestProgressor.quest_complete.connect(_on_quest_complete)
+	quest_display.initialize_with_quest_activity(activities)
+	quest_display.refresh()
+
+func _process(delta: float) -> void:
+	$QuestProgressor.process_activity(activity1, delta)
+	quest_display.refresh()
+
+func _on_qn_a_answer_correct(): 
+	$QuestProgressor.on_correct_answer(activity1)
+
+func _on_quest_complete(activity: ActivityInfo): 
+	pass
+"
+
 [node name="QuestbarExperiment" type="Node2D" unique_id=607221540 node_paths=PackedStringArray("quest_display")]
-script = ExtResource("1_y8rxp")
+script = SubResource("GDScript_jyi13")
 quest_display = NodePath("QuestStuff/PanelContainer/QuestGroupDisplay")
 quest1 = ExtResource("2_gplrd")
 
