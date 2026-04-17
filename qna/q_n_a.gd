@@ -39,7 +39,6 @@ func generate_question():
 	update_display()
 
 func _process(delta) -> void: 
-
 	# only goes up to 9
 	for x in range(0,10): 
 		if Input.is_action_just_pressed("num" + str(x)):
@@ -50,7 +49,6 @@ func _process(delta) -> void:
 		press_direction(true)
 	elif Input.is_action_just_pressed("right"):
 		press_direction(false)
-
 
 func press_back(): 
 	if is_question_timed_out: 
@@ -65,16 +63,17 @@ func press_back():
 	num_digits_typed -= 1
 	update_display()
 	
-func submit_answer(player_answer): 
-	var is_correct = ( player_answer  == current_question.correct_answer)
+func submit_answer(player_answer: int): 
+	print("Player answer: " + str(player_answer))
+	print("current_question.correct_answer: " + str(current_question.correct_answer))
+	
+	var is_correct = (player_answer  == current_question.correct_answer)
 	var player_answer_string = str(player_answer)
 	if is_correct:
 		if current_question.correct_answer == 69: 
 			player_answer_string += " nice"
 		elif current_question.correct_answer == 67: 
 			player_answer_string = "six seven"
-	else: 
-		answer_wrong.emit()
 	result_display.display_arithmetic_result(is_correct, current_question, player_answer_string)
 	if is_correct:
 		answer_correct.emit()
@@ -139,5 +138,7 @@ func press_direction(is_left):
 
 func switch_question_generator(new_question_generator: QuestionGenerator) -> void:
 	question_generator = new_question_generator
+	player_answer = 0
+	num_digits_typed = 0
 	if is_node_ready(): 
 		generate_question()
